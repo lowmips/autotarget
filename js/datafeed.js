@@ -32,3 +32,27 @@ export default {
         console.log('[unsubscribeBars]: Method call with subscriberUID:', subscriberUID);
     },
 };
+
+async function getAllSymbols() {
+    const data = await makeApiRequest('api/v3/defaultSymbols');
+    let allSymbols = [];
+
+    for (const exchange of configurationData.exchanges) {
+        const pairs = data.Data[exchange.value].pairs;
+
+        for (const leftPairPart of Object.keys(pairs)) {
+            const symbols = pairs[leftPairPart].map(rightPairPart => {
+                const symbol = generateSymbol(exchange.value, leftPairPart, rightPairPart);
+                return {
+                    symbol: symbol.short,
+                    full_name: symbol.full,
+                    description: symbol.short,
+                    exchange: exchange.value,
+                    type: 'crypto',
+                };
+            });
+            allSymbols = [...allSymbols, ...symbols];
+        }
+    }
+    return allSymbols;
+}
