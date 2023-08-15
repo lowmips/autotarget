@@ -6,6 +6,7 @@ export async function makeApiRequest(path) {
                 'X-Proxy-Url': `https://api.mexc.com/${path}`,
             },
         });
+        console.log(response);
         return response.json();
     } catch(error) {
         throw new Error(`MEXC request error: ${error.status}`);
