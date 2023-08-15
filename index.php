@@ -34,10 +34,10 @@
 					container: "tv_chart_container",
 
 					//	BEWARE: no trailing slash is expected in feed URL
-					datafeed: new Datafeeds.UDFCompatibleDatafeed(datafeedUrl, undefined, {
+					/*datafeed: new Datafeeds.UDFCompatibleDatafeed(datafeedUrl, undefined, {
 						maxResponseLength: 1000,
 						expectedOrder: 'latestFirst',
-					}),
+					}),*/
 					library_path: "charting_library/",
 					locale: getParameterByName('lang') || "en",
 
