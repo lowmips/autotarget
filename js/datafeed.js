@@ -1,3 +1,4 @@
+import { makeApiRequest, generateSymbol } from './helpers_mexc.js';
 export default {
     onReady: (callback) => {
         console.log('[onReady]: Method call');
