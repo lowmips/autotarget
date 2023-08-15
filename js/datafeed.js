@@ -19,7 +19,7 @@ export default {
     searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
         console.log('[searchSymbols]: Method call');
     },
-    resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback, extension) => {
+    resolveSymbol: async (symbolName, onSymbolResolvedCallback, onResolveErrorCallback, extension) => {
         console.log('[resolveSymbol]: Method call', symbolName);
         const symbols = await getAllSymbols();
         const symbolItem = symbols.find(({ full_name }) => full_name === symbolName);
