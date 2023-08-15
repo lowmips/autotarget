@@ -1,5 +1,5 @@
 import Datafeed from './datafeed.js';
-import {makeApiRequest} from "./helpers_mexc";
+import {makeApiRequest} from "./helpers_mexc.js";
 
 window.tvWidget = new TradingView.widget({
     symbol: 'MEXC:BTCUSDT',            // Default symbol pair
