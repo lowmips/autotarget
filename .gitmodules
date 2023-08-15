@@ -1,3 +1,6 @@
 [submodule "charting_library"]
 	path = charting_library
 	url = ssh://lowmips@github.com/tradingview/charting_library.git
+[submodule "php-cross-domain-proxy"]
+	path = php-cross-domain-proxy
+	url = https://github.com/softius/php-cross-domain-proxy.git
