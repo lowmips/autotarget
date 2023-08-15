@@ -29,7 +29,7 @@
 				var widget = window.tvWidget = new TradingView.widget({
 					// debug: true, // uncomment this line to see Library errors and warnings in the console
 					fullscreen: true,
-					symbol: 'MEXC:BTCUSDT',
+					symbol: 'BTCUSDT',
 					interval: '1D',
 					container: "tv_chart_container",
 
