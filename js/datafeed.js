@@ -21,6 +21,34 @@ export default {
     },
     resolveSymbol: (symbolName, onSymbolResolvedCallback, onResolveErrorCallback, extension) => {
         console.log('[resolveSymbol]: Method call', symbolName);
+        const symbols = await getAllSymbols();
+        const symbolItem = symbols.find(({ full_name }) => full_name === symbolName);
+        if (!symbolItem) {
+            console.log('[resolveSymbol]: Cannot resolve symbol', symbolName);
+            onResolveErrorCallback('Cannot resolve symbol');
+            return;
+        }
+        // Symbol information object
+        const symbolInfo = {
+            ticker: symbolItem.full_name,
+            name: symbolItem.symbol,
+            description: symbolItem.description,
+            type: symbolItem.type,
+            session: '24x7',
+            timezone: 'Etc/UTC',
+            exchange: symbolItem.exchange,
+            minmov: 1,
+            pricescale: 100,
+            has_intraday: false,
+            visible_plots_set: 'ohlc',
+            has_weekly_and_monthly: false,
+            supported_resolutions: configurationData.supported_resolutions,
+            volume_precision: 2,
+            data_status: 'streaming',
+        };
+        console.log('[resolveSymbol]: Symbol resolved', symbolName);
+        onSymbolResolvedCallback(symbolInfo);
+
     },
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
         console.log('[getBars]: Method call', symbolInfo);
