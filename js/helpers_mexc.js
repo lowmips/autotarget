@@ -1,9 +1,9 @@
 // Makes requests to MEXC API
 export async function makeApiRequest(path) {
     try {
-        const response = await fetch(`https://api.mexc.com/${path}`,{
+        const response = await fetch(window.location.href + 'php-cross-domain-proxy/proxy.php',{
             headers:{
-                'X-Proxy-Url': window.location.href + 'php-cross-domain-proxy/proxy.php',
+                'X-Proxy-Url': `https://api.mexc.com/${path}`,
             },
         });
         return response.json();
