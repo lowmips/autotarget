@@ -4,7 +4,7 @@ export async function makeApiRequest(path) {
         const response = await fetch(`https://api.mexc.com/${path}`);
         return response.json();
     } catch(error) {
-        throw new Error(`CryptoCompare request error: ${error.status}`);
+        throw new Error(`MEXC request error: ${error.status}`);
     }
 }
 
