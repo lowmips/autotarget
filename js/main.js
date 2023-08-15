@@ -6,5 +6,5 @@ window.tvWidget = new TradingView.widget({
     fullscreen: true,                      // Displays the chart in the fullscreen mode
     container: 'tv_chart_container',       // Reference to an attribute of a DOM element
     datafeed: Datafeed,
-    library_path: 'charting_library_cloned_data/charting_library/',
+    library_path: '../charting_library/charting_library/',
 });
