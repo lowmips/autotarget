@@ -7,7 +7,7 @@ export async function makeApiRequest(path) {
             },
         });
         console.log(response);
-        return response.json();
+        return response.json().data;
     } catch(error) {
         throw new Error(`MEXC request error: ${error.status}`);
     }
