@@ -74,3 +74,5 @@ async function getAllSymbols() {
     }
     return allSymbols;
 }
+
+export {getAllSymbols}
