@@ -67,24 +67,15 @@ export async function getAllSymbols() {
                 console.log(e);
                 continue;
             }
-
-            console.log('pair: '+pair+' ls: '+lsRs.ls+' rs: '+lsRs.rs);
-        }
-
-
-
-        for (const leftPairPart of Object.keys(pairs)) {
-            const symbols = pairs[leftPairPart].map(rightPairPart => {
-                const symbol = generateSymbol(exchange.value, leftPairPart, rightPairPart);
-                return {
-                    symbol: symbol.short,
-                    full_name: symbol.full,
-                    description: symbol.short,
-                    exchange: exchange.value,
-                    type: 'crypto',
-                };
+            //console.log('pair: '+pair+' ls: '+lsRs.ls+' rs: '+lsRs.rs);
+            const symbol = generateSymbol(exchange.value, lsRs.ls, lsRs.rs);
+            allSymbols.push({
+                symbol: symbol.short,
+                full_name: symbol.full,
+                description: symbol.short,
+                exchange: exchange.value,
+                type: 'crypto',
             });
-            allSymbols = [...allSymbols, ...symbols];
         }
     }
     return allSymbols;
