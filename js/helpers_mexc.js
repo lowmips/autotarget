@@ -35,3 +35,13 @@ export function generateSymbol(exchange, fromSymbol, toSymbol) {
         full: `${exchange}:${short}`,
     };
 }
+
+export function splitSymbolPair(sp){
+    let rightSides = ['USDT','USDC','BTC','ETH'];
+    for(let rs of rightSides){
+        if(sp.length <= rs.length) continue;    // invalid
+        let ls = sp.substring(0,rs.length-1);
+        return {ls: ls, rs:rs};
+    }
+    throw 'Unknown pair '+sp;
+}

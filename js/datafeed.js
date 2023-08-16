@@ -1,4 +1,4 @@
-import { makeApiRequest, generateSymbol, configurationData } from './helpers_mexc.js';
+import { makeApiRequest, generateSymbol, configurationData, splitSymbolPair } from './helpers_mexc.js';
 export default {
 
 
@@ -51,7 +51,7 @@ export default {
     },
 };
 
-async function getAllSymbols() {
+export async function getAllSymbols() {
     const data = await makeApiRequest('api/v3/defaultSymbols');
     console.log('data:');console.log(data);
 
@@ -59,6 +59,19 @@ async function getAllSymbols() {
 
     for (const exchange of configurationData.exchanges) {
         const pairs = data.data;
+        for(const pair of pairs){
+            let lsRs = null;
+            try{
+                lsRs = splitSymbolPair(pair);
+            }catch(e){
+                console.log(e);
+                continue;
+            }
+
+            console.log('pair: '+pair+' ls: '+lsRs.ls+' rs: '+lsRs.rs);
+        }
+
+
 
         for (const leftPairPart of Object.keys(pairs)) {
             const symbols = pairs[leftPairPart].map(rightPairPart => {
@@ -76,5 +89,3 @@ async function getAllSymbols() {
     }
     return allSymbols;
 }
-
-export {getAllSymbols}
