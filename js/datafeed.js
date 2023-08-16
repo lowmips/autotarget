@@ -1,4 +1,5 @@
 import { makeApiRequest, generateSymbol, configurationData, splitSymbolPair } from './helpers_mexc.js';
+import {parseFullSymbol} from './helpers.js';
 export default {
 
 
