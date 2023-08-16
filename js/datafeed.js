@@ -53,6 +53,8 @@ export default {
 
 async function getAllSymbols() {
     const data = await makeApiRequest('api/v3/defaultSymbols');
+    console.log('data:');console.log(data);
+
     let allSymbols = [];
 
     for (const exchange of configurationData.exchanges) {
