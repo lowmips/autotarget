@@ -42,7 +42,7 @@ export default {
 
     },
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
-        console.log('[getBars]: Method call', symbolInfo);
+        console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
     },
     subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
         console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
