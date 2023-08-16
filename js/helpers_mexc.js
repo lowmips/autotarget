@@ -40,7 +40,7 @@ export function splitSymbolPair(sp){
     let rightSides = ['USDT','USDC','BTC','ETH'];
     for(let rs of rightSides){
         if(sp.length <= rs.length) continue;    // invalid
-        let ls = sp.substring(0,sp.length - rs.length-1);
+        let ls = sp.substring(0,sp.length - rs.length);
         return {ls: ls, rs:rs};
     }
     throw 'Unknown pair '+sp;
