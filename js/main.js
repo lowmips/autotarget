@@ -1,5 +1,7 @@
 import Datafeed from './datafeed.js';
 import {makeApiRequest} from "./helpers_mexc.js";
+import {getAllSymbols} from "./datafeed.js";
+
 
 window.tvWidget = new TradingView.widget({
     symbol: 'MEXC:BTCUSDT',            // Default symbol pair
@@ -10,4 +12,5 @@ window.tvWidget = new TradingView.widget({
     library_path: 'charting_library/charting_library/',
 });
 
+window.getAllSymbols = getAllSymbols;
 window.makeApiRequest = makeApiRequest;
