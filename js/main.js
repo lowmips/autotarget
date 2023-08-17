@@ -5,7 +5,7 @@ import {getAllSymbols} from "./datafeed.js";
 
 window.tvWidget = new TradingView.widget({
     symbol: 'MEXC:BTCUSDT',            // Default symbol pair
-    interval: '1H',                        // Default interval
+    interval: '60',                        // Default interval
     fullscreen: true,                      // Displays the chart in the fullscreen mode
     container: 'tv_chart_container',       // Reference to an attribute of a DOM element
     datafeed: Datafeed,
