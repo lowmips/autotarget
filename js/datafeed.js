@@ -30,7 +30,7 @@ export default {
             pricescale: 100,
             has_intraday: false,
             visible_plots_set: 'ohlc',
-            has_weekly_and_monthly: false,
+            has_weekly_and_monthly: true,
             supported_resolutions: configurationData.supported_resolutions,
             volume_precision: 2,
             data_status: 'streaming',
@@ -42,7 +42,7 @@ export default {
         console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
 
         let allBars = [];
-        
+
 
     },
     subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
