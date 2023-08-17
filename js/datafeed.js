@@ -1,8 +1,6 @@
 import { makeApiRequest, generateSymbol, configurationData, splitSymbolPair } from './helpers_mexc.js';
 import {parseFullSymbol} from './helpers.js';
 export default {
-
-
     onReady: (callback) => {
         console.log('[onReady]: Method call');
         setTimeout(() => callback(configurationData));
@@ -39,10 +37,13 @@ export default {
         };
         console.log('[resolveSymbol]: Symbol resolved', symbolName);
         onSymbolResolvedCallback(symbolInfo);
-
     },
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
         console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
+
+        let allBars = [];
+        
+
     },
     subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
         console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);

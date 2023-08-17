@@ -45,3 +45,7 @@ export function splitSymbolPair(sp){
     }
     throw 'Unknown pair '+sp;
 }
+
+export async function getBarsForSymbolStartEnd(){
+
+}
