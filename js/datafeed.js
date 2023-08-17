@@ -30,7 +30,7 @@ export default {
             pricescale: 100,
             has_intraday: false,
             visible_plots_set: 'ohlc',
-            has_weekly_and_monthly: true,
+            has_weekly_and_monthly: false,
             supported_resolutions: configurationData.supported_resolutions,
             volume_precision: 2,
             data_status: 'streaming',
