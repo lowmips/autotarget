@@ -10,6 +10,7 @@ window.tvWidget = new TradingView.widget({
     container: 'tv_chart_container',       // Reference to an attribute of a DOM element
     datafeed: Datafeed,
     library_path: 'charting_library/charting_library/',
+    debug: true,
 });
 
 window.getAllSymbols = getAllSymbols;
