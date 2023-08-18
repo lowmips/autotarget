@@ -54,7 +54,8 @@ export default {
 };
 
 export async function getAllSymbols() {
-    const data = await makeApiRequest('api/v3/defaultSymbols');
+    //const data = await makeApiRequest('api/v3/defaultSymbols');
+    const data = {data:['BTCUSDT']};
     console.log('data:');console.log(data);
 
     let allSymbols = [];

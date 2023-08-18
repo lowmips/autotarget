@@ -3,12 +3,12 @@
 export const configurationData =  {
     // Represents the resolutions for bars supported by your datafeed
     supported_resolutions: ['1','5','15','30','60','4H','12H','1D','1W'],
-        // The `exchanges` arguments are used for the `searchSymbols` method if a user selects the exchange
-        exchanges: [
+    // The `exchanges` arguments are used for the `searchSymbols` method if a user selects the exchange
+    exchanges: [
         { value: 'MEXC', name: 'MEXC', desc: 'MEXC'},
     ],
-        // The `symbols_types` arguments are used for the `searchSymbols` method if a user selects this symbol type
-        symbols_types: [
+    // The `symbols_types` arguments are used for the `searchSymbols` method if a user selects this symbol type
+    symbols_types: [
         { name: 'crypto', value: 'crypto'}
     ]
 }
