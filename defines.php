@@ -12,6 +12,7 @@ if(php_sapi_name() == 'cli'){
 }
 define('DEBUG', $debug);
 
+
 define('KLINE_TBL', 'btc_usdt_klines');
 define('KLINE_SPAN_NAMES_TBL','kline_span_names');
 define('KLINE_SEQ_TARGETS_TBL','btc_usdt_kline_sequence_targets');
