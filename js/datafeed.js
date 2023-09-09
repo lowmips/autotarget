@@ -40,10 +40,11 @@ export default {
     },
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
         console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
+        const bars = new Array(periodParams.countBack + 1);
+        const response =  fetch(window.location.href + 'ajax-handlers/get_klines.php');
 
-        let allBars = [];
-
-
+        console.log('response:');
+        console.log(response);
     },
     subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
         console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
