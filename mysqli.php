@@ -9,4 +9,4 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $mysqli = new mysqli($host, $username, $password, $database);
 
 // Check for connection errors
-if ($mysqli->connect_error) die('Connection failed: ' . $mysqli->connect_errori."\n");
+if ($mysqli->connect_error) die('Connection failed: ' . $mysqli->connect_error."\n");
