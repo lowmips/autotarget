@@ -41,10 +41,11 @@ export default {
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
         console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
         const bars = new Array(periodParams.countBack + 1);
-        const response =  fetch(window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to);
-
-        console.log('response:');
-        console.log(response);
+        fetch(window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to)
+            .then(function(i){
+                console.log('i:');
+                console.log(i);
+            });
     },
     subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
         console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
