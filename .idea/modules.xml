@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/autotarget.iml" filepath="$PROJECT_DIR$/.idea/autotarget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../get_klines_rabbitmq/.idea/get_klines_rabbitmq.iml" filepath="$PROJECT_DIR$/../get_klines_rabbitmq/.idea/get_klines_rabbitmq.iml" />
     </modules>
   </component>
 </project>
