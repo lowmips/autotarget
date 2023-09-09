@@ -43,8 +43,8 @@ export default {
         const bars = new Array(periodParams.countBack + 1);
         fetch(window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to)
             .then(function(i){
-                console.log('i:');
-                console.log(i);
+                console.log('i.text():');
+                console.log(i.text());
             });
     },
     subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
