@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change afterPath="$PROJECT_DIR$/SQL/SP_get_klines.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SQL/index.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/js/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/datafeed.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/datafeed.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ajax-handlers/get_klines.php" beforeDir="false" afterPath="$PROJECT_DIR$/ajax-handlers/get_klines.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,12 +22,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "lowmips"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;lowmips&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -33,10 +36,10 @@
       </UrlAndAccount>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": -1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: -1
+}</component>
   <component name="ProjectId" id="2VA0hXpETAiC9QPeMcb7cfodMgo" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -49,7 +52,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/reggi/PhpstormProjects/autotarget",
+    "last_opened_file_path": "C:/Users/reggi/PhpstormProjects/autotarget/SQL",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -60,6 +63,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\reggi\PhpstormProjects\autotarget\SQL" />
       <recent name="C:\Users\reggi\PhpstormProjects\autotarget" />
     </key>
   </component>
@@ -72,6 +76,7 @@
       <option name="presentableId" value="Default" />
       <updated>1694263697316</updated>
       <workItem from="1694263699347" duration="7005000" />
+      <workItem from="1694728508546" duration="1494000" />
     </task>
     <task id="LOCAL-00001" summary="dev">
       <option name="closed" value="true" />
@@ -297,7 +302,23 @@
       <option name="project" value="LOCAL" />
       <updated>1694289063614</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="dev">
+      <option name="closed" value="true" />
+      <created>1694728801721</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1694728801721</updated>
+    </task>
+    <task id="LOCAL-00030" summary="dev">
+      <option name="closed" value="true" />
+      <created>1694728931876</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1694728931876</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
