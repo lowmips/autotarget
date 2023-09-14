@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev" />
+    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change beforePath="$PROJECT_DIR$/ajax-handlers/get_klines.php" beforeDir="false" afterPath="$PROJECT_DIR$/ajax-handlers/get_klines.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,7 +72,7 @@
       <option name="presentableId" value="Default" />
       <updated>1694263697316</updated>
       <workItem from="1694263699347" duration="7005000" />
-      <workItem from="1694728508546" duration="4435000" />
+      <workItem from="1694728508546" duration="4763000" />
     </task>
     <task id="LOCAL-00001" summary="dev">
       <option name="closed" value="true" />
@@ -328,7 +330,23 @@
       <option name="project" value="LOCAL" />
       <updated>1694734105785</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="dev">
+      <option name="closed" value="true" />
+      <created>1694734413549</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1694734413549</updated>
+    </task>
+    <task id="LOCAL-00034" summary="dev">
+      <option name="closed" value="true" />
+      <created>1694734468000</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1694734468000</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
