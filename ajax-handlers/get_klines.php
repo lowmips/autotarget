@@ -8,3 +8,9 @@ require_once('../mysqli.php');
 if(!array_key_exists('resolution', $_REQUEST) || !array_key_exists('from', $_REQUEST) || !array_key_exists('to', $_REQUEST))
     die("Missing required request params");
 
+$resolution = $mysqli->real_escape_string($_REQUEST['resolution']);
+$from = $mysqli->real_escape_string($_REQUEST['from']);
+$to = $mysqli->real_escape_string($_REQUEST['to']);
+
+$q = "CALL get_klines($resolution, $from, $to)";
+$result = $mysqli->query($q);
