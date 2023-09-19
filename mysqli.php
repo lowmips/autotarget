@@ -1,5 +1,8 @@
 <?php
-$credentials = file('variable/mysql_credentials.txt', FILE_IGNORE_NEW_LINES);
+$creds_file = 'variable/mysql_credentials.txt';
+if(!file_exists($creds_file)) die("Could not find [$creds_file]");
+
+$credentials = file($creds_file, FILE_IGNORE_NEW_LINES);
 $host = $credentials[0];
 $username = $credentials[1];
 $password = $credentials[2];
