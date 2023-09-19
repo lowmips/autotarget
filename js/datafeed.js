@@ -43,6 +43,8 @@ export default {
         const bars = new Array(periodParams.countBack + 1);
         const response = fetch(window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to);
 
+        console.log(response);
+
         if(response?.ok){
 
         }else{
