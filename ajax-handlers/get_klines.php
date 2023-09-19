@@ -28,8 +28,8 @@ $loop_ts = $from;
 while($loop_ts < $to){
     $q = "SELECT `open` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`=$loop_ts LIMIT 1;";
     echo $q."<br/>\n";
-    $result = $mysqli->query($q);
-
+    if(($result = $mysqli->query($q)) === false) die("kline query failure");
+    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure");
 
 
     $loop_ts += $resolution;
