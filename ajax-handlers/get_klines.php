@@ -23,14 +23,43 @@ $result = $mysqli->query($q);
 while( $row = $result->fetch_assoc() ){
     print_r($row);
 }*/
-
+$rows = [];
 $loop_ts = $from;
 while($loop_ts < $to){
     $q = "SELECT `open` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`=$loop_ts LIMIT 1;";
     echo $q."<br/>\n";
     if(($result = $mysqli->query($q)) === false) die("kline query failure");
     if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure");
+    $open = (float)$row['open'];
 
+    $span_end_ts = $loop_ts + ($resolution * 60) - 60;
+    $q = "SELECT `close` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`=$span_end_ts LIMIT 1;";
+    echo $q."<br/>\n";
+    if(($result = $mysqli->query($q)) === false) die("kline query failure");
+    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure");
+    $close = (float)$row['close'];
 
-    $loop_ts += $resolution;
+    $q = "SELECT MAX(`high`) AS high FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN $loop_ts AND $span_end_ts";
+    echo $q."<br/>\n";
+    if(($result = $mysqli->query($q)) === false) die("kline query failure");
+    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure");
+    $high = (float)$row['high'];
+
+    $q = "SELECT MIN(`low`) AS high FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN $loop_ts AND $span_end_ts";
+    echo $q."<br/>\n";
+    if(($result = $mysqli->query($q)) === false) die("kline query failure");
+    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure");
+    $low = (float)$row['low'];
+
+    $rows[] = [
+        'time' => $loop_ts,
+        'open' => $open,
+        'high' => $high,
+        'low' => $low,
+        'close' => $close,
+    ];
+
+    $loop_ts += ($resolution * 60);
 }
+
+echo json_encode($rows);
