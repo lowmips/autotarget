@@ -1,5 +1,5 @@
 <?php
-$creds_file = 'variable/mysql_credentials.txt';
+$creds_file = '/var/www/mysql_credentials.txt';
 if(!file_exists($creds_file)) die("Could not find [$creds_file]");
 
 $credentials = file($creds_file, FILE_IGNORE_NEW_LINES);
