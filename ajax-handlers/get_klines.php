@@ -16,6 +16,7 @@ $to = $mysqli->real_escape_string($_REQUEST['to']);
 if($from % 60 != 0) die("from[$from] not centered on 1 minute interval");
 if($to % 60 != 0) die("to[$to] not centered on 1 minute interval");
 if($to < $from) die("to < from");
+if( (($to - $from) % $resolution) != 0) die("range does not end on [$resolution] interval");
 
 /*$q = "CALL get_klines($resolution, $from, $to)";
 $result = $mysqli->query($q);

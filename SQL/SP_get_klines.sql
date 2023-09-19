@@ -16,9 +16,9 @@ BEGIN
         SET pLOW   = 0.00;
         SET pCLOSE = 0.00;
         SELECT COALESCE(`open`,0.00) INTO @pOPEN FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` = looper LIMIT 1;
-        SELECT COALESCE(`close`,0.00) INTO @pCLOSE FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` = ts_to LIMIT 1;
-        SELECT COALESCE(MAX(`high`),0) INTO @pHIGH FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN ts_from AND ts_to;
-        SELECT COALESCE(MIN(`low`),0) INTO @pLOW FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN ts_from AND ts_to;
+        SELECT COALESCE(`close`,0.00) INTO @pCLOSE FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` = (looper + resolution - 1)  LIMIT 1;
+        SELECT COALESCE(MAX(`high`),0) INTO @pHIGH FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN looper AND (looper + resolution - 1);
+        SELECT COALESCE(MIN(`low`),0) INTO @pLOW FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN looper AND (looper + resolution - 1);
         INSERT INTO ohlc VALUES (@looper, @pOPEN, @pHIGH, @pLOW, @pCLOSE);
         SET looper = looper + resolution;
     END WHILE;
