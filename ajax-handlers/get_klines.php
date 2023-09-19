@@ -15,4 +15,4 @@ $to = $mysqli->real_escape_string($_REQUEST['to']);
 
 $q = "CALL get_klines($resolution, $from, $to)";
 $result = $mysqli->query($q);
-#print_r($result);
+print_r($result);
