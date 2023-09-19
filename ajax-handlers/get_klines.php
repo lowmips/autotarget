@@ -24,3 +24,13 @@ while( $row = $result->fetch_assoc() ){
     print_r($row);
 }*/
 
+$loop_ts = $from;
+while($loop_ts < $to){
+    $q = "SELECT `open` FROM `$database` WHERE `kline_timestamp`=$loop_ts LIMIT 1;";
+    echo $q."<br/>\n";
+    $result = $mysqli->query($q);
+
+
+
+    $loop_ts += $resolution;
+}
