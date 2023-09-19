@@ -13,8 +13,13 @@ $resolution = $mysqli->real_escape_string($_REQUEST['resolution']);
 $from = $mysqli->real_escape_string($_REQUEST['from']);
 $to = $mysqli->real_escape_string($_REQUEST['to']);
 
-$q = "CALL get_klines($resolution, $from, $to)";
+if($from % 60 != 0) die("from[$from] not centered on 1 minute interval");
+if($to % 60 != 0) die("to[$to] not centered on 1 minute interval");
+if($to < $from) die("to < from");
+
+/*$q = "CALL get_klines($resolution, $from, $to)";
 $result = $mysqli->query($q);
 while( $row = $result->fetch_assoc() ){
     print_r($row);
-}
+}*/
+
