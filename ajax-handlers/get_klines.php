@@ -13,7 +13,6 @@ $resolution = $mysqli->real_escape_string($_REQUEST['resolution']);
 $from = $mysqli->real_escape_string($_REQUEST['from']);
 $to = $mysqli->real_escape_string($_REQUEST['to']);
 
-$q = "USE `".DATABASE."`";
 $result = $mysqli->query($q);
 $q = "CALL get_klines($resolution, $from, $to)";
 $result = $mysqli->query($q);
