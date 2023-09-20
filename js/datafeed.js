@@ -45,7 +45,7 @@ export default {
         const kline_request_url = window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to;
         //console.log('kline_request_url: ' + kline_request_url);
         //const response = fetch(kline_request_url);
-        //console.log(response);
+        //console.log(response);...
 
         fetch(kline_request_url)
             .then((response) => {
