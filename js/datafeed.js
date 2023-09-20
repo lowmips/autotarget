@@ -42,17 +42,20 @@ export default {
         console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
         const bars = new Array(periodParams.countBack + 1);
         const response = fetch(window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to);
-
-        console.log(response);
+        //console.log(response);
 
         if(response?.ok){
+            let json = response.json();
+            console.log(json);
+
+            /*
             bars.push({
                 open: price,
                 high: price,
                 low: price,
                 close: price,
                 time: time.getTime(),
-            });
+            });*/
             onHistoryCallback(bars);
         }else{
             onHistoryCallback([], {
