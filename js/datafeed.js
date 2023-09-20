@@ -56,7 +56,18 @@ export default {
             })
             .then((responseJson) => {
                 console.log(responseJson);
-                onHistoryCallback(responseJson);
+                let bars = Array();
+                for(let rj of responseJson){
+                    bars.push({
+                        time: rj.time,
+                        open: rj.open,
+                        high: rj.high,
+                        low: rj.low,
+                        close: rj.close
+                    });
+                }
+
+                onHistoryCallback(bars);
             })
             .catch((error) => {
                 console.log(error);
