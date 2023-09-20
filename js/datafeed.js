@@ -46,9 +46,18 @@ export default {
         console.log(response);
 
         if(response?.ok){
-
+            bars.push({
+                open: price,
+                high: price,
+                low: price,
+                close: price,
+                time: time.getTime(),
+            });
+            onHistoryCallback(bars);
         }else{
-
+            onHistoryCallback([], {
+                noData: true
+            });
         }
             /*.then(i => i.text())
             .then(function(i){
