@@ -32,29 +32,30 @@ while( $row = $result->fetch_assoc() ){
 $rows = [];
 $loop_ts = $from;
 while($loop_ts < $to){
+    $span_end_ts = $loop_ts + ($resolution * 60) - 60;
+
     $q = "SELECT `open` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`=$loop_ts LIMIT 1;";
     #echo $q."<br/>\n";
-    if(($result = $mysqli->query($q)) === false) die("kline query failure");
-    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure");
+    if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
+    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
     $open = (float)$row['open'];
 
-    $span_end_ts = $loop_ts + ($resolution * 60) - 60;
     $q = "SELECT `close` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`=$span_end_ts LIMIT 1;";
     #echo $q."<br/>\n";
-    if(($result = $mysqli->query($q)) === false) die("kline query failure");
-    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure");
+    if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
+    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
     $close = (float)$row['close'];
 
     $q = "SELECT MAX(`high`) AS high FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN $loop_ts AND $span_end_ts";
     #echo $q."<br/>\n";
-    if(($result = $mysqli->query($q)) === false) die("kline query failure");
-    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure");
+    if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
+    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
     $high = (float)$row['high'];
 
     $q = "SELECT MIN(`low`) AS low FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN $loop_ts AND $span_end_ts";
     #echo $q."<br/>\n";
-    if(($result = $mysqli->query($q)) === false) die("kline query failure");
-    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure");
+    if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
+    if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
     $low = (float)$row['low'];
 
     $rows[] = [
