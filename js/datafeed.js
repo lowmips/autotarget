@@ -41,7 +41,9 @@ export default {
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
         console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
         const bars = new Array(periodParams.countBack + 1);
-        const response = fetch(window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to);
+        const kline_request_url = window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to;
+        console.log('kline_request_url: ' + kline_request_url);
+        const response = fetch(kline_request_url);
         //console.log(response);
 
         if(response?.ok){
