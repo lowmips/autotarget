@@ -35,14 +35,14 @@ while($loop_ts < $to){
     $span_end_ts = $loop_ts + ($resolution * 60) - 60;
 
     // OPEN
-    $q = "SELECT `open` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`=$loop_ts LIMIT 1;";
+    $q = "SELECT `open` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`>=$loop_ts ORDER BY `kline_timestamp` ASC LIMIT 1;";
     #echo $q."<br/>\n";
     if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
     if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
     $open = (float)$row['open'];
 
     // CLOSE -- requested kline migh be an overshoot on a unfinished span -- find the latest close price
-    $q = "SELECT `close` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`<=$span_end_ts ORDER BY kline_timestamp LIMIT 1;";
+    $q = "SELECT `close` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`<=$span_end_ts ORDER BY kline_timestamp ASC LIMIT 1;";
     #echo $q."<br/>\n";
     if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
     if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
