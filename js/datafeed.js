@@ -43,33 +43,29 @@ export default {
         const bars = new Array(periodParams.countBack + 1);
         const kline_request_url = window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to;
         console.log('kline_request_url: ' + kline_request_url);
-        const response = fetch(kline_request_url);
-        console.log(response);
+        //const response = fetch(kline_request_url);
+        //console.log(response);
 
-        if(response?.ok){
-            let json = response.json();
-            console.log(json);
+        fetch(kline_request_url)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Something went wrong');
+            })
+            .then((responseJson) => {
+                console.log(responseJson);
 
-            /*
-            bars.push({
-                open: price,
-                high: price,
-                low: price,
-                close: price,
-                time: time.getTime(),
-            });*/
-            onHistoryCallback(bars);
-        }else{
-            console.log("response.ok failed");
-            onHistoryCallback([], {
-                noData: true
+
+
+            })
+            .catch((error) => {
+                console.log(error);
+                console.log("response error catch");
+                onHistoryCallback([], {
+                    noData: true
+                });
             });
-        }
-            /*.then(i => i.text())
-            .then(function(i){
-                console.log('i:');
-                console.log(i);
-            });*/
     },
     subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
         console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
