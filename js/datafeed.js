@@ -24,7 +24,7 @@ export default {
             description: symbolItem.description,
             type: symbolItem.type,
             session: '24x7',
-            timezone: 'Etc/EST',
+            timezone: 'Etc/UTC',
             exchange: symbolItem.exchange,
             minmov: 1,
             pricescale: 100,
