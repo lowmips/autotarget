@@ -22,7 +22,7 @@ if($to < $from) die("to < from");
 if($from % 60 != 0) $from = $from - ($from % 60);
 if($to % 60 != 0) $to = $to + (60 - ($to % 60));
 
-echo "from $from to $to<br/>\n";
+#echo "from $from to $to<br/>\n";
 
 /*$q = "CALL get_klines($resolution, $from, $to)";
 $result = $mysqli->query($q);
