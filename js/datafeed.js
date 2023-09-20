@@ -24,7 +24,7 @@ export default {
             description: symbolItem.description,
             type: symbolItem.type,
             session: '24x7',
-            timezone: 'Etc/UTC',
+            timezone: 'Etc/EST',
             exchange: symbolItem.exchange,
             minmov: 1,
             pricescale: 100,
@@ -33,7 +33,8 @@ export default {
             has_weekly_and_monthly: false,
             supported_resolutions: configurationData.supported_resolutions,
             volume_precision: 2,
-            data_status: 'streaming',
+            data_status: 'delayed_streaming',
+            delay: 180,
         };
         console.log('[resolveSymbol]: Symbol resolved', symbolName);
         onSymbolResolvedCallback(symbolInfo);
@@ -42,7 +43,7 @@ export default {
         console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
         const bars = new Array(periodParams.countBack + 1);
         const kline_request_url = window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to;
-        console.log('kline_request_url: ' + kline_request_url);
+        #console.log('kline_request_url: ' + kline_request_url);
         //const response = fetch(kline_request_url);
         //console.log(response);
 
