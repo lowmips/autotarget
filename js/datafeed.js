@@ -43,7 +43,7 @@ export default {
         console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
         const bars = new Array(periodParams.countBack + 1);
         const kline_request_url = window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to;
-        #console.log('kline_request_url: ' + kline_request_url);
+        //console.log('kline_request_url: ' + kline_request_url);
         //const response = fetch(kline_request_url);
         //console.log(response);
 
