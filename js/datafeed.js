@@ -34,7 +34,7 @@ export default {
             supported_resolutions: configurationData.supported_resolutions,
             volume_precision: 2,
             data_status: 'delayed_streaming',
-            delay: 180,
+            delay: 120,
         };
         console.log('[resolveSymbol]: Symbol resolved', symbolName);
         onSymbolResolvedCallback(symbolInfo);
