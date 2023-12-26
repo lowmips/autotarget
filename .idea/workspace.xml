@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev" />
+    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change afterPath="$PROJECT_DIR$/../klengine/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../klengine/sql/klines_meta.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/autotarget.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/autotarget.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +21,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../mexc-klines" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../klengine" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -30,6 +37,7 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -62,6 +70,13 @@
       <recent name="C:\Users\reggi\PhpstormProjects\autotarget" />
     </key>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-php-predefined-ba97393d7c68-b4dcf6bb9de9-com.jetbrains.php.sharedIndexes-PS-233.13135.108" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -74,15 +89,12 @@
       <workItem from="1694728508546" duration="5102000" />
       <workItem from="1695153653236" duration="11365000" />
       <workItem from="1696794988773" duration="3067000" />
-      <workItem from="1697109812498" duration="391000" />
-    </task>
-    <task id="LOCAL-00035" summary="dev">
-      <option name="closed" value="true" />
-      <created>1694734547739</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1694734547739</updated>
+      <workItem from="1697109812498" duration="2363000" />
+      <workItem from="1700929558992" duration="905000" />
+      <workItem from="1702336613531" duration="2427000" />
+      <workItem from="1703019254610" duration="762000" />
+      <workItem from="1703432105403" duration="1625000" />
+      <workItem from="1703434715903" duration="2189000" />
     </task>
     <task id="LOCAL-00036" summary="dev">
       <option name="closed" value="true" />
@@ -468,7 +480,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697109891930</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="dev">
+      <option name="closed" value="true" />
+      <created>1697110527455</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1697110527455</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

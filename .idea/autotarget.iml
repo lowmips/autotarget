@@ -6,5 +6,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="get_klines_rabbitmq" />
     <orderEntry type="module" module-name="mexc-klines" />
+    <orderEntry type="module" module-name="klengine" />
   </component>
 </module>
