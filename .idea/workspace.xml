@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../klengine/make_spans.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/make_spans.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,15 +91,7 @@
       <workItem from="1703434715903" duration="12052000" />
       <workItem from="1704757506301" duration="2574000" />
       <workItem from="1704968490204" duration="156210000" />
-      <workItem from="1707322495992" duration="6579000" />
-    </task>
-    <task id="LOCAL-00340" summary="dev">
-      <option name="closed" value="true" />
-      <created>1706881616692</created>
-      <option name="number" value="00340" />
-      <option name="presentableId" value="LOCAL-00340" />
-      <option name="project" value="LOCAL" />
-      <updated>1706881616692</updated>
+      <workItem from="1707322495992" duration="8264000" />
     </task>
     <task id="LOCAL-00341" summary="dev">
       <option name="closed" value="true" />
@@ -486,7 +477,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707684382110</updated>
     </task>
-    <option name="localTasksCounter" value="389" />
+    <task id="LOCAL-00389" summary="dev">
+      <option name="closed" value="true" />
+      <created>1707685074041</created>
+      <option name="number" value="00389" />
+      <option name="presentableId" value="LOCAL-00389" />
+      <option name="project" value="LOCAL" />
+      <updated>1707685074041</updated>
+    </task>
+    <option name="localTasksCounter" value="390" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
