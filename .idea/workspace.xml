@@ -7,6 +7,7 @@
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../klengine/sql/klines_meta.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/sql/klines_meta.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../klengine/target_rollup.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/target_rollup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,15 +100,7 @@
       <workItem from="1710373995646" duration="1807000" />
       <workItem from="1710448703644" duration="27397000" />
       <workItem from="1712748246767" duration="50003000" />
-      <workItem from="1714475916368" duration="7341000" />
-    </task>
-    <task id="LOCAL-00717" summary="dev">
-      <option name="closed" value="true" />
-      <created>1713872924375</created>
-      <option name="number" value="00717" />
-      <option name="presentableId" value="LOCAL-00717" />
-      <option name="project" value="LOCAL" />
-      <updated>1713872924375</updated>
+      <workItem from="1714475916368" duration="7912000" />
     </task>
     <task id="LOCAL-00718" summary="dev">
       <option name="closed" value="true" />
@@ -493,7 +486,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714772331686</updated>
     </task>
-    <option name="localTasksCounter" value="766" />
+    <task id="LOCAL-00766" summary="dev">
+      <option name="closed" value="true" />
+      <created>1714827584336</created>
+      <option name="number" value="00766" />
+      <option name="presentableId" value="LOCAL-00766" />
+      <option name="project" value="LOCAL" />
+      <updated>1714827584336</updated>
+    </task>
+    <option name="localTasksCounter" value="767" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
