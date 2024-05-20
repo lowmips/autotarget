@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change afterPath="$PROJECT_DIR$/../klengine/sql/templates/trigger_kline_check_target.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -101,15 +102,7 @@
       <workItem from="1714475916368" duration="21580000" />
       <workItem from="1715339967102" duration="18384000" />
       <workItem from="1715774346738" duration="1846000" />
-      <workItem from="1715974745215" duration="13837000" />
-    </task>
-    <task id="LOCAL-00813" summary="dev">
-      <option name="closed" value="true" />
-      <created>1715717148810</created>
-      <option name="number" value="00813" />
-      <option name="presentableId" value="LOCAL-00813" />
-      <option name="project" value="LOCAL" />
-      <updated>1715717148810</updated>
+      <workItem from="1715974745215" duration="15543000" />
     </task>
     <task id="LOCAL-00814" summary="dev">
       <option name="closed" value="true" />
@@ -495,7 +488,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716042904002</updated>
     </task>
-    <option name="localTasksCounter" value="862" />
+    <task id="LOCAL-00862" summary="dev">
+      <option name="closed" value="true" />
+      <created>1716235976361</created>
+      <option name="number" value="00862" />
+      <option name="presentableId" value="LOCAL-00862" />
+      <option name="project" value="LOCAL" />
+      <updated>1716235976361</updated>
+    </task>
+    <option name="localTasksCounter" value="863" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
