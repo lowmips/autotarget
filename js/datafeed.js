@@ -1,5 +1,8 @@
 import { makeApiRequest, generateSymbol, configurationData, splitSymbolPair } from './helpers_mexc.js';
+import { subscribeOnStream, unsubscribeFromStream } from './streaming.js';
 import {parseFullSymbol} from './helpers.js';
+
+const lastBarsCache = new Map();
 export default {
     onReady: (callback) => {
         console.log('[onReady]: Method call');
@@ -77,11 +80,26 @@ export default {
                 });
             });
     },
-    subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
+    subscribeBars: (
+        symbolInfo,
+        resolution,
+        onRealtimeCallback,
+        subscriberUID,
+        onResetCacheNeededCallback
+    ) => {
         console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
+        subscribeOnStream(
+            symbolInfo,
+            resolution,
+            onRealtimeCallback,
+            subscriberUID,
+            onResetCacheNeededCallback,
+            lastBarsCache.get(`${symbolInfo.exchange}:${symbolInfo.name}`)
+        );
     },
     unsubscribeBars: (subscriberUID) => {
         console.log('[unsubscribeBars]: Method call with subscriberUID:', subscriberUID);
+        unsubscribeFromStream(subscriberUID);
     },
 };
 
