@@ -44,6 +44,7 @@ export default {
     },
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
         console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
+        const { from, to, firstDataRequest } = periodParams;
         //const bars = new Array(periodParams.countBack + 1);
         const kline_request_url = window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to;
         //console.log('kline_request_url: ' + kline_request_url);
@@ -69,7 +70,9 @@ export default {
                         close: rj.close
                     });
                 }
-
+                if (firstDataRequest) {
+                    lastBarsCache.set(`${symbolInfo.exchange}:${symbolInfo.name}`, { ...bars[bars.length - 1] });
+                }
                 onHistoryCallback(bars);
             })
             .catch((error) => {

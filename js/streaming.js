@@ -1,5 +1,6 @@
 const socket = io('wss://www.lowmips.com/autotarget/');
 import { parseFullSymbol } from './helpers.js';
+
 socket.on('connect', () => {
     console.log('[socket] Connected');
 });
@@ -11,6 +12,47 @@ socket.on('disconnect', (reason) => {
 socket.on('error', (error) => {
     console.log('[socket] Error:', error);
 });
+
+// 0~Bitfinex~BTC~USD~2~335394436~1548837377~0.36~3504.1~1261.4759999999999~1f
+socket.on('m', data => {
+    console.log('[socket] Message:', data);
+    const [
+        eventTypeStr,
+        exchange,
+        fromSymbol,
+        toSymbol,
+        ,
+        ,
+        tradeTimeStr,
+        ,
+        tradePriceStr,
+    ] = data.split('~');
+
+    if (parseInt(eventTypeStr) !== 0) {
+        // Skip all non-trading events
+        return;
+    }
+    const tradePrice = parseFloat(tradePriceStr);
+    const tradeTime = parseInt(tradeTimeStr);
+    const channelString = `0~${exchange}~${fromSymbol}~${toSymbol}`;
+    const subscriptionItem = channelToSubscription.get(channelString);
+    if (subscriptionItem === undefined) {
+        return;
+    }
+    const lastDailyBar = subscriptionItem.lastDailyBar;
+    let bar = {
+        ...lastDailyBar,
+        high: Math.max(lastDailyBar.high, tradePrice),
+        low: Math.min(lastDailyBar.low, tradePrice),
+        close: tradePrice,
+    };
+    console.log('[socket] Update the latest bar by price', tradePrice);
+    subscriptionItem.lastDailyBar = bar;
+
+    // Send data to every subscriber of that symbol
+    subscriptionItem.handlers.forEach(handler => handler.callback(bar));
+});
+
 
 const channelToSubscription = new Map();
 export function subscribeOnStream(
