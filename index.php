@@ -9,6 +9,7 @@
 
 		<script type="text/javascript" src="charting_library/charting_library/charting_library.standalone.js"></script>
 		<script type="text/javascript" src="charting_library/datafeeds/udf/dist/bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
 
 		<!-- Custom datafeed module -->
 		<script type="module" src="js/main.js"></script>
