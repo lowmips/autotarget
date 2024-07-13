@@ -40,13 +40,27 @@ socket.on('m', data => {
         return;
     }
     const lastDailyBar = subscriptionItem.lastDailyBar;
-    let bar = {
-        ...lastDailyBar,
-        high: Math.max(lastDailyBar.high, tradePrice),
-        low: Math.min(lastDailyBar.low, tradePrice),
-        close: tradePrice,
-    };
-    console.log('[socket] Update the latest bar by price', tradePrice);
+    const nextDailyBarTime = getNextDailyBarTime(lastDailyBar.time);
+
+    let bar;
+    if (tradeTime >= nextDailyBarTime) {
+        bar = {
+            time: nextDailyBarTime,
+            open: tradePrice,
+            high: tradePrice,
+            low: tradePrice,
+            close: tradePrice,
+        };
+        console.log('[socket] Generate new bar', bar);
+    } else {
+        bar = {
+            ...lastDailyBar,
+            high: Math.max(lastDailyBar.high, tradePrice),
+            low: Math.min(lastDailyBar.low, tradePrice),
+            close: tradePrice,
+        };
+        console.log('[socket] Update the latest bar by price', tradePrice);
+    }
     subscriptionItem.lastDailyBar = bar;
 
     // Send data to every subscriber of that symbol
