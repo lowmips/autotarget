@@ -59,7 +59,7 @@ while($loop_ts < $to){
     if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
     $high = (float)$row['high'];
 
-    $q = "SELECT MIN(`low`) AS low FROM `klines_1` WHERE `kline_timestamp` BETWEEN $loop_ts AND $span_end_ts";
+    $q = "SELECT MIN(`low`) AS low FROM `klines_1` WHERE `timestamp` BETWEEN $loop_ts AND $span_end_ts";
     #echo $q."<br/>\n";
     if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
     if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
