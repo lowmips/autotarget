@@ -35,7 +35,7 @@ while($loop_ts < $to){
     $span_end_ts = $loop_ts + ($resolution * 60) - 60;
 
     // OPEN
-    $q = "SELECT `open` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`>=$loop_ts ORDER BY `kline_timestamp` ASC LIMIT 1;";
+    $q = "SELECT `open` FROM `klines_1` WHERE `timestamp`>=$loop_ts ORDER BY `timestamp` ASC LIMIT 1;";
     #echo $q."<br/>\n";
     if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
     if(!is_array($row = $result->fetch_assoc())) {
@@ -47,19 +47,19 @@ while($loop_ts < $to){
     $open = (float)$row['open'];
 
     // CLOSE -- requested kline might be an overshoot on a unfinished span -- find the latest close price
-    $q = "SELECT `close` FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp`<=$span_end_ts ORDER BY kline_timestamp DESC LIMIT 1;";
+    $q = "SELECT `close` FROM `klines_1` WHERE `timestamp`<=$span_end_ts ORDER BY timestamp DESC LIMIT 1;";
     #echo $q."<br/>\n";
     if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
     if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
     $close = (float)$row['close'];
 
-    $q = "SELECT MAX(`high`) AS high FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN $loop_ts AND $span_end_ts";
+    $q = "SELECT MAX(`high`) AS high FROM `klines_1` WHERE `timestamp` BETWEEN $loop_ts AND $span_end_ts";
     #echo $q."<br/>\n";
     if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
     if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
     $high = (float)$row['high'];
 
-    $q = "SELECT MIN(`low`) AS low FROM `btc_usdt_klines_reduced` WHERE `kline_timestamp` BETWEEN $loop_ts AND $span_end_ts";
+    $q = "SELECT MIN(`low`) AS low FROM `klines_1` WHERE `kline_timestamp` BETWEEN $loop_ts AND $span_end_ts";
     #echo $q."<br/>\n";
     if(($result = $mysqli->query($q)) === false) die("kline query failure: $q");
     if(!is_array($row = $result->fetch_assoc())) die("kline query fetch_assoc failure: $q");
