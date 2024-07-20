@@ -9,7 +9,7 @@ $password = $credentials[2];
 $database = $credentials[3];
 
 // Connect to the MySQL database
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+#mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $mysqli = new mysqli($host, $username, $password, $database);
 
 // Check for connection errors
