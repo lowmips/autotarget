@@ -1,20 +1,18 @@
-const socket = io('wss://www.lowmips.com/autotarget/ws/');
+const ws = new RobustWebSocket('www.lowmips.com/autotarget/ws/')
 import { parseFullSymbol } from './helpers.js';
 
-socket.on('connect', () => {
+
+ws.addEventListener('open', function(event) {
     console.log('[socket] Connected');
-});
+})
 
-socket.on('disconnect', (reason) => {
-    console.log('[socket] Disconnected:', reason);
-});
+ws.addEventListener('message', function(event) {
+    console.log('we got: ' + event.data)
+})
 
-socket.on('error', (error) => {
-    console.log('[socket] Error:', error);
-});
 
 // 0~Bitfinex~BTC~USD~2~335394436~1548837377~0.36~3504.1~1261.4759999999999~1f
-socket.on('m', data => {
+/*socket.on('m', data => {
     console.log('[socket] Message:', data);
     const [
         eventTypeStr,
@@ -66,7 +64,7 @@ socket.on('m', data => {
     // Send data to every subscriber of that symbol
     subscriptionItem.handlers.forEach(handler => handler.callback(bar));
 });
-
+*/
 
 const channelToSubscription = new Map();
 export function subscribeOnStream(
