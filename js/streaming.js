@@ -1,4 +1,4 @@
-const socket = io('wss://www.lowmips.com/autotarget/');
+const socket = io('wss://www.lowmips.com/autotarget/ws/');
 import { parseFullSymbol } from './helpers.js';
 
 socket.on('connect', () => {

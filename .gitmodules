@@ -4,3 +4,6 @@
 [submodule "php-cross-domain-proxy"]
 	path = php-cross-domain-proxy
 	url = https://github.com/softius/php-cross-domain-proxy.git
+[submodule "robust-websocket"]
+	path = robust-websocket
+	url = https://github.com/nathanboktae/robust-websocket.git
