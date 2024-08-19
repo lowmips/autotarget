@@ -1,4 +1,4 @@
-const ws = new RobustWebSocket('wss://www.lowmips.com/autotarget/wss/')
+const ws = new RobustWebSocket('wss://www.lowmips.com:8765/')
 import { parseFullSymbol } from './helpers.js';
 
 

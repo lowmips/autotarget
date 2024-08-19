@@ -2,7 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/php-cross-domain-proxy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/robust-websocket" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../get_klines_rabbitmq" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../klengine" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../mexc-klines" vcs="Git" />
