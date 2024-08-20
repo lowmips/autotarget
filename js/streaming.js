@@ -76,6 +76,9 @@ export function subscribeOnStream(
     lastDailyBar
 )
 {
+    console.log('subscribeOnStream()');
+    console.log(symbolInfo);
+
     const parsedSymbol = parseFullSymbol(`${symbolInfo.exchange}:${symbolInfo.name}`);
     const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
     const handler = {
