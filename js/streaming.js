@@ -79,6 +79,7 @@ export function subscribeOnStream(
     console.log('subscribeOnStream()');
     console.log(symbolInfo);
     const symbolStr = `${symbolInfo.exchange}:${symbolInfo.name}`;
+    console.log('symbolStr: '+symbolStr);
     const parsedSymbol = parseFullSymbol(symbolStr);
     const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
     const handler = {
