@@ -109,32 +109,16 @@ export default {
 };
 
 export async function getAllSymbols() {
+    console.log('getAllSymbols');
     //const data = await makeApiRequest('api/v3/defaultSymbols');
-    const data = {data:['BTC/USDT']};
-    console.log('data:');console.log(data);
 
     let allSymbols = [];
-
-    for (const exchange of configurationData.exchanges) {
-        const pairs = data.data;
-        for(const pair of pairs){
-            let lsRs = null;
-            try{
-                lsRs = splitSymbolPair(pair);
-            }catch(e){
-                console.log(e);
-                continue;
-            }
-            //console.log('pair: '+pair+' ls: '+lsRs.ls+' rs: '+lsRs.rs);
-            const symbol = generateSymbol(exchange.value, lsRs.ls, lsRs.rs);
-            allSymbols.push({
-                symbol: symbol.short,
-                full_name: symbol.full,
-                description: symbol.short,
-                exchange: exchange.value,
-                type: 'crypto',
-            });
-        }
-    }
+    allSymbols.push({
+        symbol: 'BTC/USDT',
+        full_name: 'MEXC:BTC/USDT',
+        description: 'BTC/USDT',
+        exchange: 'MEXC',
+        type: 'crypto',
+    });
     return allSymbols;
 }
