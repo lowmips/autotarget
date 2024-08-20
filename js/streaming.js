@@ -79,7 +79,7 @@ export function subscribeOnStream(
     //console.log('subscribeOnStream()');
     //console.log(symbolInfo);
     const symbolStr = `${symbolInfo.exchange}:${symbolInfo.name}`;
-    console.log('symbolStr: '+symbolStr);
+    //console.log('symbolStr: '+symbolStr);
     const parsedSymbol = parseFullSymbol(symbolStr);
     const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
     const handler = {
@@ -100,7 +100,7 @@ export function subscribeOnStream(
     };
     channelToSubscription.set(channelString, subscriptionItem);
     console.log('[subscribeBars]: Subscribe to streaming. Channel:', channelString);
-    let json_str = json.dumps({'SubAdd': { subs: [channelString] }});
+    let json_str = JSON.stringify({'SubAdd': { subs: [channelString] }});
     ws.send(json_str);
 }
 
