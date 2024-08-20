@@ -110,7 +110,7 @@ export default {
 
 export async function getAllSymbols() {
     //const data = await makeApiRequest('api/v3/defaultSymbols');
-    const data = {data:['BTCUSDT']};
+    const data = {data:['BTC/USDT']};
     console.log('data:');console.log(data);
 
     let allSymbols = [];

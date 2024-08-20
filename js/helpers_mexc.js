@@ -37,13 +37,8 @@ export function generateSymbol(exchange, fromSymbol, toSymbol) {
 }
 
 export function splitSymbolPair(sp){
-    let rightSides = ['USDT','USDC','BTC','ETH'];
-    for(let rs of rightSides){
-        if(sp.length <= rs.length) continue;    // invalid
-        let ls = sp.substring(0,sp.length - rs.length);
-        return {ls: ls, rs:rs};
-    }
-    throw 'Unknown pair '+sp;
+    let pair_arr = sp.split('/');
+    return {ls: pair_arr[0], rs:pair_arr[1]};
 }
 
 export async function getBarsForSymbolStartEnd(){
