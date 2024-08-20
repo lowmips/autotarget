@@ -3,11 +3,11 @@ import { parseFullSymbol } from './helpers.js';
 
 
 ws.addEventListener('open', function(event) {
-    console.log('[socket] Connected');
+    console.log('ws [open]');
 })
 
 ws.addEventListener('message', function(event) {
-    console.log('we got: ' + event.data)
+    console.log('ws [message]: ' + event.data)
 })
 
 
@@ -96,7 +96,8 @@ export function subscribeOnStream(
     };
     channelToSubscription.set(channelString, subscriptionItem);
     console.log('[subscribeBars]: Subscribe to streaming. Channel:', channelString);
-    socket.emit('SubAdd', { subs: [channelString] });
+    let json_str = json.dumps({'SubAdd': { subs: [channelString] }});
+    ws.send(json_str);
 }
 
 export function unsubscribeFromStream(subscriberUID) {
