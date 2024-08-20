@@ -112,23 +112,7 @@
       <workItem from="1716330978598" duration="19039000" />
       <workItem from="1719528758389" duration="3603000" />
       <workItem from="1720824176215" duration="10706000" />
-      <workItem from="1724089254138" duration="3824000" />
-    </task>
-    <task id="LOCAL-00873" summary="dev">
-      <option name="closed" value="true" />
-      <created>1716642363947</created>
-      <option name="number" value="00873" />
-      <option name="presentableId" value="LOCAL-00873" />
-      <option name="project" value="LOCAL" />
-      <updated>1716642363947</updated>
-    </task>
-    <task id="LOCAL-00874" summary="dev">
-      <option name="closed" value="true" />
-      <created>1716643552558</created>
-      <option name="number" value="00874" />
-      <option name="presentableId" value="LOCAL-00874" />
-      <option name="project" value="LOCAL" />
-      <updated>1716643552558</updated>
+      <workItem from="1724089254138" duration="3978000" />
     </task>
     <task id="LOCAL-00875" summary="dev">
       <option name="closed" value="true" />
@@ -506,7 +490,23 @@
       <option name="project" value="LOCAL" />
       <updated>1724167290237</updated>
     </task>
-    <option name="localTasksCounter" value="922" />
+    <task id="LOCAL-00922" summary="dev">
+      <option name="closed" value="true" />
+      <created>1724167350461</created>
+      <option name="number" value="00922" />
+      <option name="presentableId" value="LOCAL-00922" />
+      <option name="project" value="LOCAL" />
+      <updated>1724167350461</updated>
+    </task>
+    <task id="LOCAL-00923" summary="dev">
+      <option name="closed" value="true" />
+      <created>1724167401334</created>
+      <option name="number" value="00923" />
+      <option name="presentableId" value="LOCAL-00923" />
+      <option name="project" value="LOCAL" />
+      <updated>1724167401334</updated>
+    </task>
+    <option name="localTasksCounter" value="924" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
