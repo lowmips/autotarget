@@ -90,6 +90,8 @@ export default {
         subscriberUID,
         onResetCacheNeededCallback
     ) => {
+        console.log('[subscribeBars]: Method call with symbolInfo:', symbolInfo);
+        console.log('[subscribeBars]: Method call with resolution:', resolution);
         console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
         subscribeOnStream(
             symbolInfo,
