@@ -29,7 +29,7 @@ ws_connected = []
 async def main_loop():
     while True:
         print('main_loop()')
-        print(len(ws_connceted))
+        print(len(ws_connected))
         await asyncio.sleep(10)
 
 
