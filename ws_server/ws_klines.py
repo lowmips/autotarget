@@ -76,11 +76,9 @@ async def init_ws():
         await asyncio.Future()  # run forever
 
 async def main():
-    async asyncio.create_task(main_loop())
-    async asyncio.create_task(init_ws())
-    #async with asyncio.TaskGroup() as group:
-        #group.create_task(main_loop())
-        #group.create_task(init_ws())
+    async with asyncio.TaskGroup() as group:
+        group.create_task(main_loop())
+        group.create_task(init_ws())
 
 if __name__ == "__main__":
     asyncio.run(main())
