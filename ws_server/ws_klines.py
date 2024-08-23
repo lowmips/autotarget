@@ -4,7 +4,7 @@ import json
 import logging
 import websockets
 import ssl
-import path
+import os.path
 import sys
 
 
