@@ -53,7 +53,7 @@ async def handle_ws(websocket,path):
         except websockets.ConnectionClosedOK:
             print('websockets.ConnectionClosedOK')
             print(websocket.id.hex)
-            handle_closed_ws(websocket)
+            await handle_closed_ws(websocket)
             break
 
 async def send(websocket):
@@ -66,7 +66,7 @@ async def send(websocket):
             except websockets.ConnectionClosedOK:
                 print('websockets.ConnectionClosedOK')
                 print(websocket.id.hex)
-                handle_closed_ws(websocket)
+                await handle_closed_ws(websocket)
                 break
         await asyncio.sleep(5)
 
