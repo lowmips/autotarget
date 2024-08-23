@@ -29,13 +29,11 @@ async def main_loop():
         await asyncio.sleep(10)
 
 
-async def handle_ws(websocket,path, bleh):
+async def handle_ws(websocket,path):
     print('websocket:')
     print(websocket)
     print('path:')
     print(path)
-    print('bleh:')
-    print(bleh)
 
 async def init_ws():
     print('init_ws()')
