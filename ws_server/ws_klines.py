@@ -23,6 +23,9 @@ ssl_key = config['ssl']['privkey']
 ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
 mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
 
+ws_connected = []
+
+
 async def main_loop():
     while True:
         print('main_loop()')
@@ -68,4 +71,5 @@ async def main():
         group.create_task(main_loop())
         group.create_task(init_ws())
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
