@@ -4,7 +4,13 @@ import json
 import logging
 import websockets
 import ssl
-from ... import mysqlDBC
+import path
+import sys
+
+
+directory = path.path(__file__).abspath()
+sys.path.append(directory.parent)
+from autotarget.connector.mysql import mysqlDBC
 
 config = None
 mdb = None # mysqlDBC instance
