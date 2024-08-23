@@ -51,6 +51,7 @@ async def handle_ws(websocket,path):
         # client disconnected?
         except websockets.ConnectionClosedOK:
             print('websockets.ConnectionClosedOK')
+            print(websocket.id)
             break
 
 async def send(websocket):
@@ -62,6 +63,7 @@ async def send(websocket):
             # client disconnected?
             except websockets.ConnectionClosedOK:
                 print('websockets.ConnectionClosedOK')
+                print(websocket.id)
                 break
         await asyncio.sleep(5)
 
