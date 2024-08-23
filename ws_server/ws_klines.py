@@ -9,6 +9,7 @@ from zmysql import mysqlDBC
 
 config = None
 mdb = None # mysqlDBC instance
+ws = None
 
 def get_config():
     global config
