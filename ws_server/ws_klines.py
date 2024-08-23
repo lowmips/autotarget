@@ -26,7 +26,7 @@ mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config[
 ws_connected = []
 
 async def handle_closed_ws(websocket):
-    ws_connected.remove(websocket.id)
+    ws_connected.remove(websocket.id.hex)
 
 
 async def main_loop():
@@ -40,8 +40,8 @@ async def main_loop():
 async def handle_ws(websocket,path):
     print('websocket:')
     print(websocket)
-    print(websocket.id)
-    ws_connected.append(websocket.id)
+    print(websocket.id.hex)
+    ws_connected.append(websocket.id.hex)
 
     asyncio.create_task(send(websocket))
     while True:
@@ -52,7 +52,7 @@ async def handle_ws(websocket,path):
         # client disconnected?
         except websockets.ConnectionClosedOK:
             print('websockets.ConnectionClosedOK')
-            print(websocket.id)
+            print(websocket.id.hex)
             break
 
 async def send(websocket):
@@ -64,7 +64,7 @@ async def send(websocket):
             # client disconnected?
             except websockets.ConnectionClosedOK:
                 print('websockets.ConnectionClosedOK')
-                print(websocket.id)
+                print(websocket.id.hex)
                 break
         await asyncio.sleep(5)
 
