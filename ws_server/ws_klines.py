@@ -26,20 +26,21 @@ mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config[
 ws_connected = []
 
 async def handle_closed_ws(websocket):
-    ws_connected.remove(websocket)
+    ws_connected.remove(websocket.id)
 
 
 async def main_loop():
     while True:
         print('main_loop()')
         print(len(ws_connected))
+        print(ws_connected)
         await asyncio.sleep(10)
 
 
 async def handle_ws(websocket,path):
     print('websocket:')
     print(websocket)
-    ws_connected.append(websocket)
+    ws_connected.append(websocket.id)
 
     asyncio.create_task(send(websocket))
     while True:
