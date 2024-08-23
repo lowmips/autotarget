@@ -38,6 +38,6 @@ async def handle_ws(ws,path):
 async def main():
     async with asyncio.TaskGroup() as group:
         group.create_task(main_loop())
-        group.create_task(websockets.serve(handle_ws, "0.0.0.0", 8765, ssl=ssl_context))
+        group.create_task(async websockets.serve(handle_ws, "0.0.0.0", 8765, ssl=ssl_context))
 
 asyncio.run(main())
