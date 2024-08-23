@@ -29,14 +29,14 @@ ws_connected = []
 async def main_loop():
     while True:
         print('main_loop()')
+        print(len(ws_connceted))
         await asyncio.sleep(10)
 
 
 async def handle_ws(websocket,path):
     print('websocket:')
     print(websocket)
-    print('path:')
-    print(path)
+    ws_connected.append(websocket)
 
     asyncio.create_task(send(websocket))
     while True:
