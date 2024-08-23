@@ -25,6 +25,9 @@ mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config[
 
 ws_connected = []
 
+async def handle_closed_ws(websocket):
+    ws_connected.remove(websocket)
+
 
 async def main_loop():
     while True:
