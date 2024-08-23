@@ -35,6 +35,29 @@ async def handle_ws(websocket,path):
     print('path:')
     print(path)
 
+    asyncio.create_task(send(websocket))
+    while True:
+        try:
+            message = await websocket.recv()
+            print(message)
+
+        # client disconnected?
+        except websockets.ConnectionClosedOK:
+            print('websockets.ConnectionClosedOK')
+            break
+
+async def send(websocket):
+    while True:
+        print('send()')
+        if False:
+            try:
+                await websocket.send(json.dumps(data))
+            # client disconnected?
+            except websockets.ConnectionClosedOK:
+                print('websockets.ConnectionClosedOK')
+                break
+        await asyncio.sleep(5)
+
 async def init_ws():
     print('init_ws()')
     async with websockets.serve(handle_ws, "0.0.0.0", 8765, ssl=ssl_context):
