@@ -8,7 +8,7 @@ from os import path
 import sys
 
 
-directory = os.path.path(__file__).abspath()
+directory = path.path(__file__).abspath()
 sys.path.append(directory.parent)
 from autotarget.connector.mysql import mysqlDBC
 
