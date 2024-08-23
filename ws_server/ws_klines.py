@@ -77,9 +77,10 @@ async def init_ws():
 
 async def main():
     asyncio.create_task(main_loop())
-    async with asyncio.TaskGroup() as group:
+    asyncio.create_task(init_ws())
+    #async with asyncio.TaskGroup() as group:
         #group.create_task(main_loop())
-        group.create_task(init_ws())
+        #group.create_task(init_ws())
 
 if __name__ == "__main__":
     asyncio.run(main())
