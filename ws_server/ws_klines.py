@@ -5,7 +5,7 @@ import logging
 import websockets
 import ssl
 import sys
-from autotarget.connector.mysql import mysqlDBC
+from mysql import mysqlDBC
 
 config = None
 mdb = None # mysqlDBC instance
