@@ -5,7 +5,7 @@ import logging
 import websockets
 import ssl
 import sys
-from mysql import mysqlDBC
+from zmysql import mysqlDBC
 
 config = None
 mdb = None # mysqlDBC instance
