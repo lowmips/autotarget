@@ -40,6 +40,7 @@ async def main_loop():
 async def handle_ws(websocket,path):
     print('websocket:')
     print(websocket)
+    print(websocket.id)
     ws_connected.append(websocket.id)
 
     asyncio.create_task(send(websocket))
