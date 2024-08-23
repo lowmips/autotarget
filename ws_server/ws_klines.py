@@ -39,6 +39,8 @@ async def handle_ws(websocket,path):
     print(path)
 
 async def init_ws():
+    global ws
+    print('init_ws()')
     ws = websockets.serve(handle_ws, "0.0.0.0", 8765, ssl=ssl_context)
 
 async def main():
