@@ -4,6 +4,7 @@ import json
 import logging
 import websockets
 import ssl
+from connector.mysql import mysqlDBC
 
 config = None
 mdb = None # mysqlDBC instance
