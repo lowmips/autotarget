@@ -41,6 +41,9 @@ async def handle_ws(websocket,path):
     print('websocket:')
     print(websocket)
     print(websocket.id.hex)
+    print(websocket.local_address)
+    print(websocket.remote_address)
+    print(websocket.subprotocol)
     ws_connected.append(websocket.id.hex)
 
     asyncio.create_task(send(websocket))
