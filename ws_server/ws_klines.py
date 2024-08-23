@@ -4,11 +4,11 @@ import json
 import logging
 import websockets
 import ssl
-from os import path
+from pathlib import Path
 import sys
 
 
-directory = path.path(__file__).abspath()
+directory = Path.path(__file__).abspath()
 sys.path.append(directory.parent)
 from autotarget.connector.mysql import mysqlDBC
 
