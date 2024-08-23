@@ -9,7 +9,6 @@ from zmysql import mysqlDBC
 
 config = None
 mdb = None # mysqlDBC instance
-ws = None
 
 def get_config():
     global config
@@ -27,8 +26,6 @@ mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config[
 async def main_loop():
     while True:
         print('main_loop()')
-        print('websocket:')
-        print(ws)
         await asyncio.sleep(10)
 
 
