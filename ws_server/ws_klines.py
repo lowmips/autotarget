@@ -55,16 +55,21 @@ async def handle_ws(websocket,path):
     while True:
         try:
             message = await websocket.recv()
-            handle_msg(websocket, message)
+            await handle_msg(websocket, message)
         # client disconnected?
         except websockets.ConnectionClosedOK:
             print('websockets.ConnectionClosedOK' + websocket.id.hex)
             await handle_closed_ws(websocket)
             break
 
-def handle_msg(websocket, msg):
+async def handle_msg(websocket, msg):
     print('handle_msg()')
     print(msg)
+    try:
+        json.loads(msg)
+    except ValueError as e:
+        print('invalid json, closing connection')
+        await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason='')
 
 async def send(websocket):
     while True:
