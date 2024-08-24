@@ -1,4 +1,4 @@
-import mysql.connector.aio
+from mysql.connector.aio import connect
 
 class mysqlDBCa:
     async def __init__(self, user, pw, host, db):
@@ -11,7 +11,7 @@ class mysqlDBCa:
 
     async def __connect(self):
         try:
-            self.mysql_connection = await mysql.connector.connect(
+            self.mysql_connection = await connect(
                                                 user = self.user,
                                                 password = self.pw,
                                                 host = self.host,
