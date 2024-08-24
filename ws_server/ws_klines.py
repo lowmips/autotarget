@@ -78,8 +78,8 @@ async def handle_msg(websocket, msg):
         await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
         return
 
-    print('msg_obj:')
-    print(msg_obj)
+    #print('msg_obj:')
+    #print(msg_obj)
 
     if 'SubAdd' in msg_obj:
         if not 'subs' in msg_obj['SubAdd']:
@@ -89,6 +89,17 @@ async def handle_msg(websocket, msg):
             return
         for sub in msg_obj['SubAdd']['subs']:
             print('sub: '+sub)
+            sub_list = sub.split('~')
+            if len(sub_list) != 4:
+                reason = 'invalid sub definition, closing connection'
+                print(reason)
+                await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
+                return
+
+            ignore_me = sub_list[0]
+            exchange = sub_list[1]
+            from_token = sub_list[2]
+            to_token = sub_list[3]
 
 async def send(websocket):
     while True:
