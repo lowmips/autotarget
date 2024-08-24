@@ -23,10 +23,11 @@ ssl_key = config['ssl']['privkey']
 ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
 mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
 
-ws_connected = []
+ws_connected = {}
+subs_to_ws = {}
 
 async def handle_closed_ws(websocket):
-    ws_connected.remove(websocket.id.hex)
+    del ws_connected[websocket.id.hex]
 
 
 async def main_loop():
@@ -44,7 +45,10 @@ async def handle_ws(websocket,path):
     print(websocket.local_address)
     print(websocket.remote_address)
     print(websocket.subprotocol)
-    ws_connected.append(websocket.id.hex)
+
+    ws_connected[websocket.id.hex] = {
+        ws: websocket,
+    }
 
     asyncio.create_task(send(websocket))
     while True:
@@ -54,8 +58,7 @@ async def handle_ws(websocket,path):
 
         # client disconnected?
         except websockets.ConnectionClosedOK:
-            print('websockets.ConnectionClosedOK')
-            print(websocket.id.hex)
+            print('websockets.ConnectionClosedOK' + websocket.id.hex)
             await handle_closed_ws(websocket)
             break
 
@@ -67,8 +70,7 @@ async def send(websocket):
                 await websocket.send(json.dumps(data))
             # client disconnected?
             except websockets.ConnectionClosedOK:
-                print('websockets.ConnectionClosedOK')
-                print(websocket.id.hex)
+                print('websockets.ConnectionClosedOK' + websocket.id.hex)
                 await handle_closed_ws(websocket)
                 break
         await asyncio.sleep(5)
