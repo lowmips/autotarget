@@ -24,10 +24,13 @@ ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
 
 
 ws_connected = {}
-subs_to_ws = {}
+subs_to_ws = {} # exchange -> from symbol -> to symbol -> [] websocket id's
 
 async def handle_closed_ws(websocket):
+
+
     del ws_connected[websocket.id.hex]
+
 
 
 async def main_loop():
@@ -49,6 +52,7 @@ async def handle_ws(websocket,path):
 
     ws_connected[websocket.id.hex] = {
         "ws": websocket,
+        "subs": {},
     }
 
     #asyncio.create_task(send(websocket))
