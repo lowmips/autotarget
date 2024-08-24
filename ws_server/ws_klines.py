@@ -71,6 +71,9 @@ async def main_loop():
                     "latest_kline": None,
                 }
 
+    print('klines_available:')
+    print(klines_available)
+
     while True:
         print('main_loop()')
         print('client count: ' + len(ws_connected))
