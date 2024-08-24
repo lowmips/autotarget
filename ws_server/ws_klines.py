@@ -149,7 +149,7 @@ async def handle_msg(websocket, msg):
                 ws_connected[websocket.id.hex]['subs'][exchange][from_token] = {}
             if to_token in ws_connected[websocket.id.hex]['subs'][exchange][from_token]:
                 print('already subscribed')
-            else
+            else:
                 ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = None
 
 async def send(websocket):
