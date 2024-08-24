@@ -50,7 +50,7 @@ async def handle_ws(websocket,path):
         ws: websocket,
     }
 
-    asyncio.create_task(send(websocket))
+    #asyncio.create_task(send(websocket))
     while True:
         try:
             message = await websocket.recv()
