@@ -95,11 +95,14 @@ async def handle_msg(websocket, msg):
                 print(reason)
                 await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
                 return
-
             ignore_me = sub_list[0]
             exchange = sub_list[1]
             from_token = sub_list[2]
             to_token = sub_list[3]
+
+            if not exchange in ws_connected[websocket.id.hex]['subs']:
+                ws_connected[websocket.id.hex]['subs'][exchange] = {}
+
 
 async def send(websocket):
     while True:
