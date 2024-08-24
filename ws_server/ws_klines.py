@@ -54,13 +54,16 @@ async def handle_ws(websocket,path):
     while True:
         try:
             message = await websocket.recv()
-            print(message)
-
+            handle_msg(message)
         # client disconnected?
         except websockets.ConnectionClosedOK:
             print('websockets.ConnectionClosedOK' + websocket.id.hex)
             await handle_closed_ws(websocket)
             break
+
+def handle_msg(websocket, msg):
+    print('handle_msg()')
+    print(msg)
 
 async def send(websocket):
     while True:
