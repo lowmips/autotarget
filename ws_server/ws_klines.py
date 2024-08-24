@@ -5,7 +5,7 @@ import logging
 import websockets
 import ssl
 import sys
-from zmysqla import mysqlDBCa
+from zmysql import mysqlDBC
 
 config = None
 mdb = None # mysqlDBC instance
@@ -31,7 +31,7 @@ async def handle_closed_ws(websocket):
 
 
 async def main_loop():
-    mdb = await mysqlDBCa(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
+    mdb = mysqlDBCa(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
     while True:
         print('main_loop()')
         print(len(ws_connected))
