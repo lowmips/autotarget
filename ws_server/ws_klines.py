@@ -76,7 +76,7 @@ async def main_loop():
 
     while True:
         print('main_loop()')
-        print('client count: ' + len(ws_connected))
+        print('client count: ' + str(len(ws_connected)))
         #print(ws_connected)
         await asyncio.sleep(10)
 
