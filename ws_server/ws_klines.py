@@ -25,6 +25,7 @@ ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
 
 ws_connected = {}
 subs_to_ws = {} # exchange -> from symbol -> to symbol -> [] websocket id's
+klines_available = {} # exchange -> exchange_id, pairs -> {pair_id, from_token, to_token, latest_kline}
 
 async def handle_closed_ws(websocket):
 
@@ -100,9 +101,18 @@ async def handle_msg(websocket, msg):
             from_token = sub_list[2]
             to_token = sub_list[3]
 
+            # check for valid exchange and token
+
+
+            # add to subscription structures
             if not exchange in ws_connected[websocket.id.hex]['subs']:
                 ws_connected[websocket.id.hex]['subs'][exchange] = {}
-
+            if not from_token in ws_connected[websocket.id.hex]['subs'][exchange]:
+                ws_connected[websocket.id.hex]['subs'][exchange][from_token] = {}
+            if to_token in ws_connected[websocket.id.hex]['subs'][exchange][from_token]:
+                print('already subscribed')
+            else
+                ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = None
 
 async def send(websocket):
     while True:
