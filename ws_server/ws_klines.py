@@ -44,19 +44,26 @@ async def main_loop():
 
     # find available exchanges and pairs
     q = "SELECT * FROM `exchanges` WHERE 1"
-    rows = mdb.query_get_all(q)
-    if len(rows) == 0:
+    exchange_rows = mdb.query_get_all(q)
+    if len(exchange_rows) == 0:
         print('No exchanges')
         quit()
-    for row in rows:
-        exchange_id = row['id']
-        exchange = row['exchange']
+    for ex_row in exchange_rows:
+        exchange_id = ex_row['id']
+        exchange = ex_row['exchange']
         print('exchange: ' + exchange)
         klines_available[exchange] = {
             "exchange_id": exchange_id,
             "pairs": {}
         }
-        q = ""
+        q = ("SELECT * FROM `klines_meta` WHERE `exchange_id`={eid} ORDER BY `pair_l`,`pair_r`").format(eid=exchange_id)
+        pair_rows = mdb.query_get_all(q)
+        for pair_row in pair_rows:
+            pair_id = pair_row['id']
+            pair_l = pair_row['pair_l']
+            pair_r = pair_row['pair_r']
+
+
 
     while True:
         print('main_loop()')
