@@ -69,11 +69,26 @@ async def handle_ws(websocket,path):
 async def handle_msg(websocket, msg):
     print('handle_msg()')
     print(msg)
+    msg_obj = None
     try:
-        json.loads(msg)
+        msg_obj = json.loads(msg)
     except ValueError as e:
-        print('invalid json, closing connection')
-        await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason='')
+        reason = 'invalid json, closing connection'
+        print(reason)
+        await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
+        return
+
+    print('msg_obj:')
+    print(msg_obj)
+
+    if 'SubAdd' in msg_obj:
+        if not 'subs' in msg_obj['SubAdd']:
+            reason = 'invalid SubAdd definition, closing connection'
+            print(reason)
+            await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
+            return
+        for sub in msg_obj['SubAdd']['subs']:
+            print('sub: '+sub)
 
 async def send(websocket):
     while True:
