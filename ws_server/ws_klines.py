@@ -27,6 +27,11 @@ ws_connected = {}
 subs_to_ws = {} # exchange -> from symbol -> to symbol -> [] websocket id's
 klines_available = {} # exchange -> exchange_id, pairs -> {pair_id, from_token, to_token, latest_kline}
 
+
+
+
+
+
 async def handle_closed_ws(websocket):
 
 
@@ -36,10 +41,16 @@ async def handle_closed_ws(websocket):
 
 async def main_loop():
     mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
+
+    # find available exchanges and pairs
+    q = "SELECT * FROM `exchanges` WHERE 1"
+    rows = mdb.query_get_all(q)
+
+
     while True:
         print('main_loop()')
-        print(len(ws_connected))
-        print(ws_connected)
+        print('client count: ' + len(ws_connected))
+        #print(ws_connected)
         await asyncio.sleep(10)
 
 
