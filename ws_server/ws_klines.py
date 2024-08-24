@@ -25,7 +25,8 @@ ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
 
 ws_connected = {}
 subs_to_ws = {} # exchange -> from symbol -> to symbol -> [] websocket id's
-klines_available = {} # exchange -> exchange_id, pairs -> {pair_id, from_token, to_token, latest_kline}
+klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> {pair_id, latest_kline}
+
 
 
 
@@ -62,8 +63,13 @@ async def main_loop():
             pair_id = pair_row['id']
             pair_l = pair_row['pair_l']
             pair_r = pair_row['pair_r']
-
-
+            if not pair_l in klines_available[exchange]["pairs"]:
+                klines_available[exchange]["pairs"][pair_l] = {}
+            if not pair_r in klines_available[exchange]["pairs"][pair_l]:
+                klines_available[exchange]["pairs"][pair_l][pair_r] = {
+                    "pair_id": pair_id,
+                    "latest_kline": None,
+                }
 
     while True:
         print('main_loop()')
