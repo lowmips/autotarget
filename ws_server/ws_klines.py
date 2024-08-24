@@ -31,7 +31,7 @@ async def handle_closed_ws(websocket):
 
 
 async def main_loop():
-    mdb = mysqlDBCa(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
+    mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
     while True:
         print('main_loop()')
         print(len(ws_connected))
