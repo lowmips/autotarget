@@ -47,7 +47,7 @@ async def handle_ws(websocket,path):
     print(websocket.subprotocol)
 
     ws_connected[websocket.id.hex] = {
-        ws: websocket,
+        "ws": websocket,
     }
 
     #asyncio.create_task(send(websocket))
