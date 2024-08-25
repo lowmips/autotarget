@@ -42,6 +42,7 @@ async def handle_closed_ws(websocket):
 
 async def main_loop():
     mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
+    pair_count = 0
 
     # find available exchanges and pairs
     q = "SELECT * FROM `exchanges` WHERE 1"
@@ -70,7 +71,11 @@ async def main_loop():
                     "pair_id": pair_id,
                     "latest_kline": None,
                 }
+            pair_count += 1
 
+    if pair_count == 0:
+        print('No available pairs.')
+        quit()
     print('klines_available:')
     print(klines_available)
 
