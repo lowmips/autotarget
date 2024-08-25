@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change afterPath="$PROJECT_DIR$/../klengine/sql/klines_latest.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../klengine/sql/templates/klines.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/sql/templates/klines.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +18,8 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../klengine" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -113,15 +116,7 @@
       <workItem from="1716330978598" duration="19039000" />
       <workItem from="1719528758389" duration="3603000" />
       <workItem from="1720824176215" duration="10706000" />
-      <workItem from="1724089254138" duration="24606000" />
-    </task>
-    <task id="LOCAL-00945" summary="dev">
-      <option name="closed" value="true" />
-      <created>1724453518757</created>
-      <option name="number" value="00945" />
-      <option name="presentableId" value="LOCAL-00945" />
-      <option name="project" value="LOCAL" />
-      <updated>1724453518757</updated>
+      <workItem from="1724089254138" duration="25270000" />
     </task>
     <task id="LOCAL-00946" summary="dev">
       <option name="closed" value="true" />
@@ -507,7 +502,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724520634928</updated>
     </task>
-    <option name="localTasksCounter" value="994" />
+    <task id="LOCAL-00994" summary="dev">
+      <option name="closed" value="true" />
+      <created>1724588126709</created>
+      <option name="number" value="00994" />
+      <option name="presentableId" value="LOCAL-00994" />
+      <option name="project" value="LOCAL" />
+      <updated>1724588126709</updated>
+    </task>
+    <option name="localTasksCounter" value="995" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
