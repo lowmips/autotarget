@@ -181,6 +181,14 @@ async def handle_msg(websocket, msg):
             to_token = sub_list[3]
 
             # check for valid exchange and token
+            if not check_subscription(exchange, from_token, to_token):
+                reason = 'invalid sub: {e}:{f}:{t}, closing connection'.format(e=exchange, f=from_toke, t=to_token)
+                print(reason)
+                await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
+                return
+
+
+
             # find the pair_id
 
 
@@ -202,8 +210,13 @@ async def handle_msg(websocket, msg):
 
             # add the pair_id -> websocket[] reverse lookup
 
-
-
+def check_subscription(exchange, from_token, to_token):
+    print('check_subscription('+exchange+','+from_token+','+to_token+')')
+    # klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
+    if not exchange in klines_available: return False
+    if not from_token in exchange['pairs']: return False
+    if not to_token in exchange['pairs'][from_token]: return False
+    return True
 
 async def send(websocket):
     while True:
