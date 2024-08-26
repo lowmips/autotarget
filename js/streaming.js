@@ -8,6 +8,54 @@ ws.addEventListener('open', function(event) {
 
 ws.addEventListener('message', function(event) {
     console.log('ws [message]: ' + event.data)
+    const [
+        eventTypeStr,
+        exchange,
+        fromSymbol,
+        toSymbol,
+        tradeTimeStr,
+        tradePriceOpen,
+        tradePriceHigh,
+        tradePriceLow,
+        tradePriceClose
+    ] = event.data.split('~');
+    if (parseInt(eventTypeStr) !== 0) {
+        // Skip all non-trading events
+        return;
+    }
+    const tradeTime = parseInt(tradeTimeStr);
+    const channelString = `0~${exchange}~${fromSymbol}~${toSymbol}`;
+    const subscriptionItem = channelToSubscription.get(channelString);
+    if (subscriptionItem === undefined) {
+        return;
+    }
+    const lastBar = subscriptionItem.lastBar;
+    const nextBarTime = getNextMinuteBarTime(lastBar.time);
+
+    let bar;
+    if (tradeTime >= nextBarTime) {
+        bar = {
+            time: nextBarTime,
+            open: tradePriceOpen,
+            high: tradePriceHigh,
+            low: tradePriceLow,
+            close: tradePriceClose,
+        };
+        console.log('[socket] Generate new bar', bar);
+    } else {
+        bar = {
+            ...lastBar,
+            high: tradePriceHigh,
+            low: tradePriceLow,
+            close: tradePriceClose,
+        };
+        console.log('[socket] Update the latest bar by price', tradePrice);
+    }
+    subscriptionItem.lastDailyBar = bar;
+
+    // Send data to every subscriber of that symbol
+    subscriptionItem.handlers.forEach(handler => handler.callback(bar));
+
 })
 
 
@@ -73,7 +121,7 @@ export function subscribeOnStream(
     onRealtimeCallback,
     subscriberUID,
     onResetCacheNeededCallback,
-    lastDailyBar
+    lastBar
 )
 {
     //console.log('subscribeOnStream()');
@@ -95,7 +143,7 @@ export function subscribeOnStream(
     subscriptionItem = {
         subscriberUID,
         resolution,
-        lastDailyBar,
+        lastBar,
         handlers: [handler],
     };
     channelToSubscription.set(channelString, subscriptionItem);
