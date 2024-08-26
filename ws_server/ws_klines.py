@@ -252,8 +252,8 @@ def check_subscription(exchange, from_token, to_token):
     print('check_subscription('+exchange+','+from_token+','+to_token+')')
     # klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
     if not exchange in klines_available: return False
-    if not from_token in exchange['pairs']: return False
-    if not to_token in exchange['pairs'][from_token]: return False
+    if not from_token in klines_available[exchange]['pairs']: return False
+    if not to_token in klines_available[exchange]['pairs'][from_token]: return False
     return True
 
 async def init_ws():
