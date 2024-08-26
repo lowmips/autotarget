@@ -136,7 +136,6 @@ async def handle_ws(websocket,path):
         "subs": {},
     }
 
-    #asyncio.create_task(send(websocket))
     while True:
         try:
             message = await websocket.recv()
@@ -182,6 +181,10 @@ async def handle_msg(websocket, msg):
             to_token = sub_list[3]
 
             # check for valid exchange and token
+            # find the pair_id
+
+
+
 
 
             # add to subscription structures
@@ -192,7 +195,15 @@ async def handle_msg(websocket, msg):
             if to_token in ws_connected[websocket.id.hex]['subs'][exchange][from_token]:
                 print('already subscribed')
             else:
-                ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = None
+                ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = 1
+
+
+
+
+            # add the pair_id -> websocket[] reverse lookup
+
+
+
 
 async def send(websocket):
     while True:
