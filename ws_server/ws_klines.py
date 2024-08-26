@@ -99,7 +99,7 @@ async def main_loop():
                     (pair_id_latest[pair_id]['latest_kline']['open'] != open) or
                     (pair_id_latest[pair_id]['latest_kline']['high'] != high) or
                     (pair_id_latest[pair_id]['latest_kline']['low'] != low) or
-                    (pair_id_latest[pair_id]['latest_kline']['close'] != close) or
+                    (pair_id_latest[pair_id]['latest_kline']['close'] != close)
                 ):
                 await send_kline_update(pair_id, timestamp, open, high, low, close)
             pair_id_latest[pair_id]['latest_kline'] = {
