@@ -187,13 +187,8 @@ async def handle_msg(websocket, msg):
                 await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
                 return
 
-
-
             # find the pair_id
-
-
-
-
+            pair_id = exchange['pairs'][from_token][to_token]['pair_id']
 
             # add to subscription structures
             if not exchange in ws_connected[websocket.id.hex]['subs']:
@@ -206,9 +201,9 @@ async def handle_msg(websocket, msg):
                 ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = 1
 
 
-
-
             # add the pair_id -> websocket[] reverse lookup
+
+
 
 def check_subscription(exchange, from_token, to_token):
     print('check_subscription('+exchange+','+from_token+','+to_token+')')
