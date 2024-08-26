@@ -52,7 +52,7 @@ ws.addEventListener('message', function(event) {
         console.log('[socket] Update the latest bar by price', tradePriceClose);
     }*/
     bar = {
-        time: nextBarTime,
+        time: tradeTimeStr,
         open: tradePriceOpen,
         high: tradePriceHigh,
         low: tradePriceLow,
