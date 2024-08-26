@@ -167,7 +167,7 @@ export function unsubscribeFromStream(subscriberUID) {
             if (subscriptionItem.handlers.length === 0) {
                 // Unsubscribe from the channel if it is the last handler
                 console.log('[unsubscribeBars]: Unsubscribe from streaming. Channel:', channelString);
-                let json_str = JSON.stringify({'SubAdd': { subs: [channelString] }});
+                let json_str = JSON.stringify({'SubRemove': { subs: [channelString] }});
                 ws.send(json_str);
                 channelToSubscription.delete(channelString);
                 break;
