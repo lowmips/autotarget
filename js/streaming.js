@@ -72,6 +72,9 @@ export function subscribeOnStream(
 )
 {
     console.log('subscribeOnStream(,'+resolution+',,'+subscriberUID+',,)');
+    console.log('lastBar:');
+    console.log(lastBar);
+
     //console.log(symbolInfo);
     const symbolStr = `${symbolInfo.exchange}:${symbolInfo.name}`;
     //console.log('symbolStr: '+symbolStr);
@@ -127,7 +130,7 @@ export function unsubscribeFromStream(subscriberUID) {
 
 function getNextBarTime(barTime, resolution){
     console.log('getNextBarTime('+barTime+','+resolution+')');
-    const date = new Date(barTime / 1000);
+    const date = new Date(barTime);
     console.log(date.toString());
     date.setMinutes(date.getMinutes() + resolution);
     return date.getTime() * 1000;
