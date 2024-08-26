@@ -82,7 +82,21 @@ async def main_loop():
     while True:
         print('main_loop()')
         print('client count: ' + str(len(ws_connected)))
-        #print(ws_connected)
+
+        # get the latest klines for all pairs
+        q = "SELECT * FROM `klines_latest`"
+        latest_rows = mdb.query_get_all(q)
+        for latest_row in latest_rows:
+            meta_id = int(latest_row['meta_id'])
+            timestamp = latest_row['timestamp']
+            open = latest_row['open']
+            high = latest_row['high']
+            low = latest_row['low']
+            close = latest_row['close']
+
+
+
+
         await asyncio.sleep(10)
 
 
