@@ -87,6 +87,9 @@ async def main_loop():
     while True:
         print('main_loop()')
         print('client count: ' + str(len(ws_connected)))
+        print('subs_to_ws:')
+        print(subs_to_ws)
+
         loop_start = int(time.time())
 
         # get the latest klines for all pairs
@@ -252,19 +255,6 @@ def check_subscription(exchange, from_token, to_token):
     if not from_token in exchange['pairs']: return False
     if not to_token in exchange['pairs'][from_token]: return False
     return True
-
-async def send(websocket):
-    while True:
-        print('send()')
-        if False:
-            try:
-                await websocket.send(json.dumps(data))
-            # client disconnected?
-            except websockets.ConnectionClosedOK:
-                print('websockets.ConnectionClosedOK' + websocket.id.hex)
-                await handle_closed_ws(websocket)
-                break
-        await asyncio.sleep(5)
 
 async def init_ws():
     print('init_ws()')
