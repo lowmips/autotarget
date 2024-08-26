@@ -29,11 +29,11 @@ ws.addEventListener('message', function(event) {
     if (subscriptionItem === undefined) {
         return;
     }
-    //const lastBar = subscriptionItem.lastBar;
-    //const nextBarTime = getNextMinuteBarTime(lastBar.time);
+    const lastBar = subscriptionItem.lastBar;
+    const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
 
     let bar;
-    /*if (tradeTime >= nextBarTime) {
+    if (tradeTime >= nextBarTime) {
         bar = {
             time: nextBarTime,
             open: tradePriceOpen,
@@ -50,14 +50,7 @@ ws.addEventListener('message', function(event) {
             close: tradePriceClose,
         };
         console.log('[socket] Update the latest bar by price', tradePriceClose);
-    }*/
-    bar = {
-        time: tradeTimeStr,
-        open: tradePriceOpen,
-        high: tradePriceHigh,
-        low: tradePriceLow,
-        close: tradePriceClose,
-    };
+    }
     console.log('[socket] Generate new bar', bar);
 
     subscriptionItem.lastBar = bar;
@@ -187,13 +180,13 @@ export function unsubscribeFromStream(subscriberUID) {
 }
 
 
-function getNextMinuteBarTime(barTime){
+function getNextBarTime(barTime, resolution){
     const date = new Date(barTime * 1000);
-    date.setMinutes(date.getMinutes() + 1);
+    date.setMinutes(date.getMinutes() + resolution);
     return date.getTime() / 1000;
 }
-function getNextDailyBarTime(barTime) {
+/*function getNextDailyBarTime(barTime) {
     const date = new Date(barTime * 1000);
     date.setDate(date.getDate() + 1);
     return date.getTime() / 1000;
-}
+}*/
