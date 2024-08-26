@@ -27,15 +27,15 @@ ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
 ws_connected = {}
 subs_to_ws = {} # pair_id -> [] websocket id's
 klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
+pair_id_info = {} # pair_id => exchange, from_token, to_token
 pair_id_latest = {} # pair_id => latest_kline
 main_loop_max_wait = 5 # we'll wait at most 5 seconds between update klines lookups
 
 async def handle_closed_ws(websocket):
-
-
     del ws_connected[websocket.id.hex]
-
-
+    for pair_id in subs_to_ws:
+        if websocket.id.hex in subs_to_ws[pair_id]:
+            subs_to_ws[pair_id].remove(websocket.id.hex)
 
 async def main_loop():
     mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
@@ -70,6 +70,12 @@ async def main_loop():
                 }
             if not pair_id in pair_id_latest:
                 pair_id_latest[pair_id] = {"latest_kline": None}
+            if not pair_id in pair_id_info:
+                pair_id_info[pair_id] = {
+                    "exchange": exchange,
+                    "from_token": pair_l,
+                    "to_token": pair_r
+                }
             pair_count += 1
 
     if pair_count == 0:
@@ -119,9 +125,42 @@ async def main_loop():
 
 async def send_kline_update(pair_id, timestamp, open, high, low, close):
     print('send_kline_update('+str(pair_id)+','+str(timestamp)+','+open+','+high+','+low+','+close+')')
-    await asyncio.sleep(1)
+    if not pair_id in subs_to_ws:
+        print('No subs for pair!')
+        return
+    # get the exchange name
+    if not pair_id in pair_id_info:
+        print('pair_id['+str(pair_id)+'] not in pair_id_info')
+        return
+    pair_info = pair_id_info[pair_id]
 
+    # format the update string
+    update_str = "0~{ex}~{fsym}~{tsym}~{ts}~{open}~{high}~{low}~{close}".format(
+        ex=pair_info.exchange, fsym=pair_info.from_token, tsym=pair_info.to_token, ts=timestamp,
+        open=open, high=high, low=low, close=close
+        )
+    print('update is [{us}]').format(us=update_str)
 
+    for ws_hex_id in subs_to_ws[pair_id]:
+        if not ws_hex_id in ws_connected:
+            print(ws_hex_id + ' not in ws_connected!')
+            continue
+        print('sending update to websocket ['+ws_hex_id+']')
+        try:
+            await ws_connected[ws_hex_id]['ws'].send(update_str)
+        except websockets.ConnectionClosedOK:
+            print('websockets.ConnectionClosedOK' + websocket.id.hex)
+            await handle_closed_ws(websocket)
+
+def pair_id_to_exchange(pair_id):
+    print('pair_id_to_exchange('+str(pair_id)+')')
+    # klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
+    for exchange in klines_available:
+        for from_token in klines_available[exchange]['pairs']:
+            for to_token in klines_available[exchange]['pairs'][from_token]:
+                if klines_available[exchange]['pairs'][from_token][to_token] == pair_id:
+                    return exchange
+    return None
 
 async def handle_ws(websocket,path):
     print('websocket:')
@@ -197,13 +236,14 @@ async def handle_msg(websocket, msg):
                 ws_connected[websocket.id.hex]['subs'][exchange][from_token] = {}
             if to_token in ws_connected[websocket.id.hex]['subs'][exchange][from_token]:
                 print('already subscribed')
+                return
             else:
-                ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = 1
-
+                ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = pair_id
 
             # add the pair_id -> websocket[] reverse lookup
-
-
+            if not pair_id in subs_to_ws:
+                subs_to_ws[pair_id] = []
+            subs_to_ws[pair_id].append(websocket.id.hex)
 
 def check_subscription(exchange, from_token, to_token):
     print('check_subscription('+exchange+','+from_token+','+to_token+')')
