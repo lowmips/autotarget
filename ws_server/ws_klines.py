@@ -5,6 +5,7 @@ import logging
 import websockets
 import ssl
 import sys
+import time
 from zmysql import mysqlDBC
 
 config = None
@@ -26,8 +27,8 @@ ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
 ws_connected = {}
 subs_to_ws = {} # pair_id -> [] websocket id's
 klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
-pair_id_latest = {} # pair_id => latest_kline, crc32
-
+pair_id_latest = {} # pair_id => latest_kline
+main_loop_max_wait = 5 # we'll wait at most 5 seconds between update klines lookups
 
 async def handle_closed_ws(websocket):
 
@@ -67,6 +68,8 @@ async def main_loop():
                     "pair_id": pair_id,
                     "latest_kline": None,
                 }
+            if not pair_id in pair_id_latest:
+                pair_id_latest[pair_id] = {"latest_kline": None}
             pair_count += 1
 
     if pair_count == 0:
@@ -78,22 +81,46 @@ async def main_loop():
     while True:
         print('main_loop()')
         print('client count: ' + str(len(ws_connected)))
+        loop_start = int(time.time())
 
         # get the latest klines for all pairs
         q = "SELECT * FROM `klines_latest`"
         latest_rows = mdb.query_get_all(q)
         for latest_row in latest_rows:
-            meta_id = int(latest_row['meta_id'])
+            pair_id = latest_row['meta_id']
             timestamp = latest_row['timestamp']
             open = latest_row['open']
             high = latest_row['high']
             low = latest_row['low']
             close = latest_row['close']
 
+            if (    (pair_id_latest[pair_id]['latest_kline'] is None) or
+                    (pair_id_latest[pair_id]['latest_kline']['timestamp'] != timestamp) or
+                    (pair_id_latest[pair_id]['latest_kline']['open'] != open) or
+                    (pair_id_latest[pair_id]['latest_kline']['high'] != high) or
+                    (pair_id_latest[pair_id]['latest_kline']['low'] != low) or
+                    (pair_id_latest[pair_id]['latest_kline']['close'] != close) or
+                ):
+                await send_kline_update(pair_id, timestamp, open, high, low, close)
+            pair_id_latest[pair_id]['latest_kline'] = {
+                "timestamp": timestamp,
+                "open": open,
+                "high": high,
+                "low": low,
+                "close":close
+            }
 
+        loop_end = int(time.time())
+        loop_diff = loop_end - loop_start
+        if loop_diff < main_loop_max_wait:
+            sleep_time = main_loop_max_wait - loop_diff
+            print('sleeping ['+str(sleep_time)+']')
+            await asyncio.sleep(sleep_time)
 
+async def send_kline_update(pair_id, timestamp, open, high, low, close):
+    print('send_kline_update('+pair_id+','+timestamp+','+open+','+high+','+low+','+close+')')
+    await asyncio.sleep(1)
 
-        await asyncio.sleep(10)
 
 
 async def handle_ws(websocket,path):
