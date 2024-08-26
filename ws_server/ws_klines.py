@@ -86,9 +86,9 @@ async def main_loop():
 
     while True:
         print('main_loop()')
-        print('client count: ' + str(len(ws_connected)))
-        print('subs_to_ws:')
-        print(subs_to_ws)
+        #print('client count: ' + str(len(ws_connected)))
+        #print('subs_to_ws:')
+        #print(subs_to_ws)
 
         loop_start = int(time.time())
 
