@@ -24,13 +24,9 @@ ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
 
 
 ws_connected = {}
-subs_to_ws = {} # exchange -> from symbol -> to symbol -> [] websocket id's
-klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> {pair_id, latest_kline}
-
-
-
-
-
+subs_to_ws = {} # pair_id -> [] websocket id's
+klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
+pair_id_latest = {} # pair_id => latest_kline, crc32
 
 
 async def handle_closed_ws(websocket):
