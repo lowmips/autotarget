@@ -85,7 +85,7 @@ async def main_loop():
     print(klines_available)
 
     while True:
-        print('main_loop()')
+        #print('main_loop()')
         #print('client count: ' + str(len(ws_connected)))
         #print('subs_to_ws:')
         #print(subs_to_ws)
@@ -123,7 +123,7 @@ async def main_loop():
         loop_diff = loop_end - loop_start
         if loop_diff < main_loop_max_wait:
             sleep_time = main_loop_max_wait - loop_diff
-            print('sleeping ['+str(sleep_time)+']')
+            #print('sleeping ['+str(sleep_time)+']')
             await asyncio.sleep(sleep_time)
 
 async def send_kline_update(pair_id, timestamp, open, high, low, close):
