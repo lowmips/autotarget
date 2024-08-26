@@ -31,6 +31,7 @@ ws.addEventListener('message', function(event) {
     }
     const lastBar = subscriptionItem.lastBar;
     const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
+    console.log('lastBar.time['+lastBar.time+'] nextBarTime['+nextBarTime+']');
 
     let bar;
     if (tradeTime >= nextBarTime) {
