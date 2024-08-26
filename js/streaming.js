@@ -153,6 +153,7 @@ export function subscribeOnStream(
 }
 
 export function unsubscribeFromStream(subscriberUID) {
+    console.log('unsubscribeFromStream('+subscriberUID+')')
 
     // Find a subscription with id === subscriberUID
     for (const channelString of channelToSubscription.keys()) {
