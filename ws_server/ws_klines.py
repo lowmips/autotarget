@@ -139,7 +139,7 @@ async def send_kline_update(pair_id, timestamp, open, high, low, close):
 
     # format the update string
     update_str = "0~{ex}~{fsym}~{tsym}~{ts}~{open}~{high}~{low}~{close}".format(
-        ex=pair_info.exchange, fsym=pair_info.from_token, tsym=pair_info.to_token, ts=timestamp,
+        ex=pair_info['exchange'], fsym=pair_info['from_token'], tsym=pair_info['to_token'], ts=timestamp,
         open=open, high=high, low=low, close=close
         )
     print('update is [{us}]').format(us=update_str)
