@@ -142,7 +142,7 @@ async def send_kline_update(pair_id, timestamp, open, high, low, close):
         ex=pair_info['exchange'], fsym=pair_info['from_token'], tsym=pair_info['to_token'], ts=timestamp,
         open=open, high=high, low=low, close=close
         )
-    print('update is [{us}]').format(us=update_str)
+    print('update is [{us}]'.format(us=update_str))
 
     for ws_hex_id in subs_to_ws[pair_id]:
         if not ws_hex_id in ws_connected:
