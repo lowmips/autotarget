@@ -52,70 +52,14 @@ ws.addEventListener('message', function(event) {
         };
         console.log('[socket] Update the latest bar by price', tradePriceClose);
     }
-    console.log('[socket] Generate new bar', bar);
+    console.log('[socket] lastBar', bar);
 
     subscriptionItem.lastBar = bar;
 
     // Send data to every subscriber of that symbol
     subscriptionItem.handlers.forEach(handler => handler.callback(bar));
 
-})
-
-
-// 0~Bitfinex~BTC~USD~2~335394436~1548837377~0.36~3504.1~1261.4759999999999~1f
-/*socket.on('m', data => {
-    console.log('[socket] Message:', data);
-    const [
-        eventTypeStr,
-        exchange,
-        fromSymbol,
-        toSymbol,
-        ,
-        ,
-        tradeTimeStr,
-        ,
-        tradePriceStr,
-    ] = data.split('~');
-
-    if (parseInt(eventTypeStr) !== 0) {
-        // Skip all non-trading events
-        return;
-    }
-    const tradePrice = parseFloat(tradePriceStr);
-    const tradeTime = parseInt(tradeTimeStr);
-    const channelString = `0~${exchange}~${fromSymbol}~${toSymbol}`;
-    const subscriptionItem = channelToSubscription.get(channelString);
-    if (subscriptionItem === undefined) {
-        return;
-    }
-    const lastDailyBar = subscriptionItem.lastDailyBar;
-    const nextDailyBarTime = getNextDailyBarTime(lastDailyBar.time);
-
-    let bar;
-    if (tradeTime >= nextDailyBarTime) {
-        bar = {
-            time: nextDailyBarTime,
-            open: tradePrice,
-            high: tradePrice,
-            low: tradePrice,
-            close: tradePrice,
-        };
-        console.log('[socket] Generate new bar', bar);
-    } else {
-        bar = {
-            ...lastDailyBar,
-            high: Math.max(lastDailyBar.high, tradePrice),
-            low: Math.min(lastDailyBar.low, tradePrice),
-            close: tradePrice,
-        };
-        console.log('[socket] Update the latest bar by price', tradePrice);
-    }
-    subscriptionItem.lastDailyBar = bar;
-
-    // Send data to every subscriber of that symbol
-    subscriptionItem.handlers.forEach(handler => handler.callback(bar));
 });
-*/
 
 const channelToSubscription = new Map();
 export function subscribeOnStream(
