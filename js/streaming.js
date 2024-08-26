@@ -51,7 +51,7 @@ ws.addEventListener('message', function(event) {
         };
         console.log('[socket] Update the latest bar by price', tradePriceClose);
     }
-    subscriptionItem.lastDailyBar = bar;
+    subscriptionItem.lastBar = bar;
 
     // Send data to every subscriber of that symbol
     subscriptionItem.handlers.forEach(handler => handler.callback(bar));
