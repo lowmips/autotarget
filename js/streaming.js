@@ -49,7 +49,7 @@ ws.addEventListener('message', function(event) {
             low: tradePriceLow,
             close: tradePriceClose,
         };
-        console.log('[socket] Update the latest bar by price', tradePrice);
+        console.log('[socket] Update the latest bar by price', tradePriceClose);
     }
     subscriptionItem.lastDailyBar = bar;
 
