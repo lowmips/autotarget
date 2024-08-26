@@ -126,7 +126,7 @@ export function subscribeOnStream(
     lastBar
 )
 {
-    //console.log('subscribeOnStream()');
+    console.log('subscribeOnStream(,'+resolution+',,'+subscriberUID+',,)');
     //console.log(symbolInfo);
     const symbolStr = `${symbolInfo.exchange}:${symbolInfo.name}`;
     //console.log('symbolStr: '+symbolStr);
