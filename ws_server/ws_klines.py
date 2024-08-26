@@ -118,7 +118,7 @@ async def main_loop():
             await asyncio.sleep(sleep_time)
 
 async def send_kline_update(pair_id, timestamp, open, high, low, close):
-    print('send_kline_update('+str(pair_id)+','+timestamp+','+open+','+high+','+low+','+close+')')
+    print('send_kline_update('+str(pair_id)+','+str(timestamp)+','+open+','+high+','+low+','+close+')')
     await asyncio.sleep(1)
 
 
