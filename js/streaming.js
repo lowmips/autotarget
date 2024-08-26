@@ -127,7 +127,7 @@ export function unsubscribeFromStream(subscriberUID) {
 
 function getNextBarTime(barTime, resolution){
     console.log('getNextBarTime('+barTime+','+resolution+')');
-    const date = new Date(barTime);
+    const date = new Date(barTime / 1000);
     date.setMinutes(date.getMinutes() + resolution);
     return date.getTime();
 }
