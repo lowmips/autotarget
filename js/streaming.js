@@ -29,11 +29,11 @@ ws.addEventListener('message', function(event) {
     if (subscriptionItem === undefined) {
         return;
     }
-    const lastBar = subscriptionItem.lastBar;
-    const nextBarTime = getNextMinuteBarTime(lastBar.time);
+    //const lastBar = subscriptionItem.lastBar;
+    //const nextBarTime = getNextMinuteBarTime(lastBar.time);
 
     let bar;
-    if (tradeTime >= nextBarTime) {
+    /*if (tradeTime >= nextBarTime) {
         bar = {
             time: nextBarTime,
             open: tradePriceOpen,
@@ -50,7 +50,16 @@ ws.addEventListener('message', function(event) {
             close: tradePriceClose,
         };
         console.log('[socket] Update the latest bar by price', tradePriceClose);
-    }
+    }*/
+    bar = {
+        time: nextBarTime,
+        open: tradePriceOpen,
+        high: tradePriceHigh,
+        low: tradePriceLow,
+        close: tradePriceClose,
+    };
+    console.log('[socket] Generate new bar', bar);
+
     subscriptionItem.lastBar = bar;
 
     // Send data to every subscriber of that symbol
