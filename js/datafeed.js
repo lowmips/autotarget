@@ -59,6 +59,7 @@ export default {
                 throw new Error('Something went wrong');
             })
             .then((responseJson) => {
+                console.log('klines_received:');
                 console.log(responseJson);
                 let bars = Array();
                 for(let rj of responseJson){

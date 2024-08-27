@@ -32,7 +32,8 @@ while( $row = $result->fetch_assoc() ){
 $rows = [];
 $loop_ts = $from;
 while($loop_ts < $to){
-    $span_end_ts = $loop_ts + ($resolution * 60) - 60;
+    #$span_end_ts = $loop_ts + ($resolution * 60) - 60;
+    $span_end_ts = $loop_ts + 60;
 
     // OPEN
     $q = "SELECT `open` FROM `klines_1` WHERE `timestamp`>=$loop_ts ORDER BY `timestamp` ASC LIMIT 1;";
