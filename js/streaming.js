@@ -32,7 +32,7 @@ ws.addEventListener('message', function(event) {
     const lastBar = subscriptionItem.lastBar;
     //const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
     const nextBarTime = getNextBarTime(lastBar.time, 1);
-    console.log('lastBar.time['+lastBar.time+'] nextBarTime['+nextBarTime+']');
+    console.log('tradeTime['+tradeTime+'] lastBar.time['+lastBar.time+'] nextBarTime['+nextBarTime+']');
 
     let bar;
     if (tradeTime >= nextBarTime) {
@@ -53,7 +53,7 @@ ws.addEventListener('message', function(event) {
         };
         console.log('[socket] Update the latest bar by price', tradePriceClose);
     }
-    console.log('[socket] updated bar', bar);
+    console.log('[socket] updated lastBar', bar);
 
     subscriptionItem.lastBar = bar;
 
