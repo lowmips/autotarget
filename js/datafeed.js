@@ -64,7 +64,7 @@ export default {
                 let bars = Array();
                 for(let rj of responseJson){
                     bars.push({
-                        time: rj.time * 1000,
+                        time: rj.time,
                         open: rj.open,
                         high: rj.high,
                         low: rj.low,
