@@ -23,7 +23,7 @@ ws.addEventListener('message', function(event) {
         // Skip all non-trading events
         return;
     }
-    const tradeTime = parseInt(tradeTimeStr);
+    const tradeTime = parseInt(tradeTimeStr) * 1000;
     const channelString = `0~${exchange}~${fromSymbol}~${toSymbol}`;
     const subscriptionItem = channelToSubscription.get(channelString);
     if (subscriptionItem === undefined) {
