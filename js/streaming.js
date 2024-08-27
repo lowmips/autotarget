@@ -134,7 +134,7 @@ function getNextBarTime(barTime, resolution){
     const date = new Date(barTime * 1000);
     console.log(date.toString());
     date.setMinutes(date.getMinutes() + resolution);
-    return date.getTime() * 1000;
+    return date.getTime();
 }
 /*function getNextDailyBarTime(barTime) {
     const date = new Date(barTime * 1000);
