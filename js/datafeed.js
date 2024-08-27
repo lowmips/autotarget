@@ -94,13 +94,16 @@ export default {
         console.log('[subscribeBars]: Method call with symbolInfo:', symbolInfo);
         console.log('[subscribeBars]: Method call with resolution:', resolution);
         console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
+        console.log('[subscribeBars]: lastBarsCache item is:');
+        let cache_item = lastBarsCache.get(`${symbolInfo.exchange}:${symbolInfo.name}`);
+        console.log(cache_item);
         subscribeOnStream(
             symbolInfo,
             resolution,
             onRealtimeCallback,
             subscriberUID,
             onResetCacheNeededCallback,
-            lastBarsCache.get(`${symbolInfo.exchange}:${symbolInfo.name}`)
+            cache_item
         );
     },
     unsubscribeBars: (subscriberUID) => {
