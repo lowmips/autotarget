@@ -30,7 +30,8 @@ ws.addEventListener('message', function(event) {
         return;
     }
     const lastBar = subscriptionItem.lastBar;
-    const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
+    //const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
+    const nextBarTime = getNextBarTime(lastBar.time, 1);
     console.log('lastBar.time['+lastBar.time+'] nextBarTime['+nextBarTime+']');
 
     let bar;
@@ -130,7 +131,7 @@ export function unsubscribeFromStream(subscriberUID) {
 
 function getNextBarTime(barTime, resolution){
     console.log('getNextBarTime('+barTime+','+resolution+')');
-    const date = new Date(barTime);
+    const date = new Date(barTime * 1000);
     console.log(date.toString());
     date.setMinutes(date.getMinutes() + resolution);
     return date.getTime() * 1000;
