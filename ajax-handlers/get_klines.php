@@ -74,7 +74,8 @@ while($loop_ts < $to){
         'close' => $close,
     ];
 
-    $loop_ts += ($resolution * 60);
+    //$loop_ts += ($resolution * 60);
+    $loop_ts += 60;
 }
 
 echo json_encode($rows);
