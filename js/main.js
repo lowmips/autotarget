@@ -11,4 +11,6 @@ window.tvWidget = new TradingView.widget({
     //timezone: 'America/New_York',
 });
 
-window.tvWidget.activeChart().setTimezone("America/New_York");
+window.tvWidget.onChartReady(function() {
+    window.tvWidget.activeChart().setTimezone("America/New_York");
+});
