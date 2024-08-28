@@ -8,9 +8,9 @@ window.tvWidget = new TradingView.widget({
     datafeed: Datafeed,
     library_path: 'charting_library/charting_library/',
     debug: true,
-    //timezone: 'America/New_York',
+    timezone: 'America/New_York',
 });
 
 window.tvWidget.onChartReady(function() {
-    window.tvWidget.activeChart().setTimezone("America/New_York");
+    //window.tvWidget.activeChart().setTimezone("America/New_York");
 });
