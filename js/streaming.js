@@ -144,17 +144,3 @@ export function unsubscribeFromStream(subscriberUID) {
         }
     }
 }
-
-
-function getNextBarTime(barTime, resolution){
-    console.log('getNextBarTime('+barTime+','+resolution+')');
-    const date = new Date(barTime);
-    console.log(date.toString());
-    date.setMinutes(date.getMinutes() + resolution);
-    return date.getTime();
-}
-/*function getNextDailyBarTime(barTime) {
-    const date = new Date(barTime * 1000);
-    date.setDate(date.getDate() + 1);
-    return date.getTime() / 1000;
-}*/
