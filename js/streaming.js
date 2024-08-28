@@ -30,6 +30,15 @@ ws.addEventListener('message', function(event) {
         return;
     }
     const lastBar = subscriptionItem.lastBar;
+
+    // determine starting timestamp for current bar, in case an old subscription started too early
+    // prevent putToCacheNewBar: time violation
+
+
+
+
+
+
     const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
     //const nextBarTime = getNextBarTime(lastBar.time, 1);
     console.log('tradeTime['+tradeTime+'] lastBar.time['+lastBar.time+'] nextBarTime['+nextBarTime+']');
