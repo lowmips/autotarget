@@ -1,7 +1,4 @@
 import Datafeed from './datafeed.js';
-import {makeApiRequest} from "./helpers_mexc.js";
-import {getAllSymbols} from "./datafeed.js";
-
 
 window.tvWidget = new TradingView.widget({
     symbol: 'MEXC:BTC/USDT',            // Default symbol pair
@@ -11,8 +8,7 @@ window.tvWidget = new TradingView.widget({
     datafeed: Datafeed,
     library_path: 'charting_library/charting_library/',
     debug: true,
-    timezone: 'America/New_York',
+    //timezone: 'America/New_York',
 });
 
-window.getAllSymbols = getAllSymbols;
-window.makeApiRequest = makeApiRequest;
+window.tvWidget.activeChart().setTimezone("America/New_York");
