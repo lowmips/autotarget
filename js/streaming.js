@@ -35,7 +35,7 @@ ws.addEventListener('message', function(event) {
     // prevent putToCacheNewBar: time violation
     let bar;
     let barTime;
-    console.log('resolution: ' + subscriptionItem.resolution);
+    //console.log('resolution: ' + subscriptionItem.resolution);
     if(subscriptionItem.resolution == 1){
         barTime = tradeTime * 1000;
     }else{
@@ -67,7 +67,7 @@ ws.addEventListener('message', function(event) {
         low: tradePriceLow,
         close: tradePriceClose,
     };
-    console.log('[socket] updated bar: ', bar);
+    //console.log('[socket] updated bar: ', bar);
     subscriptionItem.lastBar = bar;
 
     // Send data to every subscriber of that symbol
