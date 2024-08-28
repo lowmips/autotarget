@@ -248,6 +248,14 @@ async def handle_msg(websocket, msg):
                 subs_to_ws[pair_id] = []
             subs_to_ws[pair_id].append(websocket.id.hex)
 
+    if 'SubRemove' in msg_obj:
+        pass
+
+        #for pair_id in subs_to_ws:
+        #    if websocket.id.hex in subs_to_ws[pair_id]:
+        #        subs_to_ws[pair_id].remove(websocket.id.hex)
+
+
 def check_subscription(exchange, from_token, to_token):
     print('check_subscription('+exchange+','+from_token+','+to_token+')')
     # klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
