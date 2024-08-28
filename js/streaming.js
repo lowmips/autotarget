@@ -93,8 +93,8 @@ ws.addEventListener('message', function(event) {
         };
         console.log('[socket] Update the latest bar by price', tradePriceClose);
     }
-    console.log('[socket] updated lastBar', bar);
 */
+    console.log('[socket] updated bar: ', bar);
     subscriptionItem.lastBar = bar;
 
     // Send data to every subscriber of that symbol
