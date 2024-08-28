@@ -19,6 +19,7 @@ if($from % 60 != 0) $from = $from - ($from % 60);
 if($to % 60 != 0) $to = $to + (60 - ($to % 60));
 
 #echo "from $from to $to<br/>\n";
+// determine the correct start for this bar, aligned by resolution minutes, starting at the start of day GMT (00:00:00)
 $resolution_aligned_start_ts = $from;
 $seconds_in_resolution = $resolution * 60;
 $dt_from = new DateTime('now', new DateTimeZone('GMT'));
