@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev" />
+    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/main.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,39 +115,7 @@
       <workItem from="1716330978598" duration="19039000" />
       <workItem from="1719528758389" duration="3603000" />
       <workItem from="1720824176215" duration="10706000" />
-      <workItem from="1724089254138" duration="59884000" />
-    </task>
-    <task id="LOCAL-01018" summary="dev">
-      <option name="closed" value="true" />
-      <created>1724698018249</created>
-      <option name="number" value="01018" />
-      <option name="presentableId" value="LOCAL-01018" />
-      <option name="project" value="LOCAL" />
-      <updated>1724698018249</updated>
-    </task>
-    <task id="LOCAL-01019" summary="dev">
-      <option name="closed" value="true" />
-      <created>1724698985297</created>
-      <option name="number" value="01019" />
-      <option name="presentableId" value="LOCAL-01019" />
-      <option name="project" value="LOCAL" />
-      <updated>1724698985297</updated>
-    </task>
-    <task id="LOCAL-01020" summary="dev">
-      <option name="closed" value="true" />
-      <created>1724699448819</created>
-      <option name="number" value="01020" />
-      <option name="presentableId" value="LOCAL-01020" />
-      <option name="project" value="LOCAL" />
-      <updated>1724699448819</updated>
-    </task>
-    <task id="LOCAL-01021" summary="dev">
-      <option name="closed" value="true" />
-      <created>1724699484721</created>
-      <option name="number" value="01021" />
-      <option name="presentableId" value="LOCAL-01021" />
-      <option name="project" value="LOCAL" />
-      <updated>1724699484721</updated>
+      <workItem from="1724089254138" duration="60741000" />
     </task>
     <task id="LOCAL-01022" summary="dev">
       <option name="closed" value="true" />
@@ -506,7 +477,39 @@
       <option name="project" value="LOCAL" />
       <updated>1724863732081</updated>
     </task>
-    <option name="localTasksCounter" value="1067" />
+    <task id="LOCAL-01067" summary="dev">
+      <option name="closed" value="true" />
+      <created>1724864104213</created>
+      <option name="number" value="01067" />
+      <option name="presentableId" value="LOCAL-01067" />
+      <option name="project" value="LOCAL" />
+      <updated>1724864104213</updated>
+    </task>
+    <task id="LOCAL-01068" summary="dev">
+      <option name="closed" value="true" />
+      <created>1724864249965</created>
+      <option name="number" value="01068" />
+      <option name="presentableId" value="LOCAL-01068" />
+      <option name="project" value="LOCAL" />
+      <updated>1724864249965</updated>
+    </task>
+    <task id="LOCAL-01069" summary="dev">
+      <option name="closed" value="true" />
+      <created>1724864342115</created>
+      <option name="number" value="01069" />
+      <option name="presentableId" value="LOCAL-01069" />
+      <option name="project" value="LOCAL" />
+      <updated>1724864342116</updated>
+    </task>
+    <task id="LOCAL-01070" summary="dev">
+      <option name="closed" value="true" />
+      <created>1724864388043</created>
+      <option name="number" value="01070" />
+      <option name="presentableId" value="LOCAL-01070" />
+      <option name="project" value="LOCAL" />
+      <updated>1724864388043</updated>
+    </task>
+    <option name="localTasksCounter" value="1071" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -7,6 +7,9 @@ window.tvWidget = new TradingView.widget({
     fullscreen: true,                      // Displays the chart in the fullscreen mode
     interval: '60',                        // Default interval
     library_path: 'charting_library/charting_library/',
+    overrides: {
+        "mainSeriesProperties.showCountdown": true,
+    },
     symbol: 'MEXC:BTC/USDT',            // Default symbol pair
     theme: "dark",
     timezone: 'America/New_York',
