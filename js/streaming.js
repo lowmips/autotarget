@@ -23,22 +23,53 @@ ws.addEventListener('message', function(event) {
         // Skip all non-trading events
         return;
     }
-    const tradeTime = parseInt(tradeTimeStr) * 1000;
+    //const tradeTime = parseInt(tradeTimeStr) * 1000;
+    const tradeTime = parseInt(tradeTimeStr);
     const channelString = `0~${exchange}~${fromSymbol}~${toSymbol}`;
     const subscriptionItem = channelToSubscription.get(channelString);
     if (subscriptionItem === undefined) {
         return;
     }
-    const lastBar = subscriptionItem.lastBar;
 
     // determine starting timestamp for current bar, in case an old subscription started too early
     // prevent putToCacheNewBar: time violation
+    let bar;
+    let barTime;
+    if(subscriptionItem.resolution == 1){
+        barTime = tradeTime;
+    }else{
+        let seconds_in_resolution = subscriptionItem.resolution * 60;
+        let dt_startOfDay = new Date();
+        let dt_barStart = new Date();
+        let dt_tradeTime = new Date();
+        let sod_trade_diff;
+        let bars_in_diff;
+        let bars_in_diff_int;
+        let seconds_in_bars_in_diff;
+
+        dt_tradeTime.setTime(tradeTime);
+        dt_startOfDay.setTime(tradeTime);
+        dt_startOfDay.setUTCHours(0);
+        dt_startOfDay.setUTCMinutes(0);
+        dt_startOfDay.setUTCSeconds(0);
+        dt_startOfDay.setUTCMilliseconds(0);
+        sod_trade_diff = parseInt((dt_tradeTime.getTime() - dt_startOfDay.getTime()) / 1000);
+        bars_in_diff = sod_trade_diff / seconds_in_resolution;
+        bars_in_diff_int = Math.floor(bars_in_diff);
+        seconds_in_bars_in_diff = bars_in_diff_int * seconds_in_resolution;
+        barTime = (seconds_in_bars_in_diff * 1000) + dt_startOfDay.getTime();
+    }
+
+    bar = {
+        time: barTime,
+        open: tradePriceOpen,
+        high: tradePriceHigh,
+        low: tradePriceLow,
+        close: tradePriceClose,
+    };
 
 
-
-
-
-
+    /*const lastBar = subscriptionItem.lastBar;
     const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
     //const nextBarTime = getNextBarTime(lastBar.time, 1);
     console.log('tradeTime['+tradeTime+'] lastBar.time['+lastBar.time+'] nextBarTime['+nextBarTime+']');
@@ -63,7 +94,7 @@ ws.addEventListener('message', function(event) {
         console.log('[socket] Update the latest bar by price', tradePriceClose);
     }
     console.log('[socket] updated lastBar', bar);
-
+*/
     subscriptionItem.lastBar = bar;
 
     // Send data to every subscriber of that symbol
