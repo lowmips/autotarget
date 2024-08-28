@@ -87,6 +87,10 @@ export function subscribeOnStream(
     };
     let subscriptionItem = channelToSubscription.get(channelString);
     if (subscriptionItem) {
+        // update the resolution
+        subscriptionItem.resolution = resolution;
+        channelToSubscription.set(channelString, subscriptionItem);
+
         // Already subscribed to the channel, use the existing subscription
         subscriptionItem.handlers.push(handler);
         return;
