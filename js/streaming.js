@@ -47,7 +47,6 @@ ws.addEventListener('message', function(event) {
         let bars_in_diff;
         let bars_in_diff_int;
         let seconds_in_bars_in_diff;
-
         dt_tradeTime.setTime(tradeTime * 1000);
         dt_startOfDay.setTime(tradeTime * 1000);
         dt_startOfDay.setUTCHours(0);
@@ -68,33 +67,6 @@ ws.addEventListener('message', function(event) {
         low: tradePriceLow,
         close: tradePriceClose,
     };
-
-
-    /*const lastBar = subscriptionItem.lastBar;
-    const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
-    //const nextBarTime = getNextBarTime(lastBar.time, 1);
-    console.log('tradeTime['+tradeTime+'] lastBar.time['+lastBar.time+'] nextBarTime['+nextBarTime+']');
-
-    let bar;
-    if (tradeTime >= nextBarTime) {
-        bar = {
-            time: nextBarTime,
-            open: tradePriceOpen,
-            high: tradePriceHigh,
-            low: tradePriceLow,
-            close: tradePriceClose,
-        };
-        console.log('[socket] Generate new bar', bar);
-    } else {
-        bar = {
-            ...lastBar,
-            high: tradePriceHigh,
-            low: tradePriceLow,
-            close: tradePriceClose,
-        };
-        console.log('[socket] Update the latest bar by price', tradePriceClose);
-    }
-*/
     console.log('[socket] updated bar: ', bar);
     subscriptionItem.lastBar = bar;
 
