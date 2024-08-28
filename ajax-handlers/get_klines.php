@@ -12,28 +12,41 @@ if(!array_key_exists('resolution', $_REQUEST) || !array_key_exists('from', $_REQ
 $resolution = $mysqli->real_escape_string($_REQUEST['resolution']);
 $from = $mysqli->real_escape_string($_REQUEST['from']);
 $to = $mysqli->real_escape_string($_REQUEST['to']);
-
-#if($from % 60 != 0) die("from[$from] not centered on 1 minute interval");
-#if($to % 60 != 0) die("to[$to] not centered on 1 minute interval");
 if($to < $from) die("to < from");
-#if( (($to - $from) % $resolution) != 0) die("range does not end on [$resolution] interval");
 
 // align requests on 1 minute intervals
 if($from % 60 != 0) $from = $from - ($from % 60);
 if($to % 60 != 0) $to = $to + (60 - ($to % 60));
 
 #echo "from $from to $to<br/>\n";
+$resolution_aligned_start_ts = $from;
+$seconds_in_resolution = $resolution * 60;
+$dt_from = new DateTime('now', new DateTimeZone('GMT'));
+$dt_from->setTimestamp((int)$from);
+if($resolution > 1){
+    $dt_day_start = clone $dt_from;
+    $dt_day_start->setTime(0,0,0);
+    $start_from_seconds_diff = $dt_from->getTimestamp() - $dt_day_start->getTimestamp();
+    $bars_in_diff = $start_from_seconds_diff / $seconds_in_resolution;
+    $resolution_aligned_start_ts = ((int)$bars_in_diff * $seconds_in_resolution) + $dt_day_start->getTimestamp();
+    $dt_from->setTimestamp($resolution_aligned_start_ts);
+}
 
-/*$q = "CALL get_klines($resolution, $from, $to)";
-$result = $mysqli->query($q);
-while( $row = $result->fetch_assoc() ){
-    print_r($row);
-}*/
 $rows = [];
-$loop_ts = $from;
+$loop_ts = $resolution_aligned_start_ts;
 while($loop_ts < $to){
-    #$span_end_ts = $loop_ts + ($resolution * 60) - 60;
-    $span_end_ts = $loop_ts + 60;
+    $original_day_of_month = $dt_from->format('d');
+    $span_end_ts = $loop_ts + $seconds_in_resolution - 60;
+
+    // align span end on new day
+    $dt_span_end = new DateTime('now', new DateTimeZone('GMT'));
+    $dt_span_end->setTimestamp($span_end_ts);
+    $span_end_day_of_month = $dt_span_end->format('d');
+    if($original_day_of_month != $span_end_day_of_month){
+        $dt_span_end->setTime(0,0,0);
+        $dt_span_end->sub(new DateInterval('PT1M'));
+        $span_end_ts = $dt_span_end->getTimestamp();
+    }
 
     // OPEN
     $q = "SELECT `open` FROM `klines_1` WHERE `timestamp`>=$loop_ts ORDER BY `timestamp` ASC LIMIT 1;";
@@ -42,8 +55,6 @@ while($loop_ts < $to){
     if(!is_array($row = $result->fetch_assoc())) {
         // Probably requesting klines for data we don't have yet....
         break;
-
-        //die("kline query fetch_assoc failure: $q");
     }
     $open = (float)$row['open'];
 
@@ -74,8 +85,21 @@ while($loop_ts < $to){
         'close' => $close,
     ];
 
-    //$loop_ts += ($resolution * 60);
-    $loop_ts += 60;
+    // find next span timestamp
+    if($resolution == 1){
+        $loop_ts += 60;
+    }else{
+        $loop_ts += $seconds_in_resolution;
+    }
+
+    $dt_from->setTimestamp($loop_ts);
+    $new_day_of_month = $dt_from->format('d');
+    if($original_day_of_month != $new_day_of_month){
+        // the day changed, align spans to the new day
+        $dt_from->setTime(0,0,0);
+        $loop_ts = $dt_from->getTimestamp();
+    }
+
 }
 
 echo json_encode($rows);
