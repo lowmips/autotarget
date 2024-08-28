@@ -250,11 +250,28 @@ async def handle_msg(websocket, msg):
 
     if 'SubRemove' in msg_obj:
         pass
-
-        #for pair_id in subs_to_ws:
-        #    if websocket.id.hex in subs_to_ws[pair_id]:
-        #        subs_to_ws[pair_id].remove(websocket.id.hex)
-
+        if 'subs' in msg_obj['SubRemove']:
+            for sub in msg_obj['SubRemove']['subs']:
+                print('sub: '+sub)
+                sub_list = sub.split('~')
+                if len(sub_list) != 4:
+                    reason = 'invalid SubRemove definition'
+                    print(reason)
+                    continue
+                ignore_me = sub_list[0]
+                exchange = sub_list[1]
+                from_token = sub_list[2]
+                to_token = sub_list[3]
+                if not check_subscription(exchange, from_token, to_token):
+                    print('invalid SubRemove definition')
+                    continue
+                pair_id = klines_available[exchange]['pairs'][from_token][to_token]['pair_id']
+                for pair_id in subs_to_ws:
+                    if websocket.id.hex in subs_to_ws[pair_id]:
+                        subs_to_ws[pair_id].remove(websocket.id.hex)
+                if to_token in  ws_connected[websocket.id.hex]['subs'][exchange][from_token]:
+                    del ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token]
+                print('Unsubscribed ws[{ws}] exchange[{ex}] from_token[{ft}] to_token[{tt}] '.format(ws=websocket.id.hex, ex=exchange, ft=from_token, tt=to_token))
 
 def check_subscription(exchange, from_token, to_token):
     print('check_subscription('+exchange+','+from_token+','+to_token+')')
