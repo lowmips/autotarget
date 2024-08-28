@@ -35,8 +35,9 @@ ws.addEventListener('message', function(event) {
     // prevent putToCacheNewBar: time violation
     let bar;
     let barTime;
+    console.log('resolution: ' + subscriptionItem.resolution);
     if(subscriptionItem.resolution == 1){
-        barTime = tradeTime;
+        barTime = tradeTime * 1000;
     }else{
         let seconds_in_resolution = subscriptionItem.resolution * 60;
         let dt_startOfDay = new Date();
