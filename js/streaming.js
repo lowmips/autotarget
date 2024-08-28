@@ -30,8 +30,8 @@ ws.addEventListener('message', function(event) {
         return;
     }
     const lastBar = subscriptionItem.lastBar;
-    //const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
-    const nextBarTime = getNextBarTime(lastBar.time, 1);
+    const nextBarTime = getNextBarTime(lastBar.time, subscriptionItem.resolution);
+    //const nextBarTime = getNextBarTime(lastBar.time, 1);
     console.log('tradeTime['+tradeTime+'] lastBar.time['+lastBar.time+'] nextBarTime['+nextBarTime+']');
 
     let bar;
