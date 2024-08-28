@@ -32,6 +32,7 @@ export default {
             minmov: 1,
             pricescale: 100,
             has_intraday: true,
+            intraday_multipliers: configurationData.supported_resolutions,
             visible_plots_set: 'ohlc',
             has_weekly_and_monthly: false,
             supported_resolutions: configurationData.supported_resolutions,
