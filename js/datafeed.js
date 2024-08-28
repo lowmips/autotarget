@@ -93,9 +93,9 @@ export default {
         onResetCacheNeededCallback
     ) => {
         console.log('[subscribeBars]: Method call with symbolInfo:', symbolInfo);
-        console.log('[subscribeBars]: Method call with resolution:', resolution);
-        console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
-        console.log('[subscribeBars]: lastBarsCache item is:');
+        //console.log('[subscribeBars]: Method call with resolution:', resolution);
+        //console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
+        //console.log('[subscribeBars]: lastBarsCache item is:');
         let cache_item = lastBarsCache.get(`${symbolInfo.exchange}:${symbolInfo.name}`);
         console.log(cache_item);
         subscribeOnStream(
