@@ -11,6 +11,7 @@ window.tvWidget = new TradingView.widget({
     datafeed: Datafeed,
     library_path: 'charting_library/charting_library/',
     debug: true,
+    timezone: 'America/New_York',
 });
 
 window.getAllSymbols = getAllSymbols;
