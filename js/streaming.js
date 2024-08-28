@@ -86,8 +86,8 @@ export function subscribeOnStream(
 )
 {
     console.log('subscribeOnStream(,'+resolution+',,'+subscriberUID+',,)');
-    console.log('lastBar:');
-    console.log(lastBar);
+    //console.log('lastBar:');
+    //console.log(lastBar);
 
     //console.log(symbolInfo);
     const symbolStr = `${symbolInfo.exchange}:${symbolInfo.name}`;
