@@ -48,8 +48,8 @@ ws.addEventListener('message', function(event) {
         let bars_in_diff_int;
         let seconds_in_bars_in_diff;
 
-        dt_tradeTime.setTime(tradeTime);
-        dt_startOfDay.setTime(tradeTime);
+        dt_tradeTime.setTime(tradeTime * 1000);
+        dt_startOfDay.setTime(tradeTime * 1000);
         dt_startOfDay.setUTCHours(0);
         dt_startOfDay.setUTCMinutes(0);
         dt_startOfDay.setUTCSeconds(0);
