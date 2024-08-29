@@ -41,6 +41,7 @@ ws.addEventListener('message', function(event) {
     if(subscriptionItem.resolution == 1){
         barTime = tradeTime * 1000;
     }else{
+        // todo: use window.tvWidget.activeChart().barTimeToEndOfPeriod() to determine start of day?
         let seconds_in_resolution = subscriptionItem.resolution * 60;
         let dt_startOfDay = new Date();
         let dt_barStart = new Date();
