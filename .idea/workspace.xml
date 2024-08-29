@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/streaming.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/streaming.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,15 +115,7 @@
       <workItem from="1716330978598" duration="19039000" />
       <workItem from="1719528758389" duration="3603000" />
       <workItem from="1720824176215" duration="10706000" />
-      <workItem from="1724089254138" duration="67560000" />
-    </task>
-    <task id="LOCAL-01036" summary="dev">
-      <option name="closed" value="true" />
-      <created>1724758008001</created>
-      <option name="number" value="01036" />
-      <option name="presentableId" value="LOCAL-01036" />
-      <option name="project" value="LOCAL" />
-      <updated>1724758008001</updated>
+      <workItem from="1724089254138" duration="68428000" />
     </task>
     <task id="LOCAL-01037" summary="dev">
       <option name="closed" value="true" />
@@ -508,7 +501,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724971627322</updated>
     </task>
-    <option name="localTasksCounter" value="1085" />
+    <task id="LOCAL-01085" summary="dev">
+      <option name="closed" value="true" />
+      <created>1724971718413</created>
+      <option name="number" value="01085" />
+      <option name="presentableId" value="LOCAL-01085" />
+      <option name="project" value="LOCAL" />
+      <updated>1724971718413</updated>
+    </task>
+    <option name="localTasksCounter" value="1086" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
