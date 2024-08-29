@@ -19,10 +19,7 @@ window.tvWidget.onChartReady(function() {
     console.log('onChartReady()');
     //window.tvWidget.activeChart().setTimezone("America/New_York");
     //window.tvWidget.changeTheme('dark');
-
-    window.tvWidget.activeChart().dataReady(() => {
-        console.log('dataReady()');
-    });
-
-
+});
+window.tvWidget.activeChart().dataReady(() => {
+    console.log('dataReady()');
 });
