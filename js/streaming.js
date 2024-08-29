@@ -59,6 +59,7 @@ ws.addEventListener('message', function(event) {
         seconds_in_bars_in_diff = bars_in_diff_int * seconds_in_resolution;
         barTime = (seconds_in_bars_in_diff * 1000) + dt_startOfDay.getTime();
     }
+    console.log('barTime is: '+barTime);
 
     bar = {
         time: barTime,
