@@ -35,6 +35,8 @@ ws.addEventListener('message', function(event) {
     // prevent putToCacheNewBar: time violation
     let bar;
     let barTime;
+    let oldBar = subscriptionItem.lastBar;
+
     console.log('resolution: ' + subscriptionItem.resolution);
     if(subscriptionItem.resolution == 1){
         barTime = tradeTime * 1000;
@@ -61,13 +63,24 @@ ws.addEventListener('message', function(event) {
     }
     console.log('barTime is: '+barTime);
 
-    bar = {
-        time: barTime,
-        open: tradePriceOpen,
-        high: tradePriceHigh,
-        low: tradePriceLow,
-        close: tradePriceClose,
-    };
+    if(oldBar.time == barTime){
+        bar = {
+            ...oldBar,
+            high: Math.max(oldBar.high, tradePriceHigh),
+            low: Math.min(oldBar.low, tradePriceLow),
+            close: tradePriceClose,
+        };
+    }else{
+        bar = {
+            time: barTime,
+            open: tradePriceOpen,
+            high: tradePriceHigh,
+            low: tradePriceLow,
+            close: tradePriceClose,
+        };
+    }
+
+
     //console.log('[socket] updated bar: ', bar);
     subscriptionItem.lastBar = bar;
 
