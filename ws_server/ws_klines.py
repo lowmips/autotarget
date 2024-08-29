@@ -274,8 +274,10 @@ async def handle_msg(websocket, msg):
                 for pair_id in subs_to_ws:
                     if websocket.id.hex in subs_to_ws[pair_id]:
                         subs_to_ws[pair_id].remove(websocket.id.hex)
-                if to_token in  ws_connected[websocket.id.hex]['subs'][exchange][from_token]:
+                if exchange in ws_connected[websocket.id.hex]['subs'] and from_token in ws_connected[websocket.id.hex]['subs'][exchange] and to_token in ws_connected[websocket.id.hex]['subs'][exchange][from_token]:
                     del ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token]
+                    # todo: check for last from_token, exchange, and clean up 'subs'
+
                 print('Unsubscribed ws[{ws}] exchange[{ex}] from_token[{ft}] to_token[{tt}] '.format(ws=websocket.id.hex, ex=exchange, ft=from_token, tt=to_token))
 
 def check_subscription(exchange, from_token, to_token):
