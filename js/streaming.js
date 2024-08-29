@@ -37,7 +37,7 @@ ws.addEventListener('message', function(event) {
     let barTime;
     let oldBar = subscriptionItem.lastBar;
 
-    console.log('resolution: ' + subscriptionItem.resolution);
+    //console.log('resolution: ' + subscriptionItem.resolution);
     if(subscriptionItem.resolution == 1){
         barTime = tradeTime * 1000;
     }else{
@@ -61,7 +61,7 @@ ws.addEventListener('message', function(event) {
         seconds_in_bars_in_diff = bars_in_diff_int * seconds_in_resolution;
         barTime = (seconds_in_bars_in_diff * 1000) + dt_startOfDay.getTime();
     }
-    console.log('barTime is: '+barTime);
+    //console.log('barTime is: '+barTime);
 
     if(oldBar.time == barTime){
         bar = {
