@@ -79,7 +79,7 @@ while($loop_ts < $to){
     $low = (float)$row['low'];
 
     $rows[] = [
-        'time' => $loop_ts,
+        'time' => (int)$loop_ts,
         'open' => $open,
         'high' => $high,
         'low' => $low,
