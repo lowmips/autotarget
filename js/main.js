@@ -22,7 +22,7 @@ window.tvWidget.onChartReady(function() {
 
     window.tvWidget.activeChart().dataReady(() => {
         console.log('dataReady()');
-    };
+    });
 
 
 });
