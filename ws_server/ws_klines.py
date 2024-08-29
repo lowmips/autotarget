@@ -153,10 +153,10 @@ async def send_kline_update(pair_id, timestamp, open, high, low, close):
             await ws_connected[ws_hex_id]['ws'].send(update_str)
         except websockets.ConnectionClosedOK:
             print('websockets.ConnectionClosedOK' + websocket.id.hex)
-            await handle_closed_ws(websocket)
+            await handle_closed_ws(ws_connected[ws_hex_id]['ws'])
         except websockets.exceptions.ConnectionClosedError:
             print('websockets.exceptions.ConnectionClosedError')
-            await handle_closed_ws(websocket)
+            await handle_closed_ws(ws_connected[ws_hex_id]['ws'])
         except e:
             print('generic exception caught: ' + e)
 
