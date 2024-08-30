@@ -1,0 +1,13 @@
+{
+        "use_ssl": true,
+        "mysql": {
+                "host": "localhost",
+                "username": "user",
+                "password": "user",
+                "database": "db"
+        },
+        "ssl": {
+                "fullchain": "/some/secure/dir/fullchain.pem",
+                "privkey": "/some/secure/dir/privkey.pem"
+        }
+}
