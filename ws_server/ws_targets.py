@@ -16,10 +16,10 @@ ssl_cert = None
 ssl_key = None
 ws_connected = {}
 subs_to_ws = {} # pair_id -> [] websocket id's
-klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
+targets_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
 pair_id_info = {} # pair_id => exchange, from_token, to_token
-pair_id_latest = {} # pair_id => latest_kline
-main_loop_max_wait = 5 # we'll wait at most 5 seconds between update klines lookups
+pair_id_latest = {} # pair_id => latest_targets
+main_loop_max_wait = 5 # we'll wait at most 5 seconds between updated target lookups
 
 def get_config():
     global config
@@ -46,7 +46,7 @@ async def main_loop():
         exchange_id = ex_row['id']
         exchange = ex_row['exchange']
         print('exchange: ' + exchange)
-        klines_available[exchange] = {
+        targets_available[exchange] = {
             "exchange_id": exchange_id,
             "pairs": {}
         }
@@ -56,15 +56,15 @@ async def main_loop():
             pair_id = pair_row['id']
             pair_l = pair_row['pair_l']
             pair_r = pair_row['pair_r']
-            if not pair_l in klines_available[exchange]["pairs"]:
-                klines_available[exchange]["pairs"][pair_l] = {}
-            if not pair_r in klines_available[exchange]["pairs"][pair_l]:
-                klines_available[exchange]["pairs"][pair_l][pair_r] = {
+            if not pair_l in targets_available[exchange]["pairs"]:
+                targets_available[exchange]["pairs"][pair_l] = {}
+            if not pair_r in targets_available[exchange]["pairs"][pair_l]:
+                targets_available[exchange]["pairs"][pair_l][pair_r] = {
                     "pair_id": pair_id,
-                    "latest_kline": None,
+                    "latest_targets": None,
                 }
             if not pair_id in pair_id_latest:
-                pair_id_latest[pair_id] = {"latest_kline": None}
+                pair_id_latest[pair_id] = {"latest_targets": None}
             if not pair_id in pair_id_info:
                 pair_id_info[pair_id] = {
                     "exchange": exchange,
@@ -76,8 +76,8 @@ async def main_loop():
     if pair_count == 0:
         print('No available pairs.')
         quit()
-    print('klines_available:')
-    print(klines_available)
+    print('targets_available:')
+    print(targets_available)
 
     while True:
         #print('main_loop()')
@@ -87,7 +87,16 @@ async def main_loop():
 
         loop_start = int(time.time())
 
-        # get the latest klines for all pairs
+        # get the latest targets for all pairs
+        for pair_id in pair_id_info:
+            
+
+
+
+
+
+
+        ***
         q = "SELECT * FROM `klines_latest`"
         latest_rows = mdb.query_get_all(q)
         for latest_row in latest_rows:
@@ -98,15 +107,15 @@ async def main_loop():
             low = latest_row['low']
             close = latest_row['close']
 
-            if (    (pair_id_latest[pair_id]['latest_kline'] is None) or
-                    (pair_id_latest[pair_id]['latest_kline']['timestamp'] != timestamp) or
-                    (pair_id_latest[pair_id]['latest_kline']['open'] != open) or
-                    (pair_id_latest[pair_id]['latest_kline']['high'] != high) or
-                    (pair_id_latest[pair_id]['latest_kline']['low'] != low) or
-                    (pair_id_latest[pair_id]['latest_kline']['close'] != close)
+            if (    (pair_id_latest[pair_id]['latest_targets'] is None) or
+                    (pair_id_latest[pair_id]['latest_targets']['timestamp'] != timestamp) or
+                    (pair_id_latest[pair_id]['latest_targets']['open'] != open) or
+                    (pair_id_latest[pair_id]['latest_targets']['high'] != high) or
+                    (pair_id_latest[pair_id]['latest_targets']['low'] != low) or
+                    (pair_id_latest[pair_id]['latest_targets']['close'] != close)
                 ):
                 await send_kline_update(pair_id, timestamp, open, high, low, close)
-            pair_id_latest[pair_id]['latest_kline'] = {
+            pair_id_latest[pair_id]['latest_targets'] = {
                 "timestamp": timestamp,
                 "open": open,
                 "high": high,
@@ -120,6 +129,7 @@ async def main_loop():
             sleep_time = main_loop_max_wait - loop_diff
             #print('sleeping ['+str(sleep_time)+']')
             await asyncio.sleep(sleep_time)
+        ***
 
 async def send_kline_update(pair_id, timestamp, open, high, low, close):
     print('send_kline_update('+str(pair_id)+','+str(timestamp)+','+open+','+high+','+low+','+close+')')
@@ -157,11 +167,11 @@ async def send_kline_update(pair_id, timestamp, open, high, low, close):
 
 def pair_id_to_exchange(pair_id):
     print('pair_id_to_exchange('+str(pair_id)+')')
-    # klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
-    for exchange in klines_available:
-        for from_token in klines_available[exchange]['pairs']:
-            for to_token in klines_available[exchange]['pairs'][from_token]:
-                if klines_available[exchange]['pairs'][from_token][to_token] == pair_id:
+    # targets_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
+    for exchange in targets_available:
+        for from_token in targets_available[exchange]['pairs']:
+            for to_token in targets_available[exchange]['pairs'][from_token]:
+                if targets_available[exchange]['pairs'][from_token][to_token] == pair_id:
                     return exchange
     return None
 
@@ -230,7 +240,7 @@ async def handle_msg(websocket, msg):
                 return
 
             # find the pair_id
-            pair_id = klines_available[exchange]['pairs'][from_token][to_token]['pair_id']
+            pair_id = targets_available[exchange]['pairs'][from_token][to_token]['pair_id']
 
             # add to subscription structures
             if not exchange in ws_connected[websocket.id.hex]['subs']:
@@ -265,7 +275,7 @@ async def handle_msg(websocket, msg):
                 if not check_subscription(exchange, from_token, to_token):
                     print('invalid SubRemove definition')
                     continue
-                pair_id = klines_available[exchange]['pairs'][from_token][to_token]['pair_id']
+                pair_id = targets_available[exchange]['pairs'][from_token][to_token]['pair_id']
                 for pair_id in subs_to_ws:
                     if websocket.id.hex in subs_to_ws[pair_id]:
                         subs_to_ws[pair_id].remove(websocket.id.hex)
@@ -277,10 +287,10 @@ async def handle_msg(websocket, msg):
 
 def check_subscription(exchange, from_token, to_token):
     print('check_subscription('+exchange+','+from_token+','+to_token+')')
-    # klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
-    if not exchange in klines_available: return False
-    if not from_token in klines_available[exchange]['pairs']: return False
-    if not to_token in klines_available[exchange]['pairs'][from_token]: return False
+    # targets_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
+    if not exchange in targets_available: return False
+    if not from_token in targets_available[exchange]['pairs']: return False
+    if not to_token in targets_available[exchange]['pairs'][from_token]: return False
     return True
 
 async def init_ws():
