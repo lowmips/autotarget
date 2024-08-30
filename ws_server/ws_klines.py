@@ -23,7 +23,7 @@ main_loop_max_wait = 5 # we'll wait at most 5 seconds between update klines look
 
 def get_config():
     global config
-    with open('config.json','r') as f:
+    with open('config.ws_klines.json','r') as f:
         config = json.load(f)
 
 async def handle_closed_ws(websocket):
