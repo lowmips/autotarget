@@ -1,4 +1,4 @@
-import { makeApiRequest, generateSymbol, configurationData, splitSymbolPair } from './helpers_mexc.js';
+import { /*makeApiRequest, */ generateSymbol, configurationData, splitSymbolPair } from './helpers_mexc.js';
 import { subscribeOnStream, unsubscribeFromStream } from './streaming.js';
 import {parseFullSymbol} from './helpers.js';
 

@@ -13,7 +13,7 @@ export const configurationData =  {
     ]
 }
 
-export async function makeApiRequest(path) {
+/*export async function makeApiRequest(path) {
     try {
         const response = await fetch(window.location.href + 'php-cross-domain-proxy/proxy.php',{
             headers:{
@@ -25,7 +25,7 @@ export async function makeApiRequest(path) {
     } catch(error) {
         throw new Error(`MEXC request error: ${error.status}`);
     }
-}
+}*/
 
 // Generates a symbol ID from a pair of the coins
 export function generateSymbol(exchange, fromSymbol, toSymbol) {
