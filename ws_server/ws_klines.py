@@ -10,6 +10,7 @@ from zmysql import mysqlDBC
 
 config = None
 mdb = None # mysqlDBC instance
+server_port = None
 ssl_context = None
 ssl_cert = None
 ssl_key = None
@@ -284,7 +285,7 @@ def check_subscription(exchange, from_token, to_token):
 
 async def init_ws():
     print('init_ws()')
-    async with websockets.serve(handle_ws, "0.0.0.0", 8765, ssl=ssl_context):
+    async with websockets.serve(handle_ws, "0.0.0.0", server_port, ssl=ssl_context):
         await asyncio.Future()  # run forever
 
 async def main():
@@ -295,6 +296,7 @@ async def main():
 if __name__ == "__main__":
     get_config()
     logging.basicConfig()
+    server_port = config['port']
     if config['use_ssl']:
         print('ssl enabled')
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
