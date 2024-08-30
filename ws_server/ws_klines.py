@@ -10,26 +10,20 @@ from zmysql import mysqlDBC
 
 config = None
 mdb = None # mysqlDBC instance
-
-def get_config():
-    global config
-    with open('config.json','r') as f:
-        config = json.load(f)
-
-get_config()
-logging.basicConfig()
-ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-ssl_cert = config['ssl']['fullchain']
-ssl_key = config['ssl']['privkey']
-ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
-
-
+ssl_context = None
+ssl_cert = None
+ssl_key = None
 ws_connected = {}
 subs_to_ws = {} # pair_id -> [] websocket id's
 klines_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
 pair_id_info = {} # pair_id => exchange, from_token, to_token
 pair_id_latest = {} # pair_id => latest_kline
 main_loop_max_wait = 5 # we'll wait at most 5 seconds between update klines lookups
+
+def get_config():
+    global config
+    with open('config.json','r') as f:
+        config = json.load(f)
 
 async def handle_closed_ws(websocket):
     del ws_connected[websocket.id.hex]
@@ -299,4 +293,11 @@ async def main():
         group.create_task(init_ws())
 
 if __name__ == "__main__":
+    get_config()
+    logging.basicConfig()
+    if config['use_ssl']:
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        ssl_cert = config['ssl']['fullchain']
+        ssl_key = config['ssl']['privkey']
+        ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
     asyncio.run(main())
