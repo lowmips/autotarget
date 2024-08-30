@@ -296,6 +296,7 @@ if __name__ == "__main__":
     get_config()
     logging.basicConfig()
     if config['use_ssl']:
+        print('ssl enabled')
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         ssl_cert = config['ssl']['fullchain']
         ssl_key = config['ssl']['privkey']
