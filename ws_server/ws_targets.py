@@ -100,7 +100,7 @@ async def main_loop():
                 continue
             pair_id_latest[pair_id]['latest_targets'] = latest_rows
             if not pair_id in subs_to_ws:
-                print('No subs for pair!')
+                print('No subs for pair_id[{pi}]!'.format(pi=pair_id))
                 continue
             await send_targets_update(pair_id, latest_rows)
 
@@ -113,7 +113,7 @@ async def main_loop():
             await asyncio.sleep(sleep_time)
 
 async def send_targets_update(pair_id, updates):
-    print('send_targets_update()')
+    print('send_targets_update({pi})'.format(pi=pair_id))
     if not pair_id in subs_to_ws:
         print('No subs for pair!')
         return
