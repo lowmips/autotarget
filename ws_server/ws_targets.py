@@ -163,8 +163,8 @@ async def handle_ws(websocket,path):
     print(websocket.local_address)
     print(websocket.remote_address)
     print(websocket.subprotocol)
-    print(websocket.request)
-    print(websocket.response)
+    #print(websocket.request)
+    #print(websocket.response)
 
     ws_connected[websocket.id.hex] = {
         "ws": websocket,
@@ -175,6 +175,8 @@ async def handle_ws(websocket,path):
         try:
             message = await websocket.recv()
             await handle_msg(websocket, message)
+            print('request:')
+            print(websocket.request)
         # client disconnected?
         except websockets.ConnectionClosedOK:
             print('websockets.ConnectionClosedOK' + websocket.id.hex)
