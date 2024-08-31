@@ -192,7 +192,7 @@ async def handle_msg(websocket, msg):
     except ValueError as e:
         reason = 'invalid json, closing connection'
         print(reason)
-        await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
+        await websocket.close(code=1000, reason=reason)
         return
 
     #print('msg_obj:')
@@ -202,7 +202,7 @@ async def handle_msg(websocket, msg):
         if not 'subs' in msg_obj['SubAdd']:
             reason = 'invalid SubAdd definition, closing connection'
             print(reason)
-            await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
+            await websocket.close(code=1000, reason=reason)
             return
         for sub in msg_obj['SubAdd']['subs']:
             print('sub: '+sub)
@@ -210,7 +210,7 @@ async def handle_msg(websocket, msg):
             if len(sub_list) != 4:
                 reason = 'invalid sub definition, closing connection'
                 print(reason)
-                await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
+                await websocket.close(code=1000, reason=reason)
                 return
             ignore_me = sub_list[0]
             exchange = sub_list[1]
@@ -221,7 +221,7 @@ async def handle_msg(websocket, msg):
             if not check_subscription(exchange, from_token, to_token):
                 reason = 'invalid sub: {e}:{f}:{t}, closing connection'.format(e=exchange, f=from_toke, t=to_token)
                 print(reason)
-                await websocket.close(code=CloseCode.NORMAL_CLOSURE, reason=reason)
+                await websocket.close(code=1000, reason=reason)
                 return
 
             # find the pair_id
