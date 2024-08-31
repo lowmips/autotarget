@@ -89,7 +89,7 @@ async def main_loop():
 
         # get the latest targets for all pairs
         for pair_id in pair_id_info:
-            
+            q = "SELECT * FROM ``"
 
 
 
