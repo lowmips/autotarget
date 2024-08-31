@@ -61,7 +61,6 @@ async def main_loop():
             if not pair_r in targets_available[exchange]["pairs"][pair_l]:
                 targets_available[exchange]["pairs"][pair_l][pair_r] = {
                     "pair_id": pair_id,
-                    "latest_targets": None,
                 }
             if not pair_id in pair_id_latest:
                 pair_id_latest[pair_id] = {"latest_targets": None}
@@ -89,50 +88,28 @@ async def main_loop():
 
         # get the latest targets for all pairs
         for pair_id in pair_id_info:
-            q = "SELECT * FROM ``"
-
-
-
-
-
-
-        ***
-        q = "SELECT * FROM `klines_latest`"
-        latest_rows = mdb.query_get_all(q)
-        for latest_row in latest_rows:
-            pair_id = latest_row['meta_id']
-            timestamp = latest_row['timestamp']
-            open = latest_row['open']
-            high = latest_row['high']
-            low = latest_row['low']
-            close = latest_row['close']
-
-            if (    (pair_id_latest[pair_id]['latest_targets'] is None) or
-                    (pair_id_latest[pair_id]['latest_targets']['timestamp'] != timestamp) or
-                    (pair_id_latest[pair_id]['latest_targets']['open'] != open) or
-                    (pair_id_latest[pair_id]['latest_targets']['high'] != high) or
-                    (pair_id_latest[pair_id]['latest_targets']['low'] != low) or
-                    (pair_id_latest[pair_id]['latest_targets']['close'] != close)
-                ):
-                await send_kline_update(pair_id, timestamp, open, high, low, close)
-            pair_id_latest[pair_id]['latest_targets'] = {
-                "timestamp": timestamp,
-                "open": open,
-                "high": high,
-                "low": low,
-                "close":close
-            }
-
+            q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}'".format(mi=pair_id)
+            latest_rows = mdb.query_get_all(q)
+            if len(latest_rows)==0 and pair_id_latest[pair_id]['latest_targets'] is None:
+                print('No updates for [{mi}]'.format(mi=pair_id))
+                continue
+            latest_rows_str = json.dumps(latest_rows)
+            latest_targets_str = json.dumps(pair_id_latest[pair_id]['latest_targets'])
+            if latest_rows_str == latest_targets_str:
+                print('No updates for [{mi}]'.format(mi=pair_id))
+                continue
+            await send_targets_update(pair_id, latest_rows)
+            pair_id_latest[pair_id]['latest_targets'] = latest_rows
+        # do we need to wait a bit?
         loop_end = int(time.time())
         loop_diff = loop_end - loop_start
         if loop_diff < main_loop_max_wait:
             sleep_time = main_loop_max_wait - loop_diff
             #print('sleeping ['+str(sleep_time)+']')
             await asyncio.sleep(sleep_time)
-        ***
 
-async def send_kline_update(pair_id, timestamp, open, high, low, close):
-    print('send_kline_update('+str(pair_id)+','+str(timestamp)+','+open+','+high+','+low+','+close+')')
+async def send_targets_update(pair_id, updates):
+    print('send_targets_update()')
     if not pair_id in subs_to_ws:
         print('No subs for pair!')
         return
@@ -141,14 +118,14 @@ async def send_kline_update(pair_id, timestamp, open, high, low, close):
         print('pair_id['+str(pair_id)+'] not in pair_id_info')
         return
     pair_info = pair_id_info[pair_id]
-
-    # format the update string
-    update_str = "0~{ex}~{fsym}~{tsym}~{ts}~{open}~{high}~{low}~{close}".format(
-        ex=pair_info['exchange'], fsym=pair_info['from_token'], tsym=pair_info['to_token'], ts=timestamp,
-        open=open, high=high, low=low, close=close
-        )
+    update_info = {
+        'pair_info': pair_info,
+        'updates': updates
+    }
+    update_str = json.dumps(update_info)
     print('update is [{us}]'.format(us=update_str))
 
+    # send update to each subscriber
     for ws_hex_id in subs_to_ws[pair_id]:
         if not ws_hex_id in ws_connected:
             print(ws_hex_id + ' not in ws_connected!')
