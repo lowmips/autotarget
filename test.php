@@ -11,7 +11,7 @@
 
 </head>
 
-<body style="margin:0px;">
+<body style="margin:0px; color: black; background: black;">
 
 </body>
 
