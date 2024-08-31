@@ -159,6 +159,8 @@ async def handle_ws(websocket,path):
     print(websocket.local_address)
     print(websocket.remote_address)
     print(websocket.subprotocol)
+    print(websocket.request)
+    print(websocket.response)
 
     ws_connected[websocket.id.hex] = {
         "ws": websocket,
