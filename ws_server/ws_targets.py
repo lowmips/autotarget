@@ -100,6 +100,7 @@ async def main_loop():
                 continue
             await send_targets_update(pair_id, latest_rows)
             pair_id_latest[pair_id]['latest_targets'] = latest_rows
+
         # do we need to wait a bit?
         loop_end = int(time.time())
         loop_diff = loop_end - loop_start
