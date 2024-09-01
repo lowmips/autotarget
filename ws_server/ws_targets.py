@@ -278,8 +278,14 @@ def check_subscription(exchange, from_token, to_token):
 
 async def init_ws():
     print('init_ws()')
-    async with websockets.serve(handle_ws, "0.0.0.0", server_port, ssl=ssl_context):
+    async with websockets.serve(handle_ws, "0.0.0.0", server_port, ssl=ssl_context, process_request=ws_process_request):
         await asyncio.Future()  # run forever
+
+def ws_process_request(srv_connection, req):
+    print('ws_process_request()')
+    print('request: ')
+    print(req)
+
 
 async def main():
     async with asyncio.TaskGroup() as group:
