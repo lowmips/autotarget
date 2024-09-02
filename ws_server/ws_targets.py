@@ -217,7 +217,7 @@ async def handle_msg(websocket, msg):
 
             # check for valid exchange and token
             if not check_subscription(exchange, from_token, to_token):
-                reason = 'invalid sub: {e}:{f}:{t}, closing connection'.format(e=exchange, f=from_toke, t=to_token)
+                reason = 'invalid sub: {e}:{f}:{t}, closing connection'.format(e=exchange, f=from_token, t=to_token)
                 print(reason)
                 await websocket.close(code=1000, reason=reason)
                 return
