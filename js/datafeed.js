@@ -16,14 +16,14 @@ export default {
                 "symbol": "BTC",
                 "description": "BTC",
                 "exchange": "MEXC",
-                "ticker": "BTC/USDT",
+                "ticker": "MEXC:BTC/USDT",
                 "type": "crypto"
             },
             {
                 "symbol": "ETH",
                 "description": "ETH",
                 "exchange": "MEXC",
-                "ticker": "ETH/USDT",
+                "ticker": "MEXC:ETH/USDT",
                 "type": "crypto"
             },
         ];
