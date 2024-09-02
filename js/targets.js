@@ -33,7 +33,7 @@ ws_targets.addEventListener('message', function(event) {
 
 });
 
-export function stopSub(ticker) {
+export async function stopSub(ticker) {
     console.log('stopSub('+ticker+')');
     if(!(ticker in subs)) return;
     delete subs[ticker];
@@ -47,7 +47,7 @@ export function stopSub(ticker) {
     ws_targets.send(substr);
 }
 
-export function startSub(ticker) {
+export async function startSub(ticker) {
     console.log('startSub('+ticker+')');
     if(ticker in subs) return;
     const parsedSymbol = parseFullSymbol(ticker);
