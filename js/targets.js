@@ -32,7 +32,23 @@ ws_targets.addEventListener('message', function(event) {
             msg.updates.forEach((update) => {
                 //console.log('Got update:');
                 //console.log(update);
-
+                let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(
+                    [
+                        { time: update.ts_start, price: update.target_price }
+                    ],
+                    {
+                        shape: "horizontal_ray",
+                        lock: true,
+                        disableSelection: true,
+                        overrides: {
+                            //text: 'hi ya',
+                            showLabel: false,
+                            fontSize: 30,
+                            horzLabelsAlign: 'left',
+                            showPrice: false,
+                        },
+                    }
+                );
 
 
 
