@@ -178,6 +178,11 @@ async def handle_ws(websocket,path):
         },
     }
     msg_str = json.dumps(msg)
+
+    while True:
+        if websocket.state == 'CONNECTING':
+            print('waiting for CONNECTING to go CONNECTED')
+           await asyncio.sleep(1)
     await websocket.send(msg_str)
 
     while True:
