@@ -10,6 +10,25 @@ export default {
     },
     searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
         console.log('[searchSymbols]: Method call');
+        //const symbols = await getMatchingSymbolsFromBackend(userInput, exchange, symbolType);
+        const symbols = [
+            {
+                "symbol": "BTC",
+                "description": "BTC",
+                "exchange": "MEXC",
+                "ticker": "BTC/USDT",
+                "type": "crypto"
+            },
+            {
+                "symbol": "ETH",
+                "description": "ETH",
+                "exchange": "MEXC",
+                "ticker": "ETH/USDT",
+                "type": "crypto"
+            },
+        ];
+
+        onResultReadyCallback(newSymbols);
     },
     resolveSymbol: async (symbolName, onSymbolResolvedCallback, onResolveErrorCallback, extension) => {
         console.log('[resolveSymbol]: Method call', symbolName);
