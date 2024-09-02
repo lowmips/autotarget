@@ -11,13 +11,14 @@
             console.log('ws [open]' + event);
         });
         ws.addEventListener('close', function(event) {
-            console.log('ws [close]: ' + event)
+            console.log('ws [close]: code['+event.code+'] reason['+event.reason+'] wasClean['+event.wasClean+']');
         });
         ws.addEventListener('error', function(event) {
-            console.log('ws [error]: ' + event)
+            console.log('ws [error]: ' + event);
         });
         ws.addEventListener('message', function(event) {
-            console.log('ws [message]: ' + event.data)
+            console.log('ws [message]: ' + event.data);
+            console.log('    [origin] '+event.origin);
         });
 
 
