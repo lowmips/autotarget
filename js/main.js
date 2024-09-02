@@ -22,6 +22,21 @@ window.tvStuff = {
 };
 window.tvStuff.current_resolution = window.tvStuff.widget_options.symbol;
 window.tvStuff.widget = new TradingView.widget(window.tvStuff.widget_options);
+window.tvStuff.widget.subscribe('series_properties_changed', function(){
+    console.log('series_properties_changed');
+    let symbol;
+
+    try{
+        symbol = window.tvStuff.widget.activeChart().getSeries().symbolSource().symbol;
+    }catch(e){
+        //console.log(e);
+    }
+
+    console.log('symbol: '+symbol);
+
+});
+
+
 
 /*
 window.tvStuff.widget.onChartReady(function() {
@@ -44,16 +59,3 @@ window.tvStuff.widget.subscribe('onChartReady', function(){
 });
 */
 
-window.tvStuff.widget.subscribe('series_properties_changed', function(){
-    console.log('series_properties_changed');
-    let symbol;
-
-    try{
-        symbol = window.tvStuff.widget.activeChart().getSeries().symbolSource().symbol;
-    }catch(e){
-        //console.log(e);
-    }
-
-    console.log('symbol: '+symbol);
-
-});
