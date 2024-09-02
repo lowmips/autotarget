@@ -31,6 +31,9 @@ window.tvWidget.subscribe('series_properties_changed', function(){
         console.log('chart is null');
         return;
     }
+    console.log('chart:');
+    console.log(chart);
+
     let series = chart.getSeries();
     if(!series){
         console.log('series is null');
