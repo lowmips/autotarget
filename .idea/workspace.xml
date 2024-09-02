@@ -112,23 +112,7 @@
       <workItem from="1716330978598" duration="19039000" />
       <workItem from="1719528758389" duration="3603000" />
       <workItem from="1720824176215" duration="10706000" />
-      <workItem from="1724089254138" duration="98240000" />
-    </task>
-    <task id="LOCAL-01077" summary="dev">
-      <option name="closed" value="true" />
-      <created>1724932519774</created>
-      <option name="number" value="01077" />
-      <option name="presentableId" value="LOCAL-01077" />
-      <option name="project" value="LOCAL" />
-      <updated>1724932519774</updated>
-    </task>
-    <task id="LOCAL-01078" summary="dev">
-      <option name="closed" value="true" />
-      <created>1724948777766</created>
-      <option name="number" value="01078" />
-      <option name="presentableId" value="LOCAL-01078" />
-      <option name="project" value="LOCAL" />
-      <updated>1724948777766</updated>
+      <workItem from="1724089254138" duration="98440000" />
     </task>
     <task id="LOCAL-01079" summary="dev">
       <option name="closed" value="true" />
@@ -506,7 +490,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725280684117</updated>
     </task>
-    <option name="localTasksCounter" value="1126" />
+    <task id="LOCAL-01126" summary="dev">
+      <option name="closed" value="true" />
+      <created>1725281569278</created>
+      <option name="number" value="01126" />
+      <option name="presentableId" value="LOCAL-01126" />
+      <option name="project" value="LOCAL" />
+      <updated>1725281569278</updated>
+    </task>
+    <task id="LOCAL-01127" summary="dev">
+      <option name="closed" value="true" />
+      <created>1725281694964</created>
+      <option name="number" value="01127" />
+      <option name="presentableId" value="LOCAL-01127" />
+      <option name="project" value="LOCAL" />
+      <updated>1725281694964</updated>
+    </task>
+    <option name="localTasksCounter" value="1128" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -10,7 +10,7 @@
         ws.addEventListener('open', function(event) {
             console.log('ws [open]' + event);
 
-            let channelString = '0~MEXC~BTC~USD';
+            let channelString = '0~MEXC~BTC~USDT';
             let json_str = JSON.stringify({'SubAdd': { subs: [channelString] }});
             ws.send(json_str);
 
