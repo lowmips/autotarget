@@ -30,7 +30,7 @@ export function stopSub(ticker) {
             'subs': [channelString],
         },
     });
-    ws_targets.send();
+    ws_targets.send(substr);
 }
 
 export function startSub(ticker) {
@@ -43,6 +43,6 @@ export function startSub(ticker) {
             'subs': [channelString],
         },
     });
-    ws_targets.send();
+    ws_targets.send(substr);
     subs[ticker] = 1;
 }
