@@ -19,7 +19,7 @@ ws_targets.addEventListener('message', function(event) {
     //console.log('    [origin] '+event.origin);
 
     let msg = JSON.parse(event.data);
-    //console.log(msg);
+    console.log(msg);
     if('pair_info' in msg){
         let ticker = msg.exchange + ':' + msg.from_token + '/' + msg.to_token;
         if(!(ticker in subs)) {
