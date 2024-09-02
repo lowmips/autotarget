@@ -8,13 +8,13 @@
     <script type="text/javascript">
         const ws = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
         ws.addEventListener('open', function(event) {
-            console.log('ws [open]');
+            console.log('ws [open]' + event);
         });
         ws.addEventListener('close', function(event) {
-            console.log('ws [close]: ' + event.data)
+            console.log('ws [close]: ' + event)
         });
         ws.addEventListener('error', function(event) {
-            console.log('ws [error]: ' + event.data)
+            console.log('ws [error]: ' + event)
         });
         ws.addEventListener('message', function(event) {
             console.log('ws [message]: ' + event.data)
