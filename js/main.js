@@ -25,5 +25,16 @@ window.tvWidget.onChartReady(function() {
 
 window.tvWidget.subscribe('series_properties_changed', function(){
     console.log('series_properties_changed');
+
+    let chart = window.tvWidget.activeChart();
+    if(!chart){
+        console.log('chart is null');
+        return;
+    }
+    let series = chart.getSeries();
+    if(!series){
+        console.log('series is null');
+        return;
+    }
     console.log('New symbol: ' + window.tvWidget.activeChart().getSeries().symbolSource().symbol);
 });
