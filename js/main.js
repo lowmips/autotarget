@@ -23,6 +23,10 @@ window.tvWidget.onChartReady(function() {
     });
 });
 
+window.tvWidget.subscribe('onChartReady', function(){
+    console.log('onChartReady from subscribe');
+});
+
 window.tvWidget.subscribe('series_properties_changed', function(){
     console.log('series_properties_changed');
     let symbol;
@@ -30,7 +34,7 @@ window.tvWidget.subscribe('series_properties_changed', function(){
     try{
         symbol = window.tvWidget.activeChart().getSeries().symbolSource().symbol;
     }catch(e){
-        console.log(e);
+        //console.log(e);
     }
 
     console.log('symbol: '+symbol);
