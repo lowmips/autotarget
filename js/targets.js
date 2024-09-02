@@ -30,8 +30,8 @@ ws_targets.addEventListener('message', function(event) {
         }
         if('updates' in msg){
             msg.updates.forEach((update) => {
-                //console.log('Got update:');
-                //console.log(update);
+                console.log('Got update:');
+                console.log(update);
                 let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(
                     [
                         { time: update.ts_start, price: update.target_price }
