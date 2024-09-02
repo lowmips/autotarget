@@ -23,7 +23,7 @@ window.tvStuff = {
     },
 };
 window.tvStuff.current_resolution = window.tvStuff.widget_options.interval;
-window.tvStuff.current_symbol = window.tvStuff.widget_options.symbol;
+//window.tvStuff.current_symbol = window.tvStuff.widget_options.symbol;
 window.tvStuff.widget = new TradingView.widget(window.tvStuff.widget_options);
 window.tvStuff.widget.subscribe('series_properties_changed', function(){
     console.log('series_properties_changed');
