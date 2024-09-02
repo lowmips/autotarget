@@ -9,6 +9,11 @@
         const ws = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
         ws.addEventListener('open', function(event) {
             console.log('ws [open]' + event);
+
+            let channelString = '0~MEXC~BTC~USD';
+            let json_str = JSON.stringify({'SubAdd': { subs: [channelString] }});
+            ws.send(json_str);
+
         });
         ws.addEventListener('close', function(event) {
             console.log('ws [close]: code['+event.code+'] reason['+event.reason+'] wasClean['+event.wasClean+']');
