@@ -1,21 +1,27 @@
 import Datafeed from './datafeed.js';
 
-window.tvStuff = {};
-
-window.tvStuff.widget = new TradingView.widget({
-    container: 'tv_chart_container',       // Reference to an attribute of a DOM element
-    datafeed: Datafeed,
-    debug: true,
-    fullscreen: true,                      // Displays the chart in the fullscreen mode
-    interval: '60',                        // Default interval
-    library_path: 'charting_library/charting_library/',
-    overrides: {
-        "mainSeriesProperties.showCountdown": true,
+window.tvStuff = {
+    current_symbol: null,
+    previous_symbol: null,
+    current_resolution: null,
+    old_resolution: null,
+    widget_options: {
+        container: 'tv_chart_container',       // Reference to an attribute of a DOM element
+        datafeed: Datafeed,
+        debug: true,
+        fullscreen: true,                      // Displays the chart in the fullscreen mode
+        interval: '60',                        // Default interval
+        library_path: 'charting_library/charting_library/',
+        overrides: {
+            "mainSeriesProperties.showCountdown": true,
+        },
+        symbol: 'MEXC:BTC/USDT',            // Default symbol pair
+        theme: "dark",
+        timezone: 'America/New_York',
     },
-    symbol: 'MEXC:BTC/USDT',            // Default symbol pair
-    theme: "dark",
-    timezone: 'America/New_York',
-});
+};
+window.tvStuff.current_resolution = window.tvStuff.widget_options.symbol;
+window.tvStuff.widget = new TradingView.widget(window.tvStuff.widget_options);
 
 /*
 window.tvStuff.widget.onChartReady(function() {
