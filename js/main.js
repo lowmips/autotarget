@@ -31,13 +31,6 @@ window.tvWidget.subscribe('series_properties_changed', function(){
         console.log('chart is null');
         return;
     }
-    console.log('chart:');
-    console.log(chart);
-
-    if(!('getSeries' in chart)){
-        console.log('getSeries not in chart');
-        return;
-    }
 
     let series = chart.getSeries();
     if(!series){
