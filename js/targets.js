@@ -39,7 +39,7 @@ ws_targets.addEventListener('message', function(event) {
                     {
                         shape: "horizontal_ray",
                         //lock: true,
-                        disableSelection: true,
+                        //disableSelection: true,
                         overrides: {
                             //text: 'hi ya',
                             showLabel: false,
