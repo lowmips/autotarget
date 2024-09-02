@@ -21,6 +21,7 @@ ws_targets.addEventListener('message', function(event) {
 
 export default {
     stopSub: (ticker) => {
+        console.log('stopSub('+ticker+')');
         if(!(ticker in subs)) return;
         delete subs[ticker];
         const parsedSymbol = parseFullSymbol(ticker);
@@ -33,6 +34,7 @@ export default {
         ws_targets.send();
     },
     startSub: (ticker) => {
+        console.log('startSub('+ticker+')');
         if(ticker in subs) return;
         const parsedSymbol = parseFullSymbol(ticker);
         const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
