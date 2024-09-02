@@ -50,7 +50,7 @@ export async function stopSub(ticker) {
 export async function startSub(ticker) {
     console.log('startSub('+ticker+')');
     if(ticker in subs) return;
-    while(ws_targets.readyState == Websocket.CONNECTING){
+    while(ws_targets.readyState == 0){  // Websocket.CONNECTING
         setTimeout(startSub,500, ticker);
     }
     const parsedSymbol = parseFullSymbol(ticker);
