@@ -22,6 +22,7 @@ ws_targets.addEventListener('message', function(event) {
     console.log(msg);
     if('pair_info' in msg){
         let ticker = msg.exchange + ':' + msg.from_token + '/' + msg.to_token;
+        console.log('Got pair_info['+ticker+']');
         if(!(ticker in subs)) {
             console.log('No subscription for ['+ticker+']');
             return;
