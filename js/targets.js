@@ -16,7 +16,12 @@ ws_targets.addEventListener('error', function(event) {
 });
 ws_targets.addEventListener('message', function(event) {
     console.log('ws_targets [message]: ' + event.data);
-    console.log('    [origin] '+event.origin);
+    //console.log('    [origin] '+event.origin);
+
+    let msg = JSON.parse(event.data);
+    console.log(msg);
+
+
 });
 
 export function stopSub(ticker) {
