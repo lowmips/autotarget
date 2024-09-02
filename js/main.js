@@ -1,4 +1,6 @@
 import Datafeed from './datafeed.js';
+import {startSub, stopSub} from './targets.js';
+
 
 window.tvStuff = {
     current_symbol: null,
@@ -26,7 +28,6 @@ window.tvStuff.widget = new TradingView.widget(window.tvStuff.widget_options);
 window.tvStuff.widget.subscribe('series_properties_changed', function(){
     console.log('series_properties_changed');
     let symbol;
-
     try{
         symbol = window.tvStuff.widget.activeChart().getSeries().symbolSource().symbol;
     }catch(e){
@@ -38,6 +39,7 @@ window.tvStuff.widget.subscribe('series_properties_changed', function(){
     window.tvStuff.previous_symbol = window.tvStuff.current_symbol;
     window.tvStuff.current_symbol = symbol;
     console.log('Symbol changed from ['+window.tvStuff.previous_symbol+'] to ['+window.tvStuff.current_symbol+']');
+
 });
 
 window.tvStuff.widget.subscribe('time_interval', function(a){
