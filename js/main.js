@@ -49,7 +49,7 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
     //     "value": ""
     // }
     let new_interval = a.label;
-    if(new_interval == window.tvStuff.current_resolution) continue;
+    if(new_interval == window.tvStuff.current_resolution) return;
     window.tvStuff.previous_resolution = window.tvStuff.current_resolution;
     window.tvStuff.current_resolution = new_interval;
     console.log('Resolution changed from ['+window.tvStuff.previous_resolution+'] to ['+window.tvStuff.current_resolution+']');
