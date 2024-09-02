@@ -23,6 +23,7 @@ window.tvWidget.onChartReady(function() {
     });
 });
 
-window.tvWidget.subscribe('activeChartChanged', function(){
-    console.log('activeChartChanged');
+window.tvWidget.subscribe('series_properties_changed', function(){
+    console.log('series_properties_changed');
+    console.log('New symbol: ' + window.tvWidget.activeChart().getSeries().symbolSource().symbol);
 });
