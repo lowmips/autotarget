@@ -171,6 +171,15 @@ async def handle_ws(websocket,path):
         "subs": {},
     }
 
+    // TODO: Check login info here
+    msg = {
+        'subscription': {
+            'type': 'basic',
+        },
+    }
+    msg_str = json.dumps(msg)
+    await websocket.send(msg_str)
+
     while True:
         try:
             message = await websocket.recv()
