@@ -36,10 +36,10 @@ window.tvWidget.subscribe('series_properties_changed', function(){
         console.log('series is null');
         return;
     }
-    let symbolSource = series.getSymbolSource();
+    let symbolSource = series.symbolSource();
     if(!symbolSource){
         console.log('symbolSource is null');
         return;
     }
-    console.log('New symbol: ' + window.tvWidget.activeChart().getSeries().symbolSource().symbol);
+    console.log('symbolSource: ' + symbolSource);
 });
