@@ -19,32 +19,30 @@ ws_targets.addEventListener('message', function(event) {
     console.log('    [origin] '+event.origin);
 });
 
-export default {
-    stopSub: (ticker) => {
-        console.log('stopSub('+ticker+')');
-        if(!(ticker in subs)) return;
-        delete subs[ticker];
-        const parsedSymbol = parseFullSymbol(ticker);
-        const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
-        let substr = JSON.stringify({
-             'SubRemove': {
-                 'subs': [channelString],
-             },
-        });
-        ws_targets.send();
-    },
-    startSub: (ticker) => {
-        console.log('startSub('+ticker+')');
-        if(ticker in subs) return;
-        const parsedSymbol = parseFullSymbol(ticker);
-        const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
-        let substr = JSON.stringify({
-            'SubAdd': {
-                'subs': [channelString],
-            },
-        });
-        ws_targets.send();
-        subs[ticker] = 1;
-    },
+export function stopSub(ticker) {
+    console.log('stopSub('+ticker+')');
+    if(!(ticker in subs)) return;
+    delete subs[ticker];
+    const parsedSymbol = parseFullSymbol(ticker);
+    const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
+    let substr = JSON.stringify({
+        'SubRemove': {
+            'subs': [channelString],
+        },
+    });
+    ws_targets.send();
+}
 
+export function startSub(ticker) {
+    console.log('startSub('+ticker+')');
+    if(ticker in subs) return;
+    const parsedSymbol = parseFullSymbol(ticker);
+    const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
+    let substr = JSON.stringify({
+        'SubAdd': {
+            'subs': [channelString],
+        },
+    });
+    ws_targets.send();
+    subs[ticker] = 1;
 }
