@@ -1,6 +1,6 @@
 import Datafeed from './datafeed.js';
-import {startSub, stopSub} from './targets.js';
-
+import startSub from './targets.js';
+import stopSub from './targets.js';
 
 window.tvStuff = {
     current_symbol: null,
@@ -39,7 +39,8 @@ window.tvStuff.widget.subscribe('series_properties_changed', function(){
     window.tvStuff.previous_symbol = window.tvStuff.current_symbol;
     window.tvStuff.current_symbol = symbol;
     console.log('Symbol changed from ['+window.tvStuff.previous_symbol+'] to ['+window.tvStuff.current_symbol+']');
-
+    if(window.tvStuff.current_symbol) stopSub(window.tvStuff.current_symbol);
+    startSub(window.tvStuff.current_symbol);
 });
 
 window.tvStuff.widget.subscribe('time_interval', function(a){
