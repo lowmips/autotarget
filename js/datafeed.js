@@ -125,5 +125,12 @@ export async function getAllSymbols() {
         exchange: 'MEXC',
         type: 'crypto',
     });
+    allSymbols.push({
+        symbol: 'ETH/USDT',
+        full_name: 'MEXC:ETH/USDT',
+        description: 'ETH/USDT',
+        exchange: 'MEXC',
+        type: 'crypto',
+    });
     return allSymbols;
 }
