@@ -27,8 +27,14 @@ window.tvWidget.onChartReady(function() {
     window.tvWidget.activeChart().dataReady(() => {
         console.log('dataReady()');
     });
+
+
+
 });
 
+window.tvWidget.subscribe('activeChartChanged', function(){
+    console.log('activeChartChanged from subscribe');
+});
 window.tvWidget.subscribe('onChartReady', function(){
     console.log('onChartReady from subscribe');
 });
