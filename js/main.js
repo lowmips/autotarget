@@ -1,6 +1,5 @@
 import Datafeed from './datafeed.js';
-import startSub from './targets.js';
-import stopSub from './targets.js';
+import {startSub, stopSub} from './targets.js';
 
 window.tvStuff = {
     current_symbol: null,
