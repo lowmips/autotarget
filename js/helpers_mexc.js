@@ -2,7 +2,7 @@
 
 export const configurationData =  {
     // Represents the resolutions for bars supported by your datafeed
-    supported_resolutions: ['1','5','15','30','60','2H','3H','4H','6H','12H','1D','1W'],
+    supported_resolutions: ['1','5','15','30','60','120','180','240','6H','12H'],
     // The `exchanges` arguments are used for the `searchSymbols` method if a user selects the exchange
     exchanges: [
         { value: 'MEXC', name: 'MEXC', desc: 'MEXC'},
