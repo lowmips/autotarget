@@ -28,7 +28,7 @@ export default {
             },
         ];
 
-        onResultReadyCallback(newSymbols);
+        onResultReadyCallback(symbols);
     },
     resolveSymbol: async (symbolName, onSymbolResolvedCallback, onResolveErrorCallback, extension) => {
         console.log('[resolveSymbol]: Method call', symbolName);
