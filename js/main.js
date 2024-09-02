@@ -28,8 +28,6 @@ window.tvWidget.onChartReady(function() {
         console.log('dataReady()');
     });
 
-
-
 });
 
 window.tvWidget.subscribe('onChartReady', function(){
