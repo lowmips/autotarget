@@ -4,7 +4,7 @@ window.tvStuff = {
     current_symbol: null,
     previous_symbol: null,
     current_resolution: null,
-    old_resolution: null,
+    previous_resolution: null,
     widget_options: {
         container: 'tv_chart_container',       // Reference to an attribute of a DOM element
         datafeed: Datafeed,
@@ -48,9 +48,11 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
     //     "label": "120",
     //     "value": ""
     // }
-
-
-
+    let new_interval = a.label;
+    if(new_interval == window.tvStuff.current_resolution) continue;
+    window.tvStuff.previous_resolution = window.tvStuff.current_resolution;
+    window.tvStuff.current_resolution = new_interval;
+    console.log('Resolution changed from ['+window.tvStuff.previous_resolution+'] to ['+window.tvStuff.current_resolution+']');
 });
 
 /*
