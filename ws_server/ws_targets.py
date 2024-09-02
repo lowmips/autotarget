@@ -182,7 +182,7 @@ async def handle_ws(websocket,path):
     while True:
         if websocket.state == 'CONNECTING':
             print('waiting for CONNECTING to go CONNECTED')
-           await asyncio.sleep(1)
+            await asyncio.sleep(1)
         else:
             break
     await websocket.send(msg_str)
