@@ -20,7 +20,8 @@ window.tvStuff = {
         timezone: 'America/New_York',
     },
 };
-window.tvStuff.current_resolution = window.tvStuff.widget_options.symbol;
+window.tvStuff.current_resolution = window.tvStuff.widget_options.interval;
+window.tvStuff.current_symbol = window.tvStuff.widget_options.symbol;
 window.tvStuff.widget = new TradingView.widget(window.tvStuff.widget_options);
 window.tvStuff.widget.subscribe('series_properties_changed', function(){
     console.log('series_properties_changed');
@@ -31,14 +32,25 @@ window.tvStuff.widget.subscribe('series_properties_changed', function(){
     }catch(e){
         //console.log(e);
     }
-
     console.log('symbol: '+symbol);
-
+    if(!symbol) return;
+    if(symbol == window.tvStuff.current_symbol) return;
+    window.tvStuff.previous_symbol = window.tvStuff.current_symbol;
+    window.tvStuff.current_symbol = symbol;
+    console.log('Symbol changed from ['+window.tvStuff.previous_symbol+'] to ['+window.tvStuff.current_symbol+']');
 });
 
 window.tvStuff.widget.subscribe('time_interval', function(a){
     console.log('event [time_interval] ');
     console.log(a);
+    // {
+    //     "category": "GUI",
+    //     "label": "120",
+    //     "value": ""
+    // }
+
+
+
 });
 
 /*
