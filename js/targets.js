@@ -15,14 +15,15 @@ ws_targets.addEventListener('error', function(event) {
     subs = {};
 });
 ws_targets.addEventListener('message', function(event) {
-    console.log('ws_targets [message]: ' + event.data);
+    console.log('ws_targets [message]');
+    //console.log(event.data);
     //console.log('    [origin] '+event.origin);
 
     let msg = JSON.parse(event.data);
-    console.log(msg);
+    //console.log(msg);
     if('pair_info' in msg){
         let ticker = msg.pair_info.exchange + ':' + msg.pair_info.from_token + '/' + msg.pair_info.to_token;
-        console.log('Got pair_info['+ticker+']');
+        //console.log('Got pair_info['+ticker+']');
         if(!(ticker in subs)) {
             console.log('No subscription for ['+ticker+']');
             return;
