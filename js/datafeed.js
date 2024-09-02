@@ -19,13 +19,13 @@ export default {
                 "ticker": "MEXC:BTC/USDT",
                 "type": "crypto"
             },
-            {
+            /*{
                 "symbol": "ETH",
                 "description": "ETH",
                 "exchange": "MEXC",
                 "ticker": "MEXC:ETH/USDT",
                 "type": "crypto"
-            },
+            },*/
         ];
 
         onResultReadyCallback(symbols);
