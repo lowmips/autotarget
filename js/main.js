@@ -32,9 +32,6 @@ window.tvWidget.onChartReady(function() {
 
 });
 
-window.tvWidget.subscribe('activeChartChanged', function(){
-    console.log('activeChartChanged from subscribe');
-});
 window.tvWidget.subscribe('onChartReady', function(){
     console.log('onChartReady from subscribe');
 });
