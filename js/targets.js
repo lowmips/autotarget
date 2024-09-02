@@ -27,7 +27,10 @@ ws_targets.addEventListener('message', function(event) {
             return;
         }
         if('updates' in msg){
-
+            msg.updates.forEach((update) => {
+                console.log('Got update:');
+                console.log(update);
+            });
         }
     }
 
