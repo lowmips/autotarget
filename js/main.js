@@ -15,6 +15,12 @@ window.tvWidget = new TradingView.widget({
     timezone: 'America/New_York',
 });
 
+window.tvWidget.activeChart().onDataLoaded().subscribe(
+    null,
+    () => console.log('tvWidget.activeChart().onDataLoaded().subscribe() - New history bars are loaded'),
+    true
+);
+
 window.tvWidget.onChartReady(function() {
     console.log('onChartReady()');
 
