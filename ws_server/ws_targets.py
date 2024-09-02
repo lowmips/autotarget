@@ -174,6 +174,7 @@ async def handle_ws(websocket,path):
     # TODO: Check login info here
     msg = {
         'subscription': {
+            'logged_in': False,
             'type': 'basic',
         },
     }
