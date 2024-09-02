@@ -36,7 +36,10 @@ window.tvStuff.widget.subscribe('series_properties_changed', function(){
 
 });
 
-
+window.tvStuff.widget.subscribe('time_interval', function(a){
+    console.log('event [time_interval] ');
+    console.log(a);
+});
 
 /*
 window.tvStuff.widget.onChartReady(function() {
