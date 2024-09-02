@@ -33,7 +33,7 @@ ws_targets.addEventListener('message', function(event) {
                 console.log('Got update:');
                 console.log(update);
                 let shape_points = [
-                    { time: update.ts_start, price: update.target_price }
+                    { time: parseInt(update.ts_start), price: parseFloat(update.target_price) }
                 ];
                 console.log('shape_points:');
                 console.log(shape_points);
