@@ -51,6 +51,7 @@ export async function startSub(ticker) {
     console.log('startSub('+ticker+')');
     if(ticker in subs) return;
     if(ws_targets.readyState == 0){  // Websocket.CONNECTING
+        console.log('ebsocket.CONNECTING, waiting....');
         setTimeout(startSub,500, ticker);
         return;
     }
