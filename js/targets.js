@@ -32,26 +32,26 @@ ws_targets.addEventListener('message', function(event) {
             msg.updates.forEach((update) => {
                 console.log('Got update:');
                 console.log(update);
-                let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(
-                    [
-                        { time: update.ts_start, price: update.target_price }
-                    ],
-                    {
-                        shape: "horizontal_ray",
-                        //lock: true,
-                        //disableSelection: true,
-                        overrides: {
-                            //text: 'hi ya',
-                            showLabel: false,
-                            fontSize: 30,
-                            horzLabelsAlign: 'left',
-                            showPrice: false,
-                        },
-                    }
-                );
+                let shape_points = [
+                    { time: update.ts_start, price: update.target_price }
+                ];
+                console.log('shape_points:');
+                console.log(shape_points);
 
+                let shape_opts = {
+                    shape: "horizontal_ray",
+                    //lock: true,
+                    //disableSelection: true,
+                    overrides: {
+                        //text: 'hi ya',
+                        showLabel: false,
+                        fontSize: 30,
+                        horzLabelsAlign: 'left',
+                        showPrice: false,
+                    },
+                };
 
-
+                let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
             });
         }
     }
