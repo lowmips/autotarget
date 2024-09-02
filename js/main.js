@@ -1,6 +1,8 @@
 import Datafeed from './datafeed.js';
 
-window.tvWidget = new TradingView.widget({
+window.tvStuff = {};
+
+window.tvStuff.widget = new TradingView.widget({
     container: 'tv_chart_container',       // Reference to an attribute of a DOM element
     datafeed: Datafeed,
     debug: true,
@@ -15,31 +17,33 @@ window.tvWidget = new TradingView.widget({
     timezone: 'America/New_York',
 });
 
-window.tvWidget.onChartReady(function() {
+/*
+window.tvStuff.widget.onChartReady(function() {
     console.log('onChartReady()');
 
-    window.tvWidget.activeChart().onDataLoaded().subscribe(
+    window.tvStuff.widget.activeChart().onDataLoaded().subscribe(
         null,
         () => console.log('tvWidget.activeChart().onDataLoaded().subscribe() - New history bars are loaded'),
         true
     );
 
-    window.tvWidget.activeChart().dataReady(() => {
+    window.tvStuff.widget.activeChart().dataReady(() => {
         console.log('dataReady()');
     });
 
 });
 
-window.tvWidget.subscribe('onChartReady', function(){
+window.tvStuff.widget.subscribe('onChartReady', function(){
     console.log('onChartReady from subscribe');
 });
+*/
 
-window.tvWidget.subscribe('series_properties_changed', function(){
+window.tvStuff.widget.subscribe('series_properties_changed', function(){
     console.log('series_properties_changed');
     let symbol;
 
     try{
-        symbol = window.tvWidget.activeChart().getSeries().symbolSource().symbol;
+        symbol = window.tvStuff.widget.activeChart().getSeries().symbolSource().symbol;
     }catch(e){
         //console.log(e);
     }
