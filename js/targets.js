@@ -131,7 +131,7 @@ async function handleUpdateMsg(msg){
                         showLabel: false,
                         fontSize: 30,
                         horzLabelsAlign: 'left',
-                        showPrice: false,
+                        'linetoolhorzray.showPrice': false,
                         'linetoolhorzray.linecolor': target_color,
                     };
                 break;
