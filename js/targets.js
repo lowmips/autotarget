@@ -47,7 +47,7 @@ async function handleUpdateMsg(msg){
         console.log('No subscription for ['+ticker+']');
         return;
     }
-    if(!(ticker in targetCache)) targetCache[ticker] = {cache: {}, resolution_revise: []};
+    if(!(ticker in targetCache)) targetCache[ticker] = {shape_id_to_target: {}, target_to_shape_id: {}, resolution_revise: []};
     msg.updates.forEach((update) => {
         //console.log('Got update:');
         //console.log(update);
