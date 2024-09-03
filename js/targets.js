@@ -54,7 +54,7 @@ async function handleUpdateMsg(msg){
         let ts_start = parseInt(update.ts_start);
         let ts_end = parseInt(update.ts_hit);
         let target_price = parseFloat(update.target_price);
-        let shape_type = (ts_end > ts_tart?'trend_line':'horizontal_ray');
+        let shape_type = (ts_end > ts_start?'trend_line':'horizontal_ray');
         let shape_points = [];
 
         shape_points.push({ time: ts_start, price: target_price });
