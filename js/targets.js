@@ -122,6 +122,7 @@ async function handleUpdateMsg(msg){
             //disableSelection: true,
             //disableUndo: true,
         };
+
         switch (shape_type){
             case 'horizontal_ray':
                 shape_opts['overrides'] =
@@ -137,7 +138,6 @@ async function handleUpdateMsg(msg){
             case 'trend_line':
                 shape_opts['overrides'] =
                     {
-                        showPrice: false,
                         'linetooltrendline.linecolor': target_color,
                         'linetooltrendline.showBarsRange': false,
                         'linetooltrendline.showDateTimeRange': false,
