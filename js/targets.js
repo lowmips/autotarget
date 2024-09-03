@@ -155,11 +155,22 @@ async function handleUpdateMsg(msg){
                 break;
         }
 
-
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
+
+        // is the timestamp correctly set? (shape drawing at large resolution issue)
+        let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+        let points = shape.getPoints();
+        for(let idx in points){
+            if(points[idx].time != shape_points[idx].time){
+                console.log('shape_id['+shape_id+'] starting timestamp not correct!');
+                if(targetCache[ticker]['resolution_revice'].indexOf(target_id) == -1)
+                    targetCache[ticker]['resolution_revice'].push(target_id);
+                break;
+            }
+        }
 
     });
 }
