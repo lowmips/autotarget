@@ -54,6 +54,23 @@ async function handleUpdateMsg(msg){
         let ts_start = parseInt(update.ts_start);
         let ts_end = parseInt(update.ts_hit);
         let target_price = parseFloat(update.target_price);
+
+        // is there already a shape for this time/price?
+        if(ts_start in targetCache[ticker]['target_to_shape_id'] &&
+            target_price in targetCache[ticker]['target_to_shape_id'][ts_start]
+        ){
+            let existing_shape_id =  targetCache[ticker]['target_to_shape_id'][ts_start][target_price];
+            let existing_target = targetCache[ticker]['shape_id_to_target'][existing_shape_id];
+
+            // Is this a newly hit target?
+            if(ts_end > 0 && existing_target.ts_end == 0){
+                removeDrawing(ticker, existing_shape_id);
+            }
+
+        }
+
+
+
         let shape_type = (ts_end > ts_start?'trend_line':'horizontal_ray');
         let shape_points = [];
 
@@ -86,6 +103,7 @@ async function handleUpdateMsg(msg){
                     {
                         'linetooltrendline.showBarsRange': false,
                         'linetooltrendline.showDateTimeRange': false,
+                        'linetooltrendline.showLabel': false,
                         'linetooltrendline.showPriceLabels': false,
                         'linetooltrendline.showPriceRange': false,
                     };
@@ -99,9 +117,18 @@ async function handleUpdateMsg(msg){
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
 
     });
-
-
 }
+
+async function removeDrawing(ticker, shape_id){
+    console.log('removeDrawing('+ticker+','+shape_id+')');
+    const index = targetCache[ticker]['resolution_revise'].indexOf(shape_id);
+    if (index > -1) targetCache[ticker]['resolution_revise'].splice(index, 1);
+    let target = targetCache[ticker]['shape_id_to_target'][shape_id];
+    delete targetCache[ticker]['target_to_shape_id'][target.ts_start][target.target_price];
+    delete targetCache[ticker]['shape_id_to_target'][shape_id];
+    window.tvStuff.widget.activeChart().removeEntity(shape_id);
+}
+
 
 export async function stopSub(ticker) {
     console.log('stopSub('+ticker+')');
