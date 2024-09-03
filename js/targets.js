@@ -118,9 +118,9 @@ async function handleUpdateMsg(msg){
 
         let shape_opts = {
             shape: shape_type,
-            //lock: true,
+            lock: true,
             //disableSelection: true,
-            //disableUndo: true,
+            disableUndo: true,
         };
 
         switch (shape_type){
