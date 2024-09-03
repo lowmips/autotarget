@@ -125,9 +125,7 @@ async function handleUpdateMsg(msg){
 
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-        targetCache[ticker]['shape_id_to_target'][shape_id] = {
-
-        };
+        targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
 
