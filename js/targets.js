@@ -142,12 +142,15 @@ async function handleUpdateMsg(msg){
             case 'trend_line':
                 shape_opts['overrides'] =
                     {
-                        'linetooltrendline.linecolor': target_color,
-                        'linetooltrendline.showBarsRange': false,
-                        'linetooltrendline.showDateTimeRange': false,
-                        'linetooltrendline.showLabel': false,
-                        'linetooltrendline.showPriceLabels': false,
-                        'linetooltrendline.showPriceRange': false,
+                        showPriceLabels: false,
+                        showLabel: false,
+                        linecolor: target_color,
+                        //'linetooltrendline.linecolor': target_color,
+                        //'linetooltrendline.showBarsRange': false,
+                        //'linetooltrendline.showDateTimeRange': false,
+                        //'linetooltrendline.showLabel': false,
+                        //'linetooltrendline.showPriceLabels': false,
+                        //'linetooltrendline.showPriceRange': false,
                     };
                 break;
         }
