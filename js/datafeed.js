@@ -63,7 +63,7 @@ export default {
         onSymbolResolvedCallback(symbolInfo);
     },
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
-        console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
+        //console.log('[getBars]: Method call', symbolInfo, resolution, periodParams );
         const { from, to, firstDataRequest } = periodParams;
         //const bars = new Array(periodParams.countBack + 1);
         const kline_request_url = window.location.href + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to;
