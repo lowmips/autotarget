@@ -133,6 +133,8 @@ async function handleUpdateMsg(msg){
                         'linetoolhorzray.showLabel': false,
                         'linetoolhorzray.showPrice': false,
                         'linetoolhorzray.linecolor': target_color,
+                        showPrice: false,
+                        showLabel: false,
                     };
                 break;
             case 'trend_line':
