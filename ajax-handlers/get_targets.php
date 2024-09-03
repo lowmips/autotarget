@@ -17,6 +17,12 @@ function empty_set_and_end($exchange, $from_token, $to_token){
         ],
         'update_info' => [],
     ]);
+    exit;
+}
+
+function json_and_end($obj){
+    echo json_encode($obj);
+    exit;
 }
 
 
@@ -28,9 +34,9 @@ function empty_set_and_end($exchange, $from_token, $to_token){
 if(!array_key_exists('ticker', $_REQUEST) || !array_key_exists('from', $_REQUEST) || !array_key_exists('to', $_REQUEST))
     die("Missing required request params");
 
-$from = $mysqli->real_escape_string($_REQUEST['from']);
-$to = $mysqli->real_escape_string($_REQUEST['to']);
-if($to < $from) die("to < from");
+$ts_from = $mysqli->real_escape_string($_REQUEST['from']);
+$ts_to = $mysqli->real_escape_string($_REQUEST['to']);
+if($ts_to < $ts_from) error_and_end("to < from");
 
 // resolve the ticker into exchange, from_token, to_token
 $ticker_parts1 = explode(':', $_REQUEST['ticker']);
@@ -65,3 +71,26 @@ $table_name_sql = $mysqli->real_escape_string($table_name);
 $q = "SELECT * FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`='$table_name_sql' LIMIT 1";
 if(($result = $mysqli->query($q)) === false) empty_set_and_end($exchange, $from_token, $to_token);
 
+// find targets!
+$q = "SELECT * FROM `$table_name_sql` WHERE `last_update_ts`>='$ts_from' AND `last_update_ts`<='$ts_to' ORDER BY `last_update_ts` DESC ";
+if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
+$update_obj = [
+    'pair_info' => [
+        'exchange' => $exchange,
+        'from_token' => $from_token,
+        'to_token' => $to_token,
+    ],
+    'update_info' => [],
+];
+while(($row = $result->fetch_assoc()) !== false){
+    if($row === null) break;
+    $updt = [
+        'ts_start' => (int)$row['ts_end'],
+        'ts_latest' => (int)$row['last_update_ts'],
+        'ts_end' => (int)$row['ts_hit'],
+        'target_price' => (double)$row['target_price'],
+        'target_count' => (int)$row['target_count'],
+    ];
+    $update_obj['update_info'][] = $updt;
+}
+json_and_end($update_obj);
