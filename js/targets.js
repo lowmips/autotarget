@@ -61,7 +61,6 @@ async function handleUpdateMsg(msg){
         if(shape_type == 'trend_line'){
             shape_points.push({ time: ts_end, price: target_price });
         }
-
         //console.log('shape_points:');
         //console.log(shape_points);
 
@@ -80,7 +79,7 @@ async function handleUpdateMsg(msg){
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
         targetCache[ticker]['shape_id_to_target'][shape_id] = update;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
-
+        if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
 
     });
 
