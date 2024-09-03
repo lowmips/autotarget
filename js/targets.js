@@ -4,7 +4,6 @@ const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets
 let targetCache = {};
 /*
 ticker -> {
-    cache -> shape_id -> {}
     shape_id_to_target -> shape_id -> [ts_start, price]
     target_to_shape_id -> ts_start -> price -> shape_id
     resolution_revise -> [target_id]
@@ -33,46 +32,59 @@ async function handleMsg(msg_str){
     console.log('handleMsg()');
     let msg = JSON.parse(msg_str);
     //console.log(msg);
-    if('pair_info' in msg){
-        let ticker = msg.pair_info.exchange + ':' + msg.pair_info.from_token + '/' + msg.pair_info.to_token;
-        //console.log('Got pair_info['+ticker+']');
-        if(!(ticker in subs)) {
-            console.log('No subscription for ['+ticker+']');
-            return;
-        }
-        if(!(ticker in targetCache)) targetCache[ticker] = {cache: {}, resolution_revise: []};
+    if('updates' in msg) await handleUpdateMsg(msg);
+}
 
-        if('updates' in msg){
-            msg.updates.forEach((update) => {
-                //console.log('Got update:');
-                //console.log(update);
-
-
-
-
-                let shape_points = [
-                    { time: parseInt(update.ts_start), price: parseFloat(update.target_price) }
-                ];
-                //console.log('shape_points:');
-                //console.log(shape_points);
-
-                let shape_opts = {
-                    shape: "horizontal_ray",
-                    lock: true,
-                    disableSelection: true,
-                    overrides: {
-                        //text: 'hi ya',
-                        showLabel: false,
-                        fontSize: 30,
-                        horzLabelsAlign: 'left',
-                        showPrice: false,
-                    },
-                };
-                let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-                targetCache[ticker][shape_id] = update;
-            });
-        }
+async function handleUpdateMsg(msg){
+    console.log('handleUpdates');
+    if(!('pair_info' in msg)){
+        console.log('Invalid update message, missing pair_info');
+        return false;
     }
+    let ticker = msg.pair_info.exchange + ':' + msg.pair_info.from_token + '/' + msg.pair_info.to_token;
+    //console.log('Got pair_info['+ticker+']');
+    if(!(ticker in subs)) {
+        console.log('No subscription for ['+ticker+']');
+        return;
+    }
+    if(!(ticker in targetCache)) targetCache[ticker] = {cache: {}, resolution_revise: []};
+    msg.updates.forEach((update) => {
+        //console.log('Got update:');
+        //console.log(update);
+        let ts_start = parseInt(update.ts_start);
+        let ts_end = parseInt(update.ts_hit);
+        let target_price = parseFloat(update.target_price);
+        let shape_type = (ts_end > ts_tart?'trend_line':'horizontal_ray');
+        let shape_points = [];
+
+        shape_points.push({ time: ts_start, price: target_price });
+        if(shape_type == 'trend_line'){
+            shape_points.push({ time: ts_end, price: target_price });
+        }
+
+        //console.log('shape_points:');
+        //console.log(shape_points);
+
+        let shape_opts = {
+            shape: shape_type,
+            lock: true,
+            disableSelection: true,
+            overrides: {
+                //text: 'hi ya',
+                showLabel: false,
+                fontSize: 30,
+                horzLabelsAlign: 'left',
+                showPrice: false,
+            },
+        };
+        let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+        targetCache[ticker]['shape_id_to_target'][shape_id] = update;
+        if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
+
+
+    });
+
+
 }
 
 export async function stopSub(ticker) {
