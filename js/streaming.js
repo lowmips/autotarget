@@ -4,11 +4,11 @@ import { parseFullSymbol } from './helpers.js';
 
 
 ws.addEventListener('open', function(event) {
-    console.log('ws [open]');
+    //console.log('ws [open]');
 })
 
 ws.addEventListener('message', function(event) {
-    console.log('ws [message]: ' + event.data)
+    //console.log('ws [message]: ' + event.data)
     const [
         eventTypeStr,
         exchange,
