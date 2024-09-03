@@ -1,4 +1,4 @@
-const colors = {
+export const colors = {
     COLOR_TIER_1: '#00227F',
     COLOR_TIER_2: '#143592',
     COLOR_TIER_3: '#1B3D9B',
