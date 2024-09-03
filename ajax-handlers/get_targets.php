@@ -8,7 +8,16 @@ function error_and_end(string $error){
     echo json_encode(['error' => $error,]);
     exit;
 }
-
+function empty_set_and_end($exchange, $from_token, $to_token){
+    echo json_encode([
+        'pair_info' => [
+            'exchange' => $exchange,
+            'from_token' => $from_token,
+            'to_token' => $to_token,
+        ],
+        'update_info' => [],
+    ]);
+}
 
 
 #print_r($_REQUEST);
@@ -49,4 +58,10 @@ if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
 if(!is_array($row = $result->fetch_assoc())) error_and_end("query fetch_assoc failure: $q");
 $pair_id = (int)$row['id'];
 if($pair_id<=0) error_and_end("query row failure: $q");
+
+// target_groups table exist?
+$table_name = "target_groups_{$pair_id}";
+$table_name_sql = $mysqli->real_escape_string($table_name);
+$q = "SELECT * FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`='$table_name_sql' LIMIT 1";
+if(($result = $mysqli->query($q)) === false) empty_set_and_end($exchange, $from_token, $to_token);
 
