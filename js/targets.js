@@ -4,13 +4,17 @@ import { colors }from './colors.js';
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
 let targetCache = {};
 /*
-ticker -> {
-    shape_id_to_target -> shape_id -> [ts_start, price]
-    target_to_shape_id -> ts_start -> price -> shape_id
-    resolution_revise -> [target_id]
-}
- */
+    ticker -> {
+        shape_id_to_target -> shape_id -> [ts_start, price]
+        target_to_shape_id -> ts_start -> price -> shape_id
+        resolution_revise -> [target_id]
+    }
+*/
 let subs = {};
+let earliest_target_latest_ts = null;
+let max_history_targets = 10000;
+let history_targets_count = 0;
+
 
 ws_targets.addEventListener('open', function(event) {
     console.log('ws_targets [open]' + event);
@@ -64,6 +68,9 @@ async function handleUpdateMsg(msg){
             target_price,
             target_count,
         };
+
+        // update earliest ts_latest
+        if(earliest_target_latest_ts === null || ts_latest < earliest_target_latest_ts) earliest_target_latest_ts = ts_latest;
 
         // determine target color
         let target_color;
