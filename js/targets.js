@@ -1,7 +1,15 @@
 import { parseFullSymbol } from './helpers.js';
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
-const targetCache = {}; // exchange -> token_from -> token_to ->
+let targetCache = {};
+/*
+ticker -> {
+    cache -> shape_id -> {}
+    shape_id_to_target -> shape_id -> [ts_start, price]
+    target_to_shape_id -> ts_start -> price -> shape_id
+    resolution_revise -> [target_id]
+}
+ */
 let subs = {};
 
 ws_targets.addEventListener('open', function(event) {
@@ -28,20 +36,26 @@ ws_targets.addEventListener('message', function(event) {
             console.log('No subscription for ['+ticker+']');
             return;
         }
+        if(!(ticker in targetCache)) targetCache[ticker] = {cache: {}, resolution_revise: []};
+
         if('updates' in msg){
             msg.updates.forEach((update) => {
-                console.log('Got update:');
-                console.log(update);
+                //console.log('Got update:');
+                //console.log(update);
+
+
+
+
                 let shape_points = [
                     { time: parseInt(update.ts_start), price: parseFloat(update.target_price) }
                 ];
-                console.log('shape_points:');
-                console.log(shape_points);
+                //console.log('shape_points:');
+                //console.log(shape_points);
 
                 let shape_opts = {
                     shape: "horizontal_ray",
-                    //lock: true,
-                    //disableSelection: true,
+                    lock: true,
+                    disableSelection: true,
                     overrides: {
                         //text: 'hi ya',
                         showLabel: false,
@@ -50,8 +64,8 @@ ws_targets.addEventListener('message', function(event) {
                         showPrice: false,
                     },
                 };
-
                 let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+                targetCache[ticker][shape_id] = update;
             });
         }
     }
