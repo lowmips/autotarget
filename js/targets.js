@@ -53,7 +53,16 @@ async function handleUpdateMsg(msg){
         //console.log(update);
         let ts_start = parseInt(update.ts_start);
         let ts_end = parseInt(update.ts_hit);
+        let ts_latest = parseInt(update.ts_latest);
         let target_price = parseFloat(update.target_price);
+        let target_count = parseInt(update.target_count);
+        let new_target = {
+            ts_start,
+            ts_end,
+            ts_latest,
+            target_price,
+            target_count,
+        };
 
         // is there already a shape for this time/price?
         if(ts_start in targetCache[ticker]['target_to_shape_id'] &&
@@ -63,13 +72,16 @@ async function handleUpdateMsg(msg){
             let existing_target = targetCache[ticker]['shape_id_to_target'][existing_shape_id];
 
             // Is this a newly hit target?
-            if(ts_end > 0 && existing_target.ts_end == 0){
+            if(new_target.ts_end > 0 && existing_target.ts_end == 0){
                 removeDrawing(ticker, existing_shape_id);
             }
+            // Are we just updating target counts?
+            if(new_target.ts_end == 0 && new_target.target_count != existing_target.target_count){
 
+
+                return;
+            }
         }
-
-
 
         let shape_type = (ts_end > ts_start?'trend_line':'horizontal_ray');
         let shape_points = [];
@@ -101,6 +113,7 @@ async function handleUpdateMsg(msg){
             case 'trend_line':
                 shape_opts['overrides'] =
                     {
+                        showPrice: false,
                         'linetooltrendline.showBarsRange': false,
                         'linetooltrendline.showDateTimeRange': false,
                         'linetooltrendline.showLabel': false,
@@ -112,7 +125,9 @@ async function handleUpdateMsg(msg){
 
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-        targetCache[ticker]['shape_id_to_target'][shape_id] = update;
+        targetCache[ticker]['shape_id_to_target'][shape_id] = {
+
+        };
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
 
