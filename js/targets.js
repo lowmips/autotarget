@@ -76,13 +76,13 @@ async function handleUpdateMsg(msg){
             case (new_target.target_count < 25): target_color = colors.COLOR_TIER_6; break;
             default: target_color = colors.COLOR_TIER_7;
         }
-
+        let shape_type = (new_target.ts_end > new_target.ts_start?'trend_line':'horizontal_ray');
 
         // is there already a shape for this time/price?
-        if(ts_start in targetCache[ticker]['target_to_shape_id'] &&
-            target_price in targetCache[ticker]['target_to_shape_id'][ts_start]
+        if(new_target.ts_start in targetCache[ticker]['target_to_shape_id'] &&
+            new_target.target_price in targetCache[ticker]['target_to_shape_id'][new_target.ts_start]
         ){
-            let existing_shape_id =  targetCache[ticker]['target_to_shape_id'][ts_start][target_price];
+            let existing_shape_id =  targetCache[ticker]['target_to_shape_id'][new_target.ts_start][new_target.target_price];
             let existing_target = targetCache[ticker]['shape_id_to_target'][existing_shape_id];
 
             // Is this a newly hit target?
@@ -91,13 +91,22 @@ async function handleUpdateMsg(msg){
             }
             // Are we just updating target counts?
             if(new_target.ts_end == 0 && new_target.target_count != existing_target.target_count){
-
-
+                let entity = window.tvStuff.widget.activeChart().getShapeById(existing_shape_id);
+                let props = {
+                    overrides: {
+                    },
+                };
+                if(shape_type == 'horizontal_ray'){
+                    props.overrides['linetoolhorzray.linecolor'] = target_color;
+                }
+                if(shape_type == 'trend_line'){
+                    props.overrides['linetooltrendline.linecolor'] = target_color;
+                }
+                entity.setProperties(props);
                 return;
             }
         }
 
-        let shape_type = (ts_end > ts_start?'trend_line':'horizontal_ray');
         let shape_points = [];
 
         shape_points.push({ time: ts_start, price: target_price });
