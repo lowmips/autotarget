@@ -1,4 +1,5 @@
 import { parseFullSymbol } from './helpers.js';
+import colors from './colors';
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
 let targetCache = {};
@@ -64,6 +65,19 @@ async function handleUpdateMsg(msg){
             target_count,
         };
 
+        // determine target color
+        let target_color;
+        switch(true){
+            case (new_target.target_count == 1): target_color = colors.COLOR_TIER_1; break;
+            case (new_target.target_count < 5): target_color = colors.COLOR_TIER_2; break;
+            case (new_target.target_count < 10): target_color = colors.COLOR_TIER_3; break;
+            case (new_target.target_count < 15): target_color = colors.COLOR_TIER_4; break;
+            case (new_target.target_count < 20): target_color = colors.COLOR_TIER_5; break;
+            case (new_target.target_count < 25): target_color = colors.COLOR_TIER_6; break;
+            default: target_color = colors.COLOR_TIER_7;
+        }
+
+
         // is there already a shape for this time/price?
         if(ts_start in targetCache[ticker]['target_to_shape_id'] &&
             target_price in targetCache[ticker]['target_to_shape_id'][ts_start]
@@ -108,12 +122,14 @@ async function handleUpdateMsg(msg){
                         fontSize: 30,
                         horzLabelsAlign: 'left',
                         showPrice: false,
+                        'linetoolhorzray.linecolor': target_color,
                     };
                 break;
             case 'trend_line':
                 shape_opts['overrides'] =
                     {
                         showPrice: false,
+                        'linetooltrendline.linecolor': target_color,
                         'linetooltrendline.showBarsRange': false,
                         'linetooltrendline.showDateTimeRange': false,
                         'linetooltrendline.showLabel': false,
