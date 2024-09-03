@@ -41,7 +41,7 @@ if($ts_to < $ts_from) error_and_end("to < from");
 // resolve the ticker into exchange, from_token, to_token
 $ticker_parts1 = explode(':', $_REQUEST['ticker']);
 if(count($ticker_parts1)!=2) error_and_end("Invalid request");
-$exchange = $ticker_parts1[0];
+$exchange = ctype_upper($ticker_parts1[0]);
 $tokens = $ticker_parts1[1];
 $token_parts = explode('/', $tokens);
 if(count($token_parts)!=2) error_and_end("Invalid request");
