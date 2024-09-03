@@ -166,8 +166,8 @@ async function handleUpdateMsg(msg){
         for(let idx in points){
             if(points[idx].time != shape_points[idx].time){
                 console.log('shape_id['+shape_id+'] starting timestamp not correct!');
-                if(targetCache[ticker]['resolution_revise'].indexOf(target_id) == -1)
-                    targetCache[ticker]['resolution_revise'].push(target_id);
+                if(targetCache[ticker]['resolution_revise'].indexOf(shape_id) == -1)
+                    targetCache[ticker]['resolution_revise'].push(shape_id);
                 break;
             }
         }
