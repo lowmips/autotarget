@@ -127,13 +127,13 @@ export default {
         );
     },
     unsubscribeBars: (subscriberUID) => {
-        console.log('[unsubscribeBars]: Method call with subscriberUID:', subscriberUID);
+        //console.log('[unsubscribeBars]: Method call with subscriberUID:', subscriberUID);
         unsubscribeFromStream(subscriberUID);
     },
 };
 
 export async function getAllSymbols() {
-    console.log('getAllSymbols');
+    //console.log('getAllSymbols');
     //const data = await makeApiRequest('api/v3/defaultSymbols');
 
     let allSymbols = [];
