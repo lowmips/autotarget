@@ -26,8 +26,12 @@ ws_targets.addEventListener('message', function(event) {
     console.log('ws_targets [message]');
     //console.log(event.data);
     //console.log('    [origin] '+event.origin);
+    let z = handleMsg(event.data);
+});
 
-    let msg = JSON.parse(event.data);
+async function handleMsg(msg_str){
+    console.log('handleMsg()');
+    let msg = JSON.parse(msg_str);
     //console.log(msg);
     if('pair_info' in msg){
         let ticker = msg.pair_info.exchange + ':' + msg.pair_info.from_token + '/' + msg.pair_info.to_token;
@@ -69,8 +73,7 @@ ws_targets.addEventListener('message', function(event) {
             });
         }
     }
-
-});
+}
 
 export async function stopSub(ticker) {
     console.log('stopSub('+ticker+')');
