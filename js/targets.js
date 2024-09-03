@@ -1,5 +1,5 @@
 import { parseFullSymbol } from './helpers.js';
-import colors from './colors.js';
+import { colors }from './colors.js';
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
 let targetCache = {};
