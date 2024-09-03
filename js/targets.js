@@ -68,14 +68,31 @@ async function handleUpdateMsg(msg){
             shape: shape_type,
             lock: true,
             disableSelection: true,
-            overrides: {
-                //text: 'hi ya',
-                showLabel: false,
-                fontSize: 30,
-                horzLabelsAlign: 'left',
-                showPrice: false,
-            },
+            disableUndo: true,
         };
+        switch (shape_type){
+            case 'horizontal_ray':
+                shape_opts['overrides'] =
+                    {
+                        //text: 'hi ya',
+                        showLabel: false,
+                        fontSize: 30,
+                        horzLabelsAlign: 'left',
+                        showPrice: false,
+                    };
+                break;
+            case 'trend_line':
+                shape_opts['overrides'] =
+                    {
+                        'linetooltrendline.showBarsRange': false,
+                        'linetooltrendline.showDateTimeRange': false,
+                        'linetooltrendline.showPriceLabels': false,
+                        'linetooltrendline.showPriceRange': false,
+                    };
+                break;
+        }
+
+
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
         targetCache[ticker]['shape_id_to_target'][shape_id] = update;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
