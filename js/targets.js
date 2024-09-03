@@ -128,13 +128,15 @@ async function handleUpdateMsg(msg){
                 shape_opts['overrides'] =
                     {
                         //text: 'hi ya',
+                        showPrice: false,
+                        showLabel: false,
+                        linecolor: target_color,
                         'linetoolhorzray.fontsize': 30,
                         'linetoolhorzray.horzLabelsAlign': 'left',
                         'linetoolhorzray.showLabel': false,
                         'linetoolhorzray.showPrice': false,
                         'linetoolhorzray.linecolor': target_color,
-                        showPrice: false,
-                        showLabel: false,
+
                     };
                 break;
             case 'trend_line':
