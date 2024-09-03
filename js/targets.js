@@ -23,21 +23,21 @@ ws_targets.addEventListener('error', function(event) {
     subs = {};
 });
 ws_targets.addEventListener('message', function(event) {
-    console.log('ws_targets [message]');
+    //console.log('ws_targets [message]');
     //console.log(event.data);
     //console.log('    [origin] '+event.origin);
     let z = handleMsg(event.data);
 });
 
 async function handleMsg(msg_str){
-    console.log('handleMsg()');
+    //console.log('handleMsg()');
     let msg = JSON.parse(msg_str);
     //console.log(msg);
     if('updates' in msg) await handleUpdateMsg(msg);
 }
 
 async function handleUpdateMsg(msg){
-    console.log('handleUpdates');
+    //console.log('handleUpdates');
     if(!('pair_info' in msg)){
         console.log('Invalid update message, missing pair_info');
         return false;
