@@ -69,12 +69,12 @@ async function handleUpdateMsg(msg){
         let target_color;
         switch(true){
             case (new_target.target_count == 1): target_color = colors.COLOR_TIER_1; break;
-            case (new_target.target_count < 5): target_color = colors.COLOR_TIER_2; break;
-            case (new_target.target_count < 10): target_color = colors.COLOR_TIER_3; break;
-            case (new_target.target_count < 15): target_color = colors.COLOR_TIER_4; break;
-            case (new_target.target_count < 20): target_color = colors.COLOR_TIER_5; break;
-            case (new_target.target_count < 25): target_color = colors.COLOR_TIER_6; break;
-            default: target_color = colors.COLOR_TIER_7;
+            case (new_target.target_count < 5): target_color = colors.COLOR_TIER_3; break;
+            case (new_target.target_count < 10): target_color = colors.COLOR_TIER_5; break;
+            case (new_target.target_count < 15): target_color = colors.COLOR_TIER_7; break;
+            case (new_target.target_count < 20): target_color = colors.COLOR_TIER_9; break;
+            case (new_target.target_count < 25): target_color = colors.COLOR_TIER_10; break;
+            default: target_color = colors.COLOR_TIER_10;
         }
         let shape_type = (new_target.ts_end > new_target.ts_start?'trend_line':'horizontal_ray');
 
