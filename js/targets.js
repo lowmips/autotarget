@@ -207,6 +207,7 @@ export async function checkFixDrawingsResolution(ticker){
         let revs_len = revs.length;
         while(revs_len--){
             let shape_id = revs[revs_len];
+            console.log('shape_id: '+shape_id);
             let target = targetCache[ticker]['shape_id_to_target'][shape_id];
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
             let shape_points = [];
