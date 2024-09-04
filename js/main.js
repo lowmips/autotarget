@@ -64,7 +64,7 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
     let x = bleh(window.tvStuff.current_symbol);
 });
 
-/*
+
 window.tvStuff.widget.onChartReady(function() {
     console.log('onChartReady()');
 
@@ -83,5 +83,5 @@ window.tvStuff.widget.onChartReady(function() {
 window.tvStuff.widget.subscribe('onChartReady', function(){
     console.log('onChartReady from subscribe');
 });
-*/
+
 
