@@ -200,9 +200,11 @@ export async function checkFixDrawingsResolution(ticker){
     }
     let current_resolution = window.tvStuff.current_resolution;
     let revisions = targetCache[ticker]['resolution_revise'];
+    console.log('current_resolution: '+current_resolution);
     console.log(revisions);
     for(let resolution_when_set in revisions){
         if(current_resolution >= resolution_when_set) continue;
+        console.log('Checking resolution_when_set['+resolution_when_set+']');
         let revs = revisions[resolution_when_set];
         let revs_len = revs.length;
         while(revs_len--){
@@ -212,13 +214,13 @@ export async function checkFixDrawingsResolution(ticker){
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
             let shape_points = [];
 
-            console.log('shape:');
-            console.log(entity);
+            //console.log('shape:');
+            //console.log(entity);
 
             // find the current ts
             let points = entity.getPoints();
-            console.log('points:');
-            console.log(points);
+            //console.log('points:');
+            //console.log(points);
             let original_ts = points[0].time;
 
             // Build the correct points
@@ -235,12 +237,16 @@ export async function checkFixDrawingsResolution(ticker){
             if(current_ts === target.ts_start){
                 // it worked! remove from original revision list
                 revs.splice(revs_len, 1);
+                console.log('Points change success!');
             }else if(current_ts < original_ts){
                 // it sort of worked... we're closer
                 revs.splice(revs_len, 1);
-                if(!(current_resolution in revisions)) revisions[current_resolution].push(shap_id);
+                if(!(current_resolution in revisions)) revisions[current_resolution] = [];
+                revisions[current_resolution].push(shape_id);
+                console.log('Points change not successful, but closer timeframe!');
             }else{
                 // total failure... abort?? retry??
+                console.log('Points change failed completely.')
             }
         }
     }
