@@ -214,6 +214,8 @@ export async function checkFixDrawingsResolution(ticker){
 
             // find the current ts
             let points = entity.getPoints();
+            console.log('points:');
+            console.log(points);
             let original_ts = points[0].time;
 
             // Build the correct points
