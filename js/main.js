@@ -7,6 +7,7 @@ window.tvStuff = {
     current_resolution: null,
     previous_resolution: null,
     highlight_ranges: true,
+    ranges_min_distance: 0.001,
     widget_options: {
         container: 'tv_chart_container',       // Reference to an attribute of a DOM element
         datafeed: Datafeed,

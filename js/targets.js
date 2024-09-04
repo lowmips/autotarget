@@ -59,6 +59,8 @@ async function handleUpdateMsg(msg){
         resolution_revise: {},
         earliest_target_ts: null,
     };
+    let potential_ranges = [];
+
     msg.updates.forEach((update) => {
         //console.log('Got update:');
         //console.log(update);
@@ -74,6 +76,18 @@ async function handleUpdateMsg(msg){
             target_price,
             target_count,
         };
+
+        // check groups stuff
+        if(!(ts_start in potential_ranges)){
+            potential_ranges[ts_start] = {
+                count: 0,
+                high: null,
+                low: null,
+            };
+        }
+        potential_ranges[ts_start]['count']++;
+        if(potential_ranges[ts_start]['high']===null || potential_ranges[ts_start]['high'] < target_price) potential_ranges[ts_start]['high'] = target_price;
+        if(potential_ranges[ts_start]['low']===null || potential_ranges[ts_start]['low'] > target_price) potential_ranges[ts_start]['low'] = target_price;
 
         // update earliest ts_latest
         if(targetCache[ticker]['earliest_target_ts'] === null || ts_latest < targetCache[ticker]['earliest_target_ts']) targetCache[ticker]['earliest_target_ts'] = ts_latest;
@@ -172,6 +186,33 @@ async function handleUpdateMsg(msg){
 
         checkDrawingStart(ticker, shape_id, shape_points);    // did the drawing start at the correct timestamp?
     });
+
+
+    // check ranges
+    for(let ts_start in potential_ranges){
+        let r = potential_ranges[ts_start];
+        if(r['count'] < 2) continue;
+        let distance_percent = 1 - (r['low'] / r['high']);
+        if(distance_percent < window.tvStuff.ranges_min_distance) continue;
+        let shape_points = [];
+        shape_points.push({ time: parseInt(ts_start), price: parseFloat(r['high']) });
+        shape_points.push({ time: parseInt(ts_start), price: parseFloat(r['low']) });
+        let shape_opts = {
+            shape: "trend_line",
+            //lock: true,
+            //disableSelection: true,
+            //disableUndo: true,
+        };
+        shape_opts['overrides'] =
+            {
+                showPriceLabels: false,
+                showLabel: false,
+                linecolor: "rgba(255, 152, 0, 0.25)",
+            };
+        let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+        //console.log(shape_id);
+    }
+
 }
 
 function checkDrawingStart(ticker, shape_id, shape_points){
