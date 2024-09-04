@@ -237,16 +237,16 @@ export async function checkFixDrawingsResolution(ticker){
             if(current_ts === target.ts_start){
                 // it worked! remove from original revision list
                 revs.splice(revs_len, 1);
-                console.log('Points change success!');
+                //console.log('Points change success!');
             }else if(current_ts != original_ts){
                 // it sort of worked... we're closer
                 revs.splice(revs_len, 1);
                 if(!(current_resolution in revisions)) revisions[current_resolution] = [];
                 revisions[current_resolution].push(shape_id);
-                console.log('Points change not successful, but closer resolution achieved.');
+                //console.log('Points change not successful, but closer resolution achieved.');
             }else{
                 // total failure... abort?? retry??
-                console.log('Points change failed completely.')
+                //console.log('Points change failed completely.')
             }
         }
     }
