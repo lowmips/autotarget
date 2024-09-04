@@ -7,13 +7,13 @@ let targetCache = {};
     ticker -> {
         shape_id_to_target -> shape_id -> [ts_start, price]
         target_to_shape_id -> ts_start -> price -> shape_id
-        resolution_revise -> [target_id]
+        resolution_revise -> resolution_when_set -> [target_id]
+        earliest_target_ts -> [ts] # "ts_latest" timestamp of the earliest target we have so far
     }
 */
 let subs = {};
-let earliest_target_latest_ts = null;
+
 let max_history_targets = 10000;
-let history_targets_count = 0;
 
 
 ws_targets.addEventListener('open', function(event) {
@@ -52,7 +52,12 @@ async function handleUpdateMsg(msg){
         console.log('No subscription for ['+ticker+']');
         return;
     }
-    if(!(ticker in targetCache)) targetCache[ticker] = {shape_id_to_target: {}, target_to_shape_id: {}, resolution_revise: []};
+    if(!(ticker in targetCache)) targetCache[ticker] = {
+        shape_id_to_target: {},
+        target_to_shape_id: {},
+        resolution_revise: {},
+        earliest_target_ts: null,
+    };
     msg.updates.forEach((update) => {
         //console.log('Got update:');
         //console.log(update);
@@ -168,13 +173,17 @@ async function handleUpdateMsg(msg){
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
 
         // is the timestamp correctly set? (shape drawing at large resolution issue)
+        // if not, add to list of drawings whose resolution needs to be fixed
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
         let points = shape.getPoints();
         for(let idx in points){
             if(points[idx].time != shape_points[idx].time){
                 console.log('shape_id['+shape_id+'] starting timestamp not correct!');
-                if(targetCache[ticker]['resolution_revise'].indexOf(shape_id) == -1)
-                    targetCache[ticker]['resolution_revise'].push(shape_id);
+                let current_resolution = window.tvStuff.current_resolution;
+                if(!(current_resolution in targetCache[ticker]['resolution_revise']))
+                    targetCache[ticker]['resolution_revise'][current_resolution] = [];
+                if(targetCache[ticker]['resolution_revise'][current_resolution].indexOf(shape_id) == -1)
+                    targetCache[ticker]['resolution_revise'][current_resolution].push(shape_id);
                 break;
             }
         }
