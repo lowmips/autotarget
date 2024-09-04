@@ -193,23 +193,23 @@ function checkDrawingStart(ticker, shape_id, shape_points){
 }
 
 export async function checkFixDrawingsResolution(ticker){
-    console.log('checkFixDrawingsResolution('+ticker+')');
+    //console.log('checkFixDrawingsResolution('+ticker+')');
     if(!(ticker in targetCache)){
-        console.log('ticker['+ticker+'] not in targetCache');
+        //console.log('ticker['+ticker+'] not in targetCache');
         return;
     }
     let current_resolution = window.tvStuff.current_resolution;
     let revisions = targetCache[ticker]['resolution_revise'];
-    console.log('current_resolution: '+current_resolution);
-    console.log(revisions);
+    //console.log('current_resolution: '+current_resolution);
+    //console.log(revisions);
     for(let resolution_when_set in revisions){
         if(current_resolution >= resolution_when_set) continue;
-        console.log('Checking resolution_when_set['+resolution_when_set+']');
+        //console.log('Checking resolution_when_set['+resolution_when_set+']');
         let revs = revisions[resolution_when_set];
         let revs_len = revs.length;
         while(revs_len--){
             let shape_id = revs[revs_len];
-            console.log('shape_id: '+shape_id);
+            //console.log('shape_id: '+shape_id);
             let target = targetCache[ticker]['shape_id_to_target'][shape_id];
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
             let shape_points = [];
