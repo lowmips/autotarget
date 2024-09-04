@@ -5,9 +5,9 @@ const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets
 let targetCache = {};
 /*
     ticker -> {
-        shape_id_to_target -> shape_id -> [ts_start, price]
+        shape_id_to_target -> shape_id -> [targets]
         target_to_shape_id -> ts_start -> price -> shape_id
-        resolution_revise -> resolution_when_set -> [target_id]
+        resolution_revise -> resolution_when_set -> [shape_ids]
         earliest_target_ts -> [ts] # "ts_latest" timestamp of the earliest target we have so far
     }
 */
@@ -75,12 +75,12 @@ async function handleUpdateMsg(msg){
         };
 
         // update earliest ts_latest
-        if(earliest_target_latest_ts === null || ts_latest < earliest_target_latest_ts) earliest_target_latest_ts = ts_latest;
+        if(targetCache[ticker]['earliest_target_ts'] === null || ts_latest < targetCache[ticker]['earliest_target_ts']) targetCache[ticker]['earliest_target_ts'] = ts_latest;
 
         // determine target color
         let target_color;
         switch(true){
-            case (new_target.target_count == 1): target_color = colors.COLOR_TIER_1; break;
+            case (new_target.target_count === 1): target_color = colors.COLOR_TIER_1; break;
             case (new_target.target_count < 5): target_color = colors.COLOR_TIER_3; break;
             case (new_target.target_count < 10): target_color = colors.COLOR_TIER_5; break;
             case (new_target.target_count < 15): target_color = colors.COLOR_TIER_7; break;
@@ -89,6 +89,7 @@ async function handleUpdateMsg(msg){
             default: target_color = colors.COLOR_TIER_10;
         }
         let shape_type = (new_target.ts_end > new_target.ts_start?'trend_line':'horizontal_ray');
+        new_target['shape_type'] = shape_type;
 
         // is there already a shape for this time/price?
         if(new_target.ts_start in targetCache[ticker]['target_to_shape_id'] &&
@@ -98,20 +99,17 @@ async function handleUpdateMsg(msg){
             let existing_target = targetCache[ticker]['shape_id_to_target'][existing_shape_id];
 
             // Is this a newly hit target?
-            if(new_target.ts_end > 0 && existing_target.ts_end == 0){
+            if(new_target.ts_end > 0 && existing_target.ts_end === 0){
                 removeDrawing(ticker, existing_shape_id);
             }
             // Are we just updating target counts?
-            if(new_target.ts_end == 0 && new_target.target_count != existing_target.target_count){
+            if(new_target.ts_end === 0 && new_target.target_count !== existing_target.target_count){
                 let entity = window.tvStuff.widget.activeChart().getShapeById(existing_shape_id);
-                let props = {
-                    overrides: {
-                    },
-                };
-                if(shape_type == 'horizontal_ray'){
+                let props = {overrides: {},};
+                if(shape_type === 'horizontal_ray'){
                     props.overrides['linetoolhorzray.linecolor'] = target_color;
                 }
-                if(shape_type == 'trend_line'){
+                if(shape_type === 'trend_line'){
                     props.overrides['linetooltrendline.linecolor'] = target_color;
                 }
                 entity.setProperties(props);
@@ -120,9 +118,8 @@ async function handleUpdateMsg(msg){
         }
 
         let shape_points = [];
-
         shape_points.push({ time: ts_start, price: target_price });
-        if(shape_type == 'trend_line'){
+        if(shape_type === 'trend_line'){
             shape_points.push({ time: ts_end, price: target_price });
         }
         //console.log('shape_points:');
@@ -172,29 +169,82 @@ async function handleUpdateMsg(msg){
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
 
-        // is the timestamp correctly set? (shape drawing at large resolution issue)
-        // if not, add to list of drawings whose resolution needs to be fixed
-        let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-        let points = shape.getPoints();
-        for(let idx in points){
-            if(points[idx].time != shape_points[idx].time){
-                console.log('shape_id['+shape_id+'] starting timestamp not correct!');
-                let current_resolution = window.tvStuff.current_resolution;
-                if(!(current_resolution in targetCache[ticker]['resolution_revise']))
-                    targetCache[ticker]['resolution_revise'][current_resolution] = [];
-                if(targetCache[ticker]['resolution_revise'][current_resolution].indexOf(shape_id) == -1)
-                    targetCache[ticker]['resolution_revise'][current_resolution].push(shape_id);
-                break;
+        checkDrawingStart(ticker, shape_id, shape_points);    // did the drawing start at the correct timestamp?
+    });
+}
+
+function checkDrawingStart(ticker, shape_id, shape_points){
+    console.log('checkDrawingStart('+ticker+','+shape_id+')');
+    // is the timestamp correctly set? (shape drawing at large resolution issue)
+    // if not, add to list of drawings whose resolution needs to be fixed
+    let current_resolution = window.tvStuff.current_resolution;
+    let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+    let points = shape.getPoints();
+    for(let idx in points){
+        if(points[idx].time !== shape_points[idx].time){
+            console.log('shape_id['+shape_id+'] starting timestamp not correct!');
+            if(!(current_resolution in targetCache[ticker]['resolution_revise']))
+                targetCache[ticker]['resolution_revise'][current_resolution] = [];
+            if(targetCache[ticker]['resolution_revise'][current_resolution].indexOf(shape_id) === -1)
+                targetCache[ticker]['resolution_revise'][current_resolution].push(shape_id);
+            break;
+        }
+    }
+}
+
+async function checkFixDrawingsResolution(ticker){
+    console.log('checkFixDrawingsResolution('+ticker+')');
+    if(!(ticker in targetCache)){
+        console.log('ticker['+ticker+'] not in targetCache');
+        return;
+    }
+    let current_resolution = window.tvStuff.current_resolution;
+    let revisions = targetCache[ticker]['resolution_revise'];
+    for(let resolution_when_set in revisions){
+        if(current_resolution >= resolution_when_set) continue;
+        let revs = revisions[resolution_when_set];
+        let revs_len = revs.length;
+        while(revs_len--){
+            let shape_id = revs[revs_len];
+            let target = targetCache[ticker]['shape_id_to_target'][shape_id];
+            let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+            let shape_points = [];
+
+            // find the current ts
+            let original_ts = entity.getPoints()[0].time;
+
+            // Build the correct points
+            shape_points.push({ time: target.ts_start, price: target.target_price });
+            if(target.shape_type === 'trend_line'){
+                shape_points.push({ time: target.ts_end, price: target.target_price });
+            }
+
+            // Attempt to set the correct points
+            entity.setPoints(shape_points);
+
+            // Did it work?
+            let current_ts =  entity.getPoints()[0].time;
+            if(current_ts === target.ts_start){
+                // it worked! remove from original revision list
+                revs.splice(revs_len, 1);
+            }else if(current_ts < original_ts){
+                // it sort of worked... we're closer
+                revs.splice(revs_len, 1);
+                if(!(current_resolution in revisions)) revisions[current_resolution].push(shap_id);
+            }else{
+                // total failure... abort?? retry??
             }
         }
-
-    });
+    }
 }
 
 async function removeDrawing(ticker, shape_id){
     console.log('removeDrawing('+ticker+','+shape_id+')');
-    const index = targetCache[ticker]['resolution_revise'].indexOf(shape_id);
-    if (index > -1) targetCache[ticker]['resolution_revise'].splice(index, 1);
+    for(let resolution_when_set in targetCache[ticker]['resolution_revise']){
+        let revisions = targetCache[ticker]['resolution_revise'][resolution_when_set];
+        const index = revisions.indexOf(shape_id);
+        if (index > -1) revisions.splice(index, 1);
+    }
     let target = targetCache[ticker]['shape_id_to_target'][shape_id];
     delete targetCache[ticker]['target_to_shape_id'][target.ts_start][target.target_price];
     delete targetCache[ticker]['shape_id_to_target'][shape_id];

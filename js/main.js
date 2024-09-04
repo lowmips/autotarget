@@ -1,5 +1,5 @@
 import Datafeed from './datafeed.js';
-import {startSub, stopSub} from './targets.js';
+import {startSub, stopSub, checkFixDrawingsResolution} from './targets.js';
 
 window.tvStuff = {
     current_symbol: null,
@@ -58,6 +58,10 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
     window.tvStuff.previous_resolution = window.tvStuff.current_resolution;
     window.tvStuff.current_resolution = new_interval;
     console.log('Resolution changed from ['+window.tvStuff.previous_resolution+'] to ['+window.tvStuff.current_resolution+']');
+    async function bleh(symbol){
+        await checkFixDrawingsResolution(symbol);
+    }
+    let x = bleh(window.tvStuff.current_symbol);
 });
 
 /*
