@@ -3,6 +3,7 @@ import { colors }from './colors.js';
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
 let targetCache = {};
+window.targetCache = targetCache;
 /*
     ticker -> {
         shape_id_to_target -> shape_id -> [targets]
