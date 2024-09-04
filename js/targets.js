@@ -174,7 +174,7 @@ async function handleUpdateMsg(msg){
 }
 
 function checkDrawingStart(ticker, shape_id, shape_points){
-    console.log('checkDrawingStart('+ticker+','+shape_id+')');
+    //console.log('checkDrawingStart('+ticker+','+shape_id+')');
     // is the timestamp correctly set? (shape drawing at large resolution issue)
     // if not, add to list of drawings whose resolution needs to be fixed
     let current_resolution = window.tvStuff.current_resolution;
