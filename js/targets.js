@@ -213,7 +213,8 @@ export async function checkFixDrawingsResolution(ticker){
             let shape_points = [];
 
             // find the current ts
-            let original_ts = entity.getPoints()[0].time;
+            let points = entity.getPoints();
+            let original_ts = points[0].time;
 
             // Build the correct points
             shape_points.push({ time: target.ts_start, price: target.target_price });
