@@ -192,7 +192,7 @@ function checkDrawingStart(ticker, shape_id, shape_points){
     }
 }
 
-async function checkFixDrawingsResolution(ticker){
+export async function checkFixDrawingsResolution(ticker){
     console.log('checkFixDrawingsResolution('+ticker+')');
     if(!(ticker in targetCache)){
         console.log('ticker['+ticker+'] not in targetCache');
