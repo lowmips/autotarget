@@ -238,7 +238,7 @@ export async function checkFixDrawingsResolution(ticker){
                 // it worked! remove from original revision list
                 revs.splice(revs_len, 1);
                 console.log('Points change success!');
-            }else if(current_ts < original_ts){
+            }else if(current_ts != original_ts){
                 // it sort of worked... we're closer
                 revs.splice(revs_len, 1);
                 if(!(current_resolution in revisions)) revisions[current_resolution] = [];
