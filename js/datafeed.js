@@ -116,7 +116,7 @@ export default {
         //console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
         //console.log('[subscribeBars]: lastBarsCache item is:');
         let cache_item = lastBarsCache.get(`${symbolInfo.exchange}:${symbolInfo.name}`);
-        console.log(cache_item);
+        //console.log(cache_item);
         subscribeOnStream(
             symbolInfo,
             resolution,
