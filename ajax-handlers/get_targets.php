@@ -31,12 +31,19 @@ function json_and_end($obj){
 // TODO: read session info
 
 // Check request
-if(!array_key_exists('ticker', $_REQUEST) || !array_key_exists('from', $_REQUEST) || !array_key_exists('to', $_REQUEST))
+if(!array_key_exists('ticker', $_REQUEST) || !array_key_exists('from', $_REQUEST) || !array_key_exists('direction', $_REQUEST) || !array_key_exists('max', $_REQUEST))
     die("Missing required request params");
 
-$ts_from = $mysqli->real_escape_string($_REQUEST['from']);
-$ts_to = $mysqli->real_escape_string($_REQUEST['to']);
-if($ts_to < $ts_from) error_and_end("to < from");
+$ts_from = (int)$_REQUEST['from'];
+$direction = $_REQUEST['direction'];
+$max = (int)$_REQUEST['max'];
+if($ts_from <= 0) error_and_end('from must be a timestamp > 0');
+if(!in_array($direction, ['after','before'])) error_and_end('direction must be one of: [after, before]');
+if($max <= 0) error_and_end('max must be > 0');
+
+$ts_from_sql = $mysqli->real_escape_string($ts_from);
+$direction_sql = $mysqli->real_escape_string($direction);
+$max_sql = $mysqli->real_escape_string($max);
 
 // resolve the ticker into exchange, from_token, to_token
 $ticker_parts1 = explode(':', $_REQUEST['ticker']);
