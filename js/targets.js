@@ -200,6 +200,7 @@ export async function checkFixDrawingsResolution(ticker){
     }
     let current_resolution = window.tvStuff.current_resolution;
     let revisions = targetCache[ticker]['resolution_revise'];
+    console.log(revisions);
     for(let resolution_when_set in revisions){
         if(current_resolution >= resolution_when_set) continue;
         let revs = revisions[resolution_when_set];
