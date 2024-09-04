@@ -61,7 +61,7 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
     async function bleh(symbol){
         await checkFixDrawingsResolution(symbol);
     }
-    let x = bleh(window.tvStuff.current_symbol);
+    setTimeout(function(){let x = bleh(window.tvStuff.current_symbol);}, 1000);
 });
 
 
