@@ -233,7 +233,7 @@ export async function checkFixDrawingsResolution(ticker){
             entity.setPoints(shape_points);
 
             // Did it work?
-            let current_ts =  entity.getPoints()[0].time;
+            let current_ts =  parseInt(entity.getPoints()[0].time);
             if(current_ts === target.ts_start){
                 // it worked! remove from original revision list
                 revs.splice(revs_len, 1);
