@@ -66,7 +66,7 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
 
 
 window.tvStuff.widget.onChartReady(function() {
-    console.log('onChartReady()');
+    //console.log('onChartReady()');
 
     window.tvStuff.widget.activeChart().onDataLoaded().subscribe(
         null,
@@ -75,13 +75,13 @@ window.tvStuff.widget.onChartReady(function() {
     );
 
     window.tvStuff.widget.activeChart().dataReady(() => {
-        console.log('dataReady()');
+        //console.log('dataReady()');
     });
 
 });
 
 window.tvStuff.widget.subscribe('onChartReady', function(){
-    console.log('onChartReady from subscribe');
+    //console.log('onChartReady from subscribe');
 });
 
 
