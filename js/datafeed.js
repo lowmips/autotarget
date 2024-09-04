@@ -31,11 +31,11 @@ export default {
         onResultReadyCallback(symbols);
     },
     resolveSymbol: async (symbolName, onSymbolResolvedCallback, onResolveErrorCallback, extension) => {
-        console.log('[resolveSymbol]: Method call', symbolName);
+        //console.log('[resolveSymbol]: Method call', symbolName);
         const symbols = await getAllSymbols();
         const symbolItem = symbols.find(({ full_name }) => full_name === symbolName);
         if (!symbolItem) {
-            console.log('[resolveSymbol]: Cannot resolve symbol', symbolName);
+            //console.log('[resolveSymbol]: Cannot resolve symbol', symbolName);
             onResolveErrorCallback('Cannot resolve symbol');
             return;
         }
@@ -59,7 +59,7 @@ export default {
             data_status: 'delayed_streaming',
             delay: 120,
         };
-        console.log('[resolveSymbol]: Symbol resolved', symbolName);
+        //console.log('[resolveSymbol]: Symbol resolved', symbolName);
         onSymbolResolvedCallback(symbolInfo);
     },
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, onErrorCallback) => {
@@ -111,7 +111,7 @@ export default {
         subscriberUID,
         onResetCacheNeededCallback
     ) => {
-        console.log('[subscribeBars]: Method call with symbolInfo:', symbolInfo);
+        //console.log('[subscribeBars]: Method call with symbolInfo:', symbolInfo);
         //console.log('[subscribeBars]: Method call with resolution:', resolution);
         //console.log('[subscribeBars]: Method call with subscriberUID:', subscriberUID);
         //console.log('[subscribeBars]: lastBarsCache item is:');
