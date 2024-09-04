@@ -189,28 +189,30 @@ async function handleUpdateMsg(msg){
 
 
     // check ranges
-    for(let ts_start in potential_ranges){
-        let r = potential_ranges[ts_start];
-        if(r['count'] < 2) continue;
-        let distance_percent = 1 - (r['low'] / r['high']);
-        if(distance_percent < window.tvStuff.ranges_min_distance) continue;
-        let shape_points = [];
-        shape_points.push({ time: parseInt(ts_start), price: parseFloat(r['high']) });
-        shape_points.push({ time: parseInt(ts_start), price: parseFloat(r['low']) });
-        let shape_opts = {
-            shape: "trend_line",
-            //lock: true,
-            //disableSelection: true,
-            //disableUndo: true,
-        };
-        shape_opts['overrides'] =
-            {
-                showPriceLabels: false,
-                showLabel: false,
-                linecolor: "rgba(255, 152, 0, 0.25)",
+    if(window.tvStuff.highlight_ranges) {
+        for (let ts_start in potential_ranges) {
+            let r = potential_ranges[ts_start];
+            if (r['count'] < 2) continue;
+            let distance_percent = 1 - (r['low'] / r['high']);
+            if (distance_percent < window.tvStuff.ranges_min_distance) continue;
+            let shape_points = [];
+            shape_points.push({time: parseInt(ts_start), price: parseFloat(r['high'])});
+            shape_points.push({time: parseInt(ts_start), price: parseFloat(r['low'])});
+            let shape_opts = {
+                shape: "trend_line",
+                //lock: true,
+                //disableSelection: true,
+                //disableUndo: true,
             };
-        let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-        //console.log(shape_id);
+            shape_opts['overrides'] =
+                {
+                    showPriceLabels: false,
+                    showLabel: false,
+                    linecolor: "rgba(255, 152, 0, 0.25)",
+                };
+            let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+            //console.log(shape_id);
+        }
     }
 
 }
