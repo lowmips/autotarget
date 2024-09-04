@@ -212,6 +212,9 @@ export async function checkFixDrawingsResolution(ticker){
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
             let shape_points = [];
 
+            console.log('shape:');
+            console.log(entity);
+
             // find the current ts
             let points = entity.getPoints();
             console.log('points:');
