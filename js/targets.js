@@ -212,6 +212,7 @@ async function handleUpdateMsg(msg){
                 };
             let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
             //console.log(shape_id);
+            // TODO: Check shape timestamps!
         }
     }
 
