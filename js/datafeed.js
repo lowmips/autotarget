@@ -97,6 +97,10 @@ export default {
                 onHistoryCallback(bars);
                 console.log('first bar is now:' );
                 console.log(window.tvStuff.widget.activeChart().getSeries().data().first());
+                setTImeout(function(){
+                    console.log('[setTimeout] first bar is now:' );
+                    console.log(window.tvStuff.widget.activeChart().getSeries().data().first());
+                },500);
             })
             .catch((error) => {
                 console.log(error);
