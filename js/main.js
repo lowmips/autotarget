@@ -71,6 +71,10 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
 window.tvStuff.widget.onChartReady(function() {
     //console.log('onChartReady()');
 
+    window.tvStuff.widget.activeChart().subscribe({
+
+    });
+
     window.tvStuff.widget.activeChart().onDataLoaded().subscribe(
         null,
         () => console.log('tvWidget.activeChart().onDataLoaded().subscribe() - New history bars are loaded'),

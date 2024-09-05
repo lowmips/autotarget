@@ -95,6 +95,8 @@ export default {
                     lastBarsCache.set(`${symbolInfo.exchange}:${symbolInfo.name}`, { ...bars[bars.length - 1] });
                 }
                 onHistoryCallback(bars);
+                console.log('first bar is now:' );
+                console.log(window.tvStuff.widget.activeChart().getSeries().data().first());
             })
             .catch((error) => {
                 console.log(error);
