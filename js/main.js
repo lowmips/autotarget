@@ -8,6 +8,7 @@ window.tvStuff = {
     previous_resolution: null,
     highlight_ranges: true,
     ranges_min_distance: 0.001,
+    range_color: "rgba(255, 152, 0, 0.25)",
     widget_options: {
         container: 'tv_chart_container',       // Reference to an attribute of a DOM element
         datafeed: Datafeed,

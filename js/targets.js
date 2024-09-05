@@ -206,7 +206,7 @@ async function handleUpdateMsg(msg){
                 {
                     showPriceLabels: false,
                     showLabel: false,
-                    linecolor: "rgba(255, 152, 0, 0.25)",
+                    linecolor: window.tvStuff.range_color,
                 };
             let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
             targetCache[ticker]['shape_id_to_target'][shape_id] =
