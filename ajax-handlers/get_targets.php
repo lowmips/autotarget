@@ -95,8 +95,8 @@ $q ="select MAX(moo.ts_end) as max_ts, MIN(moo.ts_end) as min_ts ".
     " FROM `$table_name_sql` ".
     " where 1 ".
     " AND `ts_end`<='$ts_from' ".
-    " LIMIT $max_sql ".
     " ORDER BY `ts_end` DESC ".
+    " LIMIT $max_sql ".
     ") as moo ";
 if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
 $row = $result->fetch_assoc();
