@@ -199,9 +199,9 @@ async function handleUpdateMsg(msg){
             shape_points.push({time: parseInt(ts_start), price: parseFloat(r['low'])});
             let shape_opts = {
                 shape: "trend_line",
-                //lock: true,
+                lock: true,
                 //disableSelection: true,
-                //disableUndo: true,
+                disableUndo: true,
             };
             shape_opts['overrides'] =
                 {
