@@ -1,5 +1,6 @@
 import { /*makeApiRequest, */ generateSymbol, configurationData, splitSymbolPair } from './helpers_mexc.js';
 import { subscribeOnStream, unsubscribeFromStream } from './streaming.js';
+import { checkEarliestTarget } from './targets.js';
 import {parseFullSymbol} from './helpers.js';
 
 const lastBarsCache = new Map();
@@ -95,11 +96,10 @@ export default {
                     lastBarsCache.set(`${symbolInfo.exchange}:${symbolInfo.name}`, { ...bars[bars.length - 1] });
                 }
                 onHistoryCallback(bars);
-                console.log('first bar is now:' );
-                console.log(window.tvStuff.widget.activeChart().getSeries().data().first());
                 setTimeout(function(){
-                    console.log('[setTimeout] first bar is now:' );
-                    console.log(window.tvStuff.widget.activeChart().getSeries().data().first());
+                    //console.log('[setTimeout] first bar is now:' );
+                    //console.log(window.tvStuff.widget.activeChart().getSeries().data().first());
+                    checkEarliestTarget();
                 },500);
             })
             .catch((error) => {

@@ -33,7 +33,7 @@ ws_targets.addEventListener('message', function(event) {
     let z = handleMsg(event.data);
 });
 
-function getTargets(max){
+export function getTargets(max){
     let ticker = window.tvStuff.current_symbol;
     let earliest_ts = null;
     let from_ts;
@@ -61,6 +61,22 @@ function getTargets(max){
 
 }
 window.getTargets = getTargets;
+
+export function checkEarliestTarget(){
+    console.log('checkEarliestTarget()');
+    let ticker = window.tvStuff.current_symbol;
+    let earliestBar = window.tvStuff.widget.activeChart().getSeries().data().first().timeMs / 1000;
+    let latestBar = window.tvStuff.widget.activeChart().getSeries().data().last().timeMs / 1000;
+
+
+    if(earliestBar === null) return;
+    earliestBar = parseInt(earliestBar);
+    let max;
+    if(!(ticker in targetCache) || (targetCache[ticker]['earliest_target_ts'] === null )){
+
+    }
+
+}
 
 async function handleMsg(msg_str){
     //console.log('handleMsg()');
