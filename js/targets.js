@@ -58,11 +58,6 @@ async function handleUpdateMsg(msg){
             resolution_revise: {},
             earliest_target_ts: null,
         };
-    if(!(ticker in rangeCache))
-        rangeCache[ticker] = {
-            shape_id_to_ts: {},
-            resolution_revise: {},
-        };
     let potential_ranges = [];
 
     msg.updates.forEach((update) => {
