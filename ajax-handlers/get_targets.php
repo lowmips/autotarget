@@ -106,6 +106,7 @@ $max_ts = (int)$row['max_ts'];
 $min_ts = (int)$row['min_ts'];
 
 $q = "SELECT * FROM `$table_name_sql` WHERE `ts_end`>='$min_ts' AND `ts_end`<='$max_ts' ORDER BY `ts_end` DESC ";
+echo $q; exit;
 if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
 
 while(($row = $result->fetch_assoc()) !== false){
