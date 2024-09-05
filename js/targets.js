@@ -212,7 +212,7 @@ async function handleUpdateMsg(msg){
             targetCache[ticker]['shape_id_to_target'][shape_id] =
                 {
                     is_range: true,
-                    points: shape_points,
+                    shape_points: shape_points,
                 };
             //console.log(shape_id);
             checkDrawingStart(ticker, shape_id, shape_points);
