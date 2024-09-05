@@ -84,7 +84,7 @@ $update_obj = [
         'from_token' => $from_token,
         'to_token' => $to_token,
     ],
-    'update_info' => [],
+    'updates' => [],
 ];
 
 // find recently updated targets!
@@ -119,6 +119,6 @@ while(($row = $result->fetch_assoc()) !== false){
         'target_price' => (double)$row['target_price'],
         'target_count' => (int)$row['target_count'],
     ];
-    $update_obj['update_info'][] = $updt;
+    $update_obj['updates'][] = $updt;
 }
 json_and_end($update_obj);

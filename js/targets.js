@@ -33,6 +33,40 @@ ws_targets.addEventListener('message', function(event) {
     let z = handleMsg(event.data);
 });
 
+function getTargets(max){
+    let ticker = window.tvStuff.current_symbol;
+    let earliest_ts = null;
+    let from_ts;
+
+    if(!(ticker in targetCache)){
+        console.log('ticker['+ticker+'] not in targetCache!');
+        return;
+    }
+
+    if(targetCache[ticker]['earliest_target_ts'] === null)
+        from_ts = parseInt(new Date().getTime()/1000);
+    else
+        from_ts = targetCache[ticker]['earliest_target_ts'];
+
+    // https://www.lowmips.com/autotarget/ajax-handlers/get_targets.php?ticker=MEXC:BTC/USDT&from=1725534247&max=100
+    const request_url = window.location.href + 'ajax-handlers/get_targets.php?resolution=' + ticker + '&from=' + from_ts + '&max=' + max;
+    fetch(request_url)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Something went wrong');
+        })
+        .then((responseJson) => {
+            handleUpdateMsg(responseJson);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+}
+window.getTargets = getTargets;
+
 async function handleMsg(msg_str){
     //console.log('handleMsg()');
     let msg = JSON.parse(msg_str);

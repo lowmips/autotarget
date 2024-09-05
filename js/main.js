@@ -2,7 +2,7 @@ import Datafeed from './datafeed.js';
 import {startSub, stopSub, checkFixDrawingsResolution} from './targets.js';
 
 window.tvStuff = {
-    current_symbol: null,
+    current_symbol: null,   // ticker MEXC:BTC/USDT
     previous_symbol: null,
     current_resolution: null,
     previous_resolution: null,
