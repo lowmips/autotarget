@@ -115,7 +115,7 @@ while(($row = $result->fetch_assoc()) !== false){
     $updt = [
         'ts_start' => (int)$row['ts_end'],
         'ts_latest' => (int)$row['last_update_ts'],
-        'ts_end' => (int)$row['ts_hit'],
+        'ts_hit' => (int)$row['ts_hit'],
         'target_price' => (double)$row['target_price'],
         'target_count' => (int)$row['target_count'],
     ];
