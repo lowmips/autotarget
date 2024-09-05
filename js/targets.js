@@ -212,9 +212,9 @@ async function handleUpdateMsg(msg, sendtoback){
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-        if(sendtoback)
+        if(sendtoback && ('sendToBack' in shape))
             shape.sendToBack();
-        else
+        else if('sendToFront' in shape)
             shape.sendToFront();
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
