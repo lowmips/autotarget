@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
-      <change beforePath="$PROJECT_DIR$/ajax-handlers/get_targets.php" beforeDir="false" afterPath="$PROJECT_DIR$/ajax-handlers/get_targets.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/targets.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/targets.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,39 +115,7 @@
       <workItem from="1716330978598" duration="19039000" />
       <workItem from="1719528758389" duration="3603000" />
       <workItem from="1720824176215" duration="10706000" />
-      <workItem from="1724089254138" duration="159700000" />
-    </task>
-    <task id="LOCAL-01213" summary="dev">
-      <option name="closed" value="true" />
-      <created>1725386950542</created>
-      <option name="number" value="01213" />
-      <option name="presentableId" value="LOCAL-01213" />
-      <option name="project" value="LOCAL" />
-      <updated>1725386950542</updated>
-    </task>
-    <task id="LOCAL-01214" summary="dev">
-      <option name="closed" value="true" />
-      <created>1725387023719</created>
-      <option name="number" value="01214" />
-      <option name="presentableId" value="LOCAL-01214" />
-      <option name="project" value="LOCAL" />
-      <updated>1725387023719</updated>
-    </task>
-    <task id="LOCAL-01215" summary="dev">
-      <option name="closed" value="true" />
-      <created>1725387171948</created>
-      <option name="number" value="01215" />
-      <option name="presentableId" value="LOCAL-01215" />
-      <option name="project" value="LOCAL" />
-      <updated>1725387171948</updated>
-    </task>
-    <task id="LOCAL-01216" summary="dev">
-      <option name="closed" value="true" />
-      <created>1725387377517</created>
-      <option name="number" value="01216" />
-      <option name="presentableId" value="LOCAL-01216" />
-      <option name="project" value="LOCAL" />
-      <updated>1725387377517</updated>
+      <workItem from="1724089254138" duration="161184000" />
     </task>
     <task id="LOCAL-01217" summary="dev">
       <option name="closed" value="true" />
@@ -508,7 +477,39 @@
       <option name="project" value="LOCAL" />
       <updated>1725534439770</updated>
     </task>
-    <option name="localTasksCounter" value="1262" />
+    <task id="LOCAL-01262" summary="dev">
+      <option name="closed" value="true" />
+      <created>1725534551779</created>
+      <option name="number" value="01262" />
+      <option name="presentableId" value="LOCAL-01262" />
+      <option name="project" value="LOCAL" />
+      <updated>1725534551779</updated>
+    </task>
+    <task id="LOCAL-01263" summary="dev">
+      <option name="closed" value="true" />
+      <created>1725534625747</created>
+      <option name="number" value="01263" />
+      <option name="presentableId" value="LOCAL-01263" />
+      <option name="project" value="LOCAL" />
+      <updated>1725534625747</updated>
+    </task>
+    <task id="LOCAL-01264" summary="dev">
+      <option name="closed" value="true" />
+      <created>1725534676342</created>
+      <option name="number" value="01264" />
+      <option name="presentableId" value="LOCAL-01264" />
+      <option name="project" value="LOCAL" />
+      <updated>1725534676342</updated>
+    </task>
+    <task id="LOCAL-01265" summary="dev">
+      <option name="closed" value="true" />
+      <created>1725534796192</created>
+      <option name="number" value="01265" />
+      <option name="presentableId" value="LOCAL-01265" />
+      <option name="project" value="LOCAL" />
+      <updated>1725534796192</updated>
+    </task>
+    <option name="localTasksCounter" value="1266" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

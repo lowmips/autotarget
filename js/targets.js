@@ -3,7 +3,6 @@ import { colors }from './colors.js';
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
 let targetCache = {};
-window.targetCache = targetCache;
 /*
     ticker -> {
         shape_id_to_target -> shape_id -> [targets]
@@ -13,7 +12,6 @@ window.targetCache = targetCache;
     }
 */
 let subs = {};
-
 let max_history_targets = 10000;
 
 
@@ -53,12 +51,18 @@ async function handleUpdateMsg(msg){
         console.log('No subscription for ['+ticker+']');
         return;
     }
-    if(!(ticker in targetCache)) targetCache[ticker] = {
-        shape_id_to_target: {},
-        target_to_shape_id: {},
-        resolution_revise: {},
-        earliest_target_ts: null,
-    };
+    if(!(ticker in targetCache))
+        targetCache[ticker] = {
+            shape_id_to_target: {},
+            target_to_shape_id: {},
+            resolution_revise: {},
+            earliest_target_ts: null,
+        };
+    if(!(ticker in rangeCache))
+        rangeCache[ticker] = {
+            shape_id_to_ts: {},
+            resolution_revise: {},
+        };
     let potential_ranges = [];
 
     msg.updates.forEach((update) => {
@@ -183,7 +187,6 @@ async function handleUpdateMsg(msg){
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
-
         checkDrawingStart(ticker, shape_id, shape_points);    // did the drawing start at the correct timestamp?
     });
 
@@ -211,8 +214,13 @@ async function handleUpdateMsg(msg){
                     linecolor: "rgba(255, 152, 0, 0.25)",
                 };
             let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+            targetCache[ticker]['shape_id_to_target'][shape_id] =
+                {
+                    is_range: true,
+                    points: shape_points,
+                };
             //console.log(shape_id);
-            // TODO: Check shape timestamps!
+            checkDrawingStart(ticker, shape_id, shape_points);
         }
     }
 
@@ -225,6 +233,7 @@ function checkDrawingStart(ticker, shape_id, shape_points){
     let current_resolution = window.tvStuff.current_resolution;
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
     let points = shape.getPoints();
+    //let target = targetCache[ticker]['shape_id_to_target'][shape_id];
     for(let idx in points){
         if(points[idx].time !== shape_points[idx].time){
             console.log('shape_id['+shape_id+'] starting timestamp not correct!');
@@ -257,15 +266,9 @@ export async function checkFixDrawingsResolution(ticker){
             //console.log('shape_id: '+shape_id);
             let target = targetCache[ticker]['shape_id_to_target'][shape_id];
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+            let tooltype = entity._source.toolname;
             let shape_points = [];
-
-            //console.log('shape:');
-            //console.log(entity);
-
-            // find the current ts
             let points = entity.getPoints();
-            //console.log('points:');
-            //console.log(points);
             let original_ts = points[0].time;
 
             // Build the correct points
