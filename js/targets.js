@@ -53,7 +53,7 @@ function getTargets(max){
             throw new Error('Something went wrong');
         })
         .then((responseJson) => {
-            handleUpdateMsg(responseJson);
+            handleUpdateMsg(responseJson, true);
         })
         .catch((error) => {
             console.log(error);
@@ -69,8 +69,10 @@ async function handleMsg(msg_str){
     if('updates' in msg) await handleUpdateMsg(msg);
 }
 
-async function handleUpdateMsg(msg){
+async function handleUpdateMsg(msg, sendtoback){
     //console.log('handleUpdates');
+
+    if((typeof sendtoback) != 'boolean') sendtoback = false;
     if(!('pair_info' in msg)){
         console.log('Invalid update message, missing pair_info');
         return false;
@@ -209,6 +211,11 @@ async function handleUpdateMsg(msg){
         }
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+        let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+        if(sendtoback)
+            shape.sendToBack();
+        else
+            shape.sendToFront();
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
@@ -240,6 +247,8 @@ async function handleUpdateMsg(msg){
                     linewidth: 1,
                 };
             let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+            let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+            shape.sendToBack();
             targetCache[ticker]['shape_id_to_target'][shape_id] =
                 {
                     is_range: true,
