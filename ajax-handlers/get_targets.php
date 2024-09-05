@@ -30,19 +30,18 @@ function json_and_end($obj){
 // Check login
 // TODO: read session info
 
+// NOTE! "max" is the maximum number of 1 minute timestamp points for targets.  there may be multiple targets per timestamp!
+
 // Check request
-if(!array_key_exists('ticker', $_REQUEST) || !array_key_exists('from', $_REQUEST) || !array_key_exists('direction', $_REQUEST) || !array_key_exists('max', $_REQUEST))
+if(!array_key_exists('ticker', $_REQUEST) || !array_key_exists('from', $_REQUEST) || !array_key_exists('max', $_REQUEST))
     die("Missing required request params");
 
 $ts_from = (int)$_REQUEST['from'];
-$direction = $_REQUEST['direction'];
 $max = (int)$_REQUEST['max'];
 if($ts_from <= 0) error_and_end('from must be a timestamp > 0');
-if(!in_array($direction, ['after','before'])) error_and_end('direction must be one of: [after, before]');
 if($max <= 0) error_and_end('max must be > 0');
 
 $ts_from_sql = $mysqli->real_escape_string($ts_from);
-$direction_sql = $mysqli->real_escape_string($direction);
 $max_sql = $mysqli->real_escape_string($max);
 
 // resolve the ticker into exchange, from_token, to_token
@@ -78,9 +77,7 @@ $table_name_sql = $mysqli->real_escape_string($table_name);
 $q = "SELECT * FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`='$table_name_sql' LIMIT 1";
 if(($result = $mysqli->query($q)) === false) empty_set_and_end($exchange, $from_token, $to_token);
 
-// find targets!
-$q = "SELECT * FROM `$table_name_sql` WHERE `last_update_ts`>='$ts_from' AND `last_update_ts`<='$ts_to' ORDER BY `last_update_ts` DESC ";
-if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
+// build the return object
 $update_obj = [
     'pair_info' => [
         'exchange' => $exchange,
@@ -89,6 +86,31 @@ $update_obj = [
     ],
     'update_info' => [],
 ];
+
+// find recently updated targets!
+$q ="select MAX(moo.ts_end) as max_ts, MIN(moo.ts_end) as min_ts ".
+    "FROM ".
+    "( ".
+    " select distinct(`ts_end`) ".
+    " FROM `$table_name_sql` ".
+    " where 1 ".
+    " AND `ts_end`<='$ts_from' ".
+    " `ts_end`<='$ts_from' ".
+    ") as moo ".
+    "ORDER BY `ts_end` DESC ".
+    "LIMIT $max_sql ";
+if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
+$row = $result->fetch_assoc();
+if($row === false) error_and_end("query failure: $q");
+if($row === null) empty_set_and_end($exchange, $from_token, $to_token);
+$max_ts = (int)$row['nax_ts'];
+$min_ts = (int)$row['nin_ts'];
+
+
+
+$q = "SELECT * FROM `$table_name_sql` WHERE `ts_end`>='$min_ts' AND `ts_end`<='$max_ts' ORDER BY `ts_end` DESC ";
+if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
+
 while(($row = $result->fetch_assoc()) !== false){
     if($row === null) break;
     $updt = [
