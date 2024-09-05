@@ -38,12 +38,7 @@ function getTargets(max){
     let earliest_ts = null;
     let from_ts;
 
-    if(!(ticker in targetCache)){
-        console.log('ticker['+ticker+'] not in targetCache!');
-        return;
-    }
-
-    if(targetCache[ticker]['earliest_target_ts'] === null)
+    if(!(ticker in targetCache) || (targetCache[ticker]['earliest_target_ts'] === null))
         from_ts = parseInt(new Date().getTime()/1000);
     else
         from_ts = targetCache[ticker]['earliest_target_ts'];
