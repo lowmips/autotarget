@@ -266,15 +266,17 @@ export async function checkFixDrawingsResolution(ticker){
             //console.log('shape_id: '+shape_id);
             let target = targetCache[ticker]['shape_id_to_target'][shape_id];
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-            let tooltype = entity._source.toolname;
             let shape_points = [];
             let points = entity.getPoints();
             let original_ts = points[0].time;
 
             // Build the correct points
-            shape_points.push({ time: target.ts_start, price: target.target_price });
-            if(target.shape_type === 'trend_line'){
-                shape_points.push({ time: target.ts_end, price: target.target_price });
+            if('is_range' in target){
+                shape_points.push(target.shape_points[0]);
+                shape_points.push(target.shape_points[1]);
+            }else{
+                shape_points.push({ time: target.ts_start, price: target.target_price });
+                if(target.shape_type === 'trend_line') shape_points.push({ time: target.ts_end, price: target.target_price });
             }
 
             // Attempt to set the correct points
