@@ -377,6 +377,8 @@ export function checkFixDrawingsResolution(){
     }
 }
 
+window.checkFixDrawingsResolution = checkFixDrawingsResolution;
+
 export function hideDrawingsByTargetCount(){
     let ticker = window.tvStuff.current_symbol;
     for(let shape_id in window.targetCache[ticker]['shape_id_to_target']){
