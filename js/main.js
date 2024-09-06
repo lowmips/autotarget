@@ -78,6 +78,10 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
     setTimeout(function(){let x = checkFixDrawingsResolution();}, 2000); // directly calling bleh results in errors...
 });
 
+window.tvStuff.widget.subscribe('drawing', function(a){
+    console.log('event [drawing] ');
+    console.log(a);
+});
 window.tvStuff.widget.subscribe('drawing_event', function(drawing_id, b){
     console.log('event [drawing_event] ');
     console.log(drawing_id);
