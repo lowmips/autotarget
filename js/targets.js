@@ -331,6 +331,7 @@ export async function checkFixDrawingsResolution(){
             // bug -- sometimes we get a shape with no points
             if(original_shape_points.length === 0){
                 console.log('BUG! shape_id['+shape_id+'] has no points!');
+                console.log(target);
                 //removeDrawing(ticker, shape_id);
                 continue;
             }
