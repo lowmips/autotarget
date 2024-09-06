@@ -330,10 +330,14 @@ export async function checkFixDrawingsResolution(){
 
             // bug -- sometimes we get a shape with no points
             if(original_shape_points.length === 0){
+                original_shape_points = [];
+                original_shape_points.push({time: null, price: null});
+                if(shape_type === 'is_range' || shape_type === 'trend_line')
+                    original_shape_points.push({time: null, price: null});
                 console.log('BUG! shape_id['+shape_id+'] has no points!');
                 console.log(target);
                 //removeDrawing(ticker, shape_id);
-                continue;
+                //continue;
             }
 
             let original_start_ts = original_shape_points[0].time;
