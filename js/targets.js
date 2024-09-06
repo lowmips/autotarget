@@ -238,10 +238,7 @@ async function handleUpdateMsg(msg, sendtoback){
         }*/
         if(sendtoback && ('sendToBack' in shape)) shape.sendToBack();
         else if('sendToFront' in shape) shape.sendToFront();
-        //if(target_count < window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: false});
-        setTimeout(function(){
-            if(target_count < window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: false});
-        }, 1000);
+        if(target_count < window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: false});
 
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
@@ -298,6 +295,8 @@ async function checkDrawingStart(ticker, shape_id, shape_points){
     // if not, add to list of drawings whose resolution needs to be fixed
     let current_resolution = window.tvStuff.current_resolution;
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+    let isVisible = shape.getProperties().visible;
+    if(!isVisible) shape.setProperties({visible, true});
     let points = shape.getPoints();
     for(let idx in points){
         if(points[idx].time !== shape_points[idx].time){
@@ -309,6 +308,7 @@ async function checkDrawingStart(ticker, shape_id, shape_points){
             break;
         }
     }
+    if(!isVisible) shape.setProperties({visible, false});
 }
 
 export async function checkFixDrawingsResolution(){
