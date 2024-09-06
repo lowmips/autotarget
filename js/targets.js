@@ -229,13 +229,13 @@ async function handleUpdateMsg(msg, sendtoback){
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
 
-        if(shape.getPoints().length === 0){
+        /*if(shape.getPoints().length === 0){
             console.log('BUG! new shape_id['+shape_id+'] has no points!');
             return;
         }else{
             console.log('new shape_id['+shape_id+'] has points:');
             console.log(shape.getPoints());
-        }
+        }*/
         if(sendtoback && ('sendToBack' in shape)) shape.sendToBack();
         else if('sendToFront' in shape) shape.sendToFront();
         if(target_count < window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: false});
