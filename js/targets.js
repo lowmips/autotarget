@@ -361,7 +361,6 @@ export async function checkFixDrawingsResolution(){
                     target_end_ts = target.ts_end;
                     shape_points.push({ time: target.ts_end, price: target.target_price });
                 }
-
             }
 
             // Attempt to set the correct points

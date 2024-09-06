@@ -75,7 +75,7 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
         await checkFixDrawingsResolution();
     }
     let x = bleh();*/
-    setTimeout(function(){let x = checkFixDrawingsResolution();}, 1000); // directly calling bleh results in errors...
+    setTimeout(function(){let x = checkFixDrawingsResolution();}, 2000); // directly calling bleh results in errors...
 });
 
 
