@@ -316,38 +316,47 @@ export async function checkFixDrawingsResolution(ticker){
             let shape_id = revs[revs_len];
             //console.log('shape_id: '+shape_id);
             let target = targetCache[ticker]['shape_id_to_target'][shape_id];
+            let shape_type = (('is_range' in target)?'is_range':target.shape_type );
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
             let shape_points = [];
-            let points = entity.getPoints();
-            let original_ts = points[0].time;
+            let original_shape_points = entity.getPoints();
+            let original_start_ts = original_shape_points[0].time;
+            let original_end_ts = (original_shape_points.length > 1?original_shape_points[1].time:null);
+            let target_start_ts;
+            let target_end_ts;
 
             // Build the correct points
-            if('is_range' in target){
+            if(shape_type === 'is_range'){
+                target_start_ts = target.shape_points[0].time;
+                target_end_ts = target.shape_points[1].time;
                 shape_points.push(target.shape_points[0]);
                 shape_points.push(target.shape_points[1]);
             }else{
+                target_start_ts = target.ts_start;
                 shape_points.push({ time: target.ts_start, price: target.target_price });
-                if(target.shape_type === 'trend_line') shape_points.push({ time: target.ts_end, price: target.target_price });
+                if(shape_type === 'trend_line'){
+                    target_end_ts = target.ts_end;
+                    shape_points.push({ time: target.ts_end, price: target.target_price });
+                }
+
             }
 
             // Attempt to set the correct points
             entity.setPoints(shape_points);
 
             // Did it work?
-            let current_ts =  parseInt(entity.getPoints()[0].time);
-            if(current_ts === target.ts_start){
-                // it worked! remove from original revision list
+            let current_start_ts =  parseInt(entity.getPoints()[0].time);
+            let current_end_ts = (target.shape_type === 'trend_line')? parseInt(entity.getPoints()[1].time):null;
+            if(current_start_ts === target_start_ts && current_end_ts === target_end_ts){
+                // it worked! remove from original revision list.
                 revs.splice(revs_len, 1);
-                //console.log('Points change success!');
-            }else if(current_ts != original_ts){
-                // it sort of worked... we're closer
+            } else if(current_start_ts === original_start_ts && current_end_ts === original_end_ts){
+                // nothing changed
+            } else{
+                // partial success. move to finer time frame.
                 revs.splice(revs_len, 1);
                 if(!(current_resolution in revisions)) revisions[current_resolution] = [];
                 revisions[current_resolution].push(shape_id);
-                //console.log('Points change not successful, but closer resolution achieved.');
-            }else{
-                // total failure... abort?? retry??
-                //console.log('Points change failed completely.')
             }
         }
     }
