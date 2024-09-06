@@ -169,10 +169,10 @@ async function handleUpdateMsg(msg, sendtoback){
                 let shape = window.tvStuff.widget.activeChart().getShapeById(existing_shape_id);
                 let props = {overrides: {},};
                 if(shape_type === 'horizontal_ray'){
-                    props.overrides['linetoolhorzray.linecolor'] = target_color;
+                    props.overrides['linecolor'] = target_color;
                 }
                 if(shape_type === 'trend_line'){
-                    props.overrides['linetooltrendline.linecolor'] = target_color;
+                    props.overrides['linecolor'] = target_color;
                 }
                 shape.setProperties(props);
                 return;
