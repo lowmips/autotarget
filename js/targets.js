@@ -364,14 +364,14 @@ export async function checkFixDrawingsResolution(ticker){
     }
 }
 
-export function hideDrawingsByTargetCount(min){
+export function hideDrawingsByTargetCount(){
     let ticker = window.tvStuff.current_symbol;
     for(let shape_id in window.targetCache[ticker]['shape_id_to_target']){
         let target = window.targetCache[ticker]['shape_id_to_target'][shape_id];
         if('is_range' in target) continue;
         if(!('target_count' in target)) continue;
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-        if(target.target_count >= limit) shape.setProperties({visible: true});
+        if(target.target_count >= window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: true});
         else shape.setProperties({visible: false});
     }
 }
