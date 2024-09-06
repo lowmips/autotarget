@@ -237,7 +237,9 @@ async function handleUpdateMsg(msg, sendtoback){
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
-        checkDrawingStart(ticker, shape_id, shape_points);    // did the drawing start at the correct timestamp?
+        setTimeout(function(){
+            checkDrawingStart(ticker, shape_id, shape_points);
+        },500);
     });
 
 
