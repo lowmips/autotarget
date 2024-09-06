@@ -330,7 +330,7 @@ export function checkFixDrawingsResolution(){
                 let original_start_ts = original_shape_points[0].time;
             }catch(e){
                 console.log(e);
-                console.log('shape_id['+shape_id']');
+                console.log('shape_id['+shape_id+']');
                 console.log('original_shape_points:');
                 console.log(original_shape_points);
             }
