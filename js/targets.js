@@ -239,6 +239,9 @@ async function handleUpdateMsg(msg, sendtoback){
         if(sendtoback && ('sendToBack' in shape)) shape.sendToBack();
         else if('sendToFront' in shape) shape.sendToFront();
         //if(target_count < window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: false});
+        setTimeout(function(){
+            if(target_count < window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: false});
+        }, 1000);
 
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
