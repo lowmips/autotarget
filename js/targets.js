@@ -273,7 +273,9 @@ async function handleUpdateMsg(msg, sendtoback){
                     shape_points: shape_points,
                 };
             //console.log(shape_id);
-            checkDrawingStart(ticker, shape_id, shape_points);
+            setTimeout(function(){
+                checkDrawingStart(ticker, shape_id, shape_points);
+            },500);
         }
     }
 
