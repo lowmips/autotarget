@@ -325,17 +325,15 @@ export function checkFixDrawingsResolution(){
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
             let shape_points = [];
             let original_shape_points = entity.getPoints();
-            let original_start_ts;
 
-            try{
-                original_start_ts = original_shape_points[0].time;
-            }catch(e){
-                console.log(e);
-                console.log('shape_id['+shape_id+']');
-                console.log('original_shape_points:');
-                console.log(original_shape_points);
+            // bug -- sometimes we get a shape with no points
+            if(original_shape_points.length === 0){
+                console.log('BUG! shape_id['+shape_id+'] has no points!');
+                removeDrawing(ticker, shape_id);
+                continue;
             }
 
+            let original_start_ts = original_shape_points[0].time;
             let original_end_ts = (original_shape_points.length > 1?original_shape_points[1].time:null);
             let target_start_ts;
             let target_end_ts;
