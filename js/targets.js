@@ -291,14 +291,13 @@ async function handleUpdateMsg(msg, sendtoback){
 
 }
 
-function checkDrawingStart(ticker, shape_id, shape_points){
+async function checkDrawingStart(ticker, shape_id, shape_points){
     //console.log('checkDrawingStart('+ticker+','+shape_id+')');
     // is the timestamp correctly set? (shape drawing at large resolution issue)
     // if not, add to list of drawings whose resolution needs to be fixed
     let current_resolution = window.tvStuff.current_resolution;
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
     let points = shape.getPoints();
-    //let target = targetCache[ticker]['shape_id_to_target'][shape_id];
     for(let idx in points){
         if(points[idx].time !== shape_points[idx].time){
             console.log('shape_id['+shape_id+'] starting timestamp not correct!');
