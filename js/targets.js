@@ -362,6 +362,19 @@ export async function checkFixDrawingsResolution(ticker){
     }
 }
 
+export function hideDrawingsByTargetCount(min){
+    let ticker = window.tvStuff.current_symbol;
+    for(let shape_id in window.targetCache[ticker]['shape_id_to_target']){
+        let target = window.targetCache[ticker]['shape_id_to_target'][shape_id];
+        if('is_range' in target) continue;
+        if(!('target_count' in target)) continue;
+        let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+        if(target.target_count >= limit) shape.setProperties({visible: true});
+        else shape.setProperties({visible: false});
+    }
+}
+window.hideDrawingsByTargetCount = hideDrawingsByTargetCount;
+
 async function removeDrawing(ticker, shape_id){
     console.log('removeDrawing('+ticker+','+shape_id+')');
     for(let resolution_when_set in targetCache[ticker]['resolution_revise']){
