@@ -236,11 +236,9 @@ async function handleUpdateMsg(msg, sendtoback){
             console.log('new shape_id['+shape_id+'] has points:');
             console.log(shape.getPoints());
         }
-
         if(sendtoback && ('sendToBack' in shape)) shape.sendToBack();
         else if('sendToFront' in shape) shape.sendToFront();
-
-        //if(target_count < window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: false});
+        if(target_count < window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: false});
 
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
