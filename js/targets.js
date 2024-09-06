@@ -166,7 +166,7 @@ async function handleUpdateMsg(msg, sendtoback){
             }
             // Are we just updating target counts?
             if(new_target.ts_end === 0 && new_target.target_count !== existing_target.target_count){
-                let entity = window.tvStuff.widget.activeChart().getShapeById(existing_shape_id);
+                let shape = window.tvStuff.widget.activeChart().getShapeById(existing_shape_id);
                 let props = {overrides: {},};
                 if(shape_type === 'horizontal_ray'){
                     props.overrides['linetoolhorzray.linecolor'] = target_color;
@@ -174,7 +174,7 @@ async function handleUpdateMsg(msg, sendtoback){
                 if(shape_type === 'trend_line'){
                     props.overrides['linetooltrendline.linecolor'] = target_color;
                 }
-                entity.setProperties(props);
+                shape.setProperties(props);
                 return;
             }
         }
@@ -295,7 +295,7 @@ async function checkDrawingStart(ticker, shape_id, shape_points){
     // if not, add to list of drawings whose resolution needs to be fixed
     let current_resolution = window.tvStuff.current_resolution;
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-    let isVisible = shape.getProperties().visible;
+    let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
     if(!isVisible) shape.setProperties({visible: true});
     let points = shape.getPoints();
     for(let idx in points){
@@ -332,9 +332,13 @@ export async function checkFixDrawingsResolution(){
             //console.log('shape_id: '+shape_id);
             let target = targetCache[ticker]['shape_id_to_target'][shape_id];
             let shape_type = (('is_range' in target)?'is_range':target.shape_type);
-            let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+            let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
             let shape_points = [];
-            let original_shape_points = entity.getPoints();
+
+            let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
+            if(!isVisible) shape.setProperties({visible: true});
+
+            let original_shape_points = shape.getPoints();
 
             // bug -- sometimes we get a shape with no points
             if(original_shape_points.length === 0){
@@ -365,11 +369,11 @@ export async function checkFixDrawingsResolution(){
             }
 
             // Attempt to set the correct points
-            entity.setPoints(shape_points);
+            shape.setPoints(shape_points);
 
             // Did it work?
-            let current_start_ts =  parseInt(entity.getPoints()[0].time);
-            let current_end_ts = (target.shape_type === 'trend_line')? parseInt(entity.getPoints()[1].time):null;
+            let current_start_ts =  parseInt(shape.getPoints()[0].time);
+            let current_end_ts = (target.shape_type === 'trend_line')? parseInt(shape.getPoints()[1].time):null;
             if(current_start_ts === target_start_ts && current_end_ts === target_end_ts){
                 // it worked! remove from original revision list.
                 revs.splice(revs_len, 1);
@@ -381,6 +385,8 @@ export async function checkFixDrawingsResolution(){
                 if(!(current_resolution in revisions)) revisions[current_resolution] = [];
                 revisions[current_resolution].push(shape_id);
             }
+
+            if(!isVisible) shape.setProperties({visible: false});
         }
     }
 }
