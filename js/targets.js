@@ -202,7 +202,6 @@ async function handleUpdateMsg(msg, sendtoback){
                         showPrice: false,
                         showLabel: false,
                         linecolor: target_color,
-                        visible: (target_count >= window.tvStuff.targets.filtering.target_count.min),
                         //'linetoolhorzray.fontsize': 30,
                         //'linetoolhorzray.horzLabelsAlign': 'left',
                         //'linetoolhorzray.showLabel': false,
@@ -217,7 +216,6 @@ async function handleUpdateMsg(msg, sendtoback){
                         showPriceLabels: false,
                         showLabel: false,
                         linecolor: target_color,
-                        visible: (target_count >= window.tvStuff.targets.filtering.target_count.min),
                         //'linetooltrendline.linecolor': target_color,
                         //'linetooltrendline.showBarsRange': false,
                         //'linetooltrendline.showDateTimeRange': false,
@@ -230,10 +228,12 @@ async function handleUpdateMsg(msg, sendtoback){
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-        if(sendtoback && ('sendToBack' in shape))
-            shape.sendToBack();
-        else if('sendToFront' in shape)
-            shape.sendToFront();
+
+        if(sendtoback && ('sendToBack' in shape)) shape.sendToBack();
+        else if('sendToFront' in shape) shape.sendToFront();
+
+        if(target_count < window.tvStuff.targets.filtering.target_count.min) shape.setProperties({visible: false});
+
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
