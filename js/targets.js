@@ -229,6 +229,11 @@ async function handleUpdateMsg(msg, sendtoback){
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
 
+        if(shape.getPoints().length === 0){
+            console.log('BUG! new shape_id['+shape_id+'] has no points!');
+            return;
+        }
+
         if(sendtoback && ('sendToBack' in shape)) shape.sendToBack();
         else if('sendToFront' in shape) shape.sendToFront();
 
@@ -330,14 +335,10 @@ export async function checkFixDrawingsResolution(){
 
             // bug -- sometimes we get a shape with no points
             if(original_shape_points.length === 0){
-                original_shape_points = [];
-                original_shape_points.push({time: null, price: null});
-                if(shape_type === 'is_range' || shape_type === 'trend_line')
-                    original_shape_points.push({time: null, price: null});
                 console.log('BUG! shape_id['+shape_id+'] has no points!');
                 console.log(target);
                 //removeDrawing(ticker, shape_id);
-                //continue;
+                continue;
             }
 
             let original_start_ts = original_shape_points[0].time;
