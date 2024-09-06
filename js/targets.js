@@ -336,7 +336,10 @@ export async function checkFixDrawingsResolution(){
             let shape_points = [];
 
             let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
-            if(!isVisible) shape.setProperties({visible: true});
+            if(!isVisible) {
+                console.log('shape_id['+shape_id+'] should be made visible');
+                shape.setProperties({visible: true});
+            }
 
             let original_shape_points = shape.getPoints();
 
