@@ -303,7 +303,7 @@ function checkDrawingStart(ticker, shape_id, shape_points){
     }
 }
 
-export function checkFixDrawingsResolution(){
+export async function checkFixDrawingsResolution(){
     //console.log('checkFixDrawingsResolution()');
     let ticker = window.tvStuff.current_symbol;
     if(!(ticker in targetCache)){
@@ -331,7 +331,7 @@ export function checkFixDrawingsResolution(){
             // bug -- sometimes we get a shape with no points
             if(original_shape_points.length === 0){
                 console.log('BUG! shape_id['+shape_id+'] has no points!');
-                removeDrawing(ticker, shape_id);
+                //removeDrawing(ticker, shape_id);
                 continue;
             }
 
