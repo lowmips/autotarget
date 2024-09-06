@@ -296,7 +296,7 @@ async function checkDrawingStart(ticker, shape_id, shape_points){
     let current_resolution = window.tvStuff.current_resolution;
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
     let isVisible = shape.getProperties().visible;
-    if(!isVisible) shape.setProperties({visibleL true});
+    if(!isVisible) shape.setProperties({visible: true});
     let points = shape.getPoints();
     for(let idx in points){
         if(points[idx].time !== shape_points[idx].time){
