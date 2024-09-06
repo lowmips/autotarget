@@ -232,6 +232,9 @@ async function handleUpdateMsg(msg, sendtoback){
         if(shape.getPoints().length === 0){
             console.log('BUG! new shape_id['+shape_id+'] has no points!');
             return;
+        }else{
+            console.log('new shape_id['+shape_id+'] has points:');
+            console.log(shape.getPoints());
         }
 
         if(sendtoback && ('sendToBack' in shape)) shape.sendToBack();
