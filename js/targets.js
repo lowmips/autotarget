@@ -386,7 +386,7 @@ export async function checkFixDrawingsResolution(){
                 revisions[current_resolution].push(shape_id);
             }
 
-            if(!isVisible) shape.setProperties({visible: false});
+            if(!isVisible) setTimeout(function(){shape.setProperties({visible: false});},100);
         }
     }
 }
