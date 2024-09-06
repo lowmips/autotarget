@@ -202,6 +202,7 @@ async function handleUpdateMsg(msg, sendtoback){
                         showPrice: false,
                         showLabel: false,
                         linecolor: target_color,
+                        visible: (target_count >= window.tvStuff.targets.filtering.target_count.min),
                         //'linetoolhorzray.fontsize': 30,
                         //'linetoolhorzray.horzLabelsAlign': 'left',
                         //'linetoolhorzray.showLabel': false,
@@ -216,6 +217,7 @@ async function handleUpdateMsg(msg, sendtoback){
                         showPriceLabels: false,
                         showLabel: false,
                         linecolor: target_color,
+                        visible: (target_count >= window.tvStuff.targets.filtering.target_count.min),
                         //'linetooltrendline.linecolor': target_color,
                         //'linetooltrendline.showBarsRange': false,
                         //'linetooltrendline.showDateTimeRange': false,
@@ -240,12 +242,12 @@ async function handleUpdateMsg(msg, sendtoback){
 
 
     // check ranges
-    if(window.tvStuff.highlight_ranges) {
+    if(window.tvStuff.ranges.highlight) {
         for (let ts_start in potential_ranges) {
             let r = potential_ranges[ts_start];
             if (r['count'] < 2) continue;
             let distance_percent = 1 - (r['low'] / r['high']);
-            if (distance_percent < window.tvStuff.ranges_min_distance) continue;
+            if (distance_percent < window.tvStuff.ranges.min_distance) continue;
             let shape_points = [];
             shape_points.push({time: parseInt(ts_start), price: parseFloat(r['high'])});
             shape_points.push({time: parseInt(ts_start), price: parseFloat(r['low'])});
@@ -259,7 +261,7 @@ async function handleUpdateMsg(msg, sendtoback){
                 {
                     showPriceLabels: false,
                     showLabel: false,
-                    linecolor: window.tvStuff.range_color,
+                    linecolor: window.tvStuff.ranges.color,
                     linewidth: 1,
                 };
             let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
