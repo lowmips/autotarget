@@ -392,7 +392,7 @@ async function removeDrawing(ticker, shape_id){
 }
 
 
-export async function stopSub(ticker) {
+export async function stopTargetsSub(ticker) {
     console.log('stopSub('+ticker+')');
     if(!(ticker in subs)) return;
     delete subs[ticker];
@@ -406,12 +406,12 @@ export async function stopSub(ticker) {
     ws_targets.send(substr);
 }
 
-export async function startSub(ticker) {
+export async function startTargetsSub(ticker) {
     //console.log('startSub('+ticker+')');
     if(ticker in subs) return;
     if(ws_targets.readyState == 0){  // Websocket.CONNECTING
         //console.log('websocket.CONNECTING, waiting....');
-        setTimeout(startSub,500, ticker);
+        setTimeout(startTargetsSub,500, ticker);
         return;
     }
     const parsedSymbol = parseFullSymbol(ticker);

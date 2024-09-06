@@ -1,5 +1,5 @@
 import Datafeed from './datafeed.js';
-import {startSub, stopSub, checkFixDrawingsResolution} from './targets.js';
+import {startTargetsSub, stopTargetsSub, checkFixDrawingsResolution} from './targets.js';
 
 window.tvStuff = {
     current_symbol: null,   // ticker MEXC:BTC/USDT
@@ -50,9 +50,9 @@ window.tvStuff.widget.subscribe('series_properties_changed', function(){
     window.tvStuff.previous_symbol = window.tvStuff.current_symbol;
     window.tvStuff.current_symbol = symbol;
     console.log('Symbol changed from ['+window.tvStuff.previous_symbol+'] to ['+window.tvStuff.current_symbol+']');
-    if(window.tvStuff.current_symbol) stopSub(window.tvStuff.current_symbol);
+    if(window.tvStuff.current_symbol) stopTargetsSub(window.tvStuff.current_symbol);
     async function bleh(symbol){
-        await startSub(symbol);
+        await startTargetsSub(symbol);
     }
     let x = bleh(window.tvStuff.current_symbol);
 });
