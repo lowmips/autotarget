@@ -335,8 +335,6 @@ export function checkFixDrawingsResolution(){
                 console.log(original_shape_points);
             }
 
-
-
             let original_end_ts = (original_shape_points.length > 1?original_shape_points[1].time:null);
             let target_start_ts;
             let target_end_ts;
