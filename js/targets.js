@@ -325,9 +325,10 @@ export function checkFixDrawingsResolution(){
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
             let shape_points = [];
             let original_shape_points = entity.getPoints();
+            let original_start_ts;
 
             try{
-                let original_start_ts = original_shape_points[0].time;
+                original_start_ts = original_shape_points[0].time;
             }catch(e){
                 console.log(e);
                 console.log('shape_id['+shape_id+']');
