@@ -385,7 +385,7 @@ export async function checkFixDrawingsResolution(){
     }
 }
 
-window.checkFixDrawingsResolution = checkFixDrawingsResolution;
+//window.checkFixDrawingsResolution = checkFixDrawingsResolution;
 
 export function hideDrawingsByTargetCount(){
     let ticker = window.tvStuff.current_symbol;
