@@ -299,8 +299,9 @@ function checkDrawingStart(ticker, shape_id, shape_points){
     }
 }
 
-export async function checkFixDrawingsResolution(ticker){
-    //console.log('checkFixDrawingsResolution('+ticker+')');
+export function checkFixDrawingsResolution(){
+    //console.log('checkFixDrawingsResolution()');
+    let ticker = window.tvStuff.current_symbol;
     if(!(ticker in targetCache)){
         //console.log('ticker['+ticker+'] not in targetCache');
         return;
@@ -318,7 +319,7 @@ export async function checkFixDrawingsResolution(ticker){
             let shape_id = revs[revs_len];
             //console.log('shape_id: '+shape_id);
             let target = targetCache[ticker]['shape_id_to_target'][shape_id];
-            let shape_type = (('is_range' in target)?'is_range':target.shape_type );
+            let shape_type = (('is_range' in target)?'is_range':target.shape_type);
             let entity = window.tvStuff.widget.activeChart().getShapeById(shape_id);
             let shape_points = [];
             let original_shape_points = entity.getPoints();
