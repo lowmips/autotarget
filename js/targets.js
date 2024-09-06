@@ -386,7 +386,10 @@ export async function checkFixDrawingsResolution(){
                 revisions[current_resolution].push(shape_id);
             }
 
-            if(!isVisible) setTimeout(function(){shape.setProperties({visible: false});},100);
+            if(!isVisible) {
+                console.log('shape_id['+shape_id+'] should be hidden');
+                setTimeout(function(){shape.setProperties({visible: false});},100);
+            }
         }
     }
 }
