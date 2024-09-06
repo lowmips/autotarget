@@ -71,11 +71,11 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
     window.tvStuff.current_resolution = new_interval;
     console.log('Resolution changed from ['+window.tvStuff.previous_resolution+'] to ['+window.tvStuff.current_resolution+']');
 
-    async function bleh(){
+    /*async function bleh(){
         await checkFixDrawingsResolution();
     }
-    let x = bleh();
-    //setTimeout(function(){checkFixDrawingsResolution();}, 1000); // directly calling bleh results in errors...
+    let x = bleh();*/
+    setTimeout(function(){let x = checkFixDrawingsResolution();}, 1000); // directly calling bleh results in errors...
 });
 
 
