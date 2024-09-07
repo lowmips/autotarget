@@ -227,8 +227,9 @@ async function handleUpdateMsg(msg, sendtoback){
         }
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-        let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
         console.log( 'shape_id['+shape_id+']'+ ((new Date).toLocaleString('en-US')) );
+
+        let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
         /*if(shape.getPoints().length === 0){
             console.log('BUG! new shape_id['+shape_id+'] has no points!');
             return;
