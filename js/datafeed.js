@@ -85,11 +85,11 @@ export default {
                 let bars = Array();
                 for(let rj of responseJson){
                     bars.push({
-                        time: rj.time * 1000,
-                        open: rj.open,
-                        high: rj.high,
-                        low: rj.low,
-                        close: rj.close
+                        time: parseInt(rj.time * 1000),
+                        open: Number(rj.open),
+                        high: Number(rj.high),
+                        low: Number(rj.low),
+                        close: Number(rj.close)
                     });
                 }
                 if (firstDataRequest) {
