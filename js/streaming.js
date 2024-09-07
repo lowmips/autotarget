@@ -70,15 +70,15 @@ ws.addEventListener('message', function(event) {
             ...oldBar,
             high: Math.max(oldBar.high, tradePriceHigh),
             low: Math.min(oldBar.low, tradePriceLow),
-            close: tradePriceClose,
+            close: parseInt(tradePriceClose),
         };
     }else{
         bar = {
-            time: barTime,
+            time: parseInt(barTime),
             open: tradePriceOpen,
             high: tradePriceHigh,
             low: tradePriceLow,
-            close: tradePriceClose,
+            close: parseInt(tradePriceClose),
         };
     }
 
