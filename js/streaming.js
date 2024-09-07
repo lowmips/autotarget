@@ -70,7 +70,7 @@ ws.addEventListener('message', function(event) {
             ...oldBar,
             high: Math.max(oldBar.high, tradePriceHigh),
             low: Math.min(oldBar.low, tradePriceLow),
-            close: parseInt(tradePriceClose),
+            close: tradePriceClose,
         };
     }else{
         bar = {
@@ -78,7 +78,7 @@ ws.addEventListener('message', function(event) {
             open: tradePriceOpen,
             high: tradePriceHigh,
             low: tradePriceLow,
-            close: parseInt(tradePriceClose),
+            close: tradePriceClose,
         };
     }
 
