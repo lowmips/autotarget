@@ -104,7 +104,7 @@ window.tvStuff.widget.onChartReady(function() {
 });
 
 window.tvStuff.widget.subscribe('onChartReady', function(){
-    //console.log('onChartReady from subscribe');
+    console.log('onChartReady from subscribe');
 });
 
 
