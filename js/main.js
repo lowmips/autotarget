@@ -47,7 +47,7 @@ window.tvStuff.widget.subscribe('chart_loaded', function(a){
     console.log(a);
 });
 window.tvStuff.widget.subscribe('drawing', function(a){
-    console.log('event [drawing] ' + (new Date.toLocaleString('en-US')));
+    console.log('event [drawing] ' + ((new Date).toLocaleString('en-US')) );
     console.log(a);
 });
 window.tvStuff.widget.subscribe('drawing_event', function(drawing_id, b){
