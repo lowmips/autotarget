@@ -227,7 +227,7 @@ async function handleUpdateMsg(msg, sendtoback){
         }
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-        console.log( ((new Date).toLocaleString('en-US')) + ': shape_id['+shape_id+'] created');
+        console.log( ((new Date).toLocaleString('en-US')) + ': handleUpdateMsg - shape_id['+shape_id+'] created');
 
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
         /*if(shape.getPoints().length === 0){
@@ -237,10 +237,16 @@ async function handleUpdateMsg(msg, sendtoback){
             console.log('new shape_id['+shape_id+'] has points:');
             console.log(shape.getPoints());
         }*/
-        if(sendtoback && ('sendToBack' in shape)) shape.sendToBack();
-        else if('sendToFront' in shape) shape.sendToFront();
+        if(sendtoback && ('sendToBack' in shape)) {
+            console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to back');
+            shape.sendToBack();
+        }
+        else if('sendToFront' in shape) {
+            console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to front');
+            shape.sendToFront();
+        }
         if(target_count < window.tvStuff.targets.filtering.target_count.min) {
-            //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: hiding');
+            console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
             shape.setProperties({visible: false});
             //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
         }
@@ -301,7 +307,10 @@ async function checkDrawingStart(ticker, shape_id, shape_points){
     let current_resolution = window.tvStuff.current_resolution;
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
     let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
-    if(!isVisible) shape.setProperties({visible: true});
+    if(!isVisible) {
+        console.log( ((new Date).toLocaleString('en-US')) + ' checkDrawingStart - shape_id['+shape_id+']: - setting visible');
+        shape.setProperties({visible: true});
+    }
     let points = shape.getPoints();
     for(let idx in points){
         if(points[idx].time !== shape_points[idx].time){
@@ -342,7 +351,7 @@ export async function checkFixDrawingsResolution(){
 
             let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
             if(!isVisible) {
-                console.log( ((new Date).toLocaleString('en-US')) + ': shape_id['+shape_id+'] making visible');
+                console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
                 shape.setProperties({visible: true});
             }
 
@@ -377,7 +386,7 @@ export async function checkFixDrawingsResolution(){
             }
 
             // Attempt to set the correct points
-            console.log( ((new Date).toLocaleString('en-US')) + ': shape_id['+shape_id+'] setting points');
+            console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] setting points');
             shape.setPoints(shape_points);
 
             // wait for properties_changed event before proceeding
@@ -400,7 +409,7 @@ export async function checkFixDrawingsResolution(){
             }
 
             if(!isVisible) {
-                console.log( ((new Date).toLocaleString('en-US')) + ': shape_id['+shape_id+'] making hidden');
+                console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making hidden');
                 setTimeout(function(){shape.setProperties({visible: false});},100);
             }
         }
