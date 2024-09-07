@@ -36,6 +36,36 @@ window.tvStuff = {
 window.tvStuff.current_resolution = window.tvStuff.widget_options.interval;
 //window.tvStuff.current_symbol = window.tvStuff.widget_options.symbol;
 window.tvStuff.widget = new TradingView.widget(window.tvStuff.widget_options);
+
+
+
+
+
+
+window.tvStuff.widget.subscribe('chart_loaded', function(a){
+    console.log('event [chart_loaded] ');
+    console.log(a);
+});
+window.tvStuff.widget.subscribe('drawing', function(a){
+    console.log('event [drawing] ');
+    console.log(a);
+});
+window.tvStuff.widget.subscribe('drawing_event', function(drawing_id, b){
+    console.log('event [drawing_event] ');
+    console.log(drawing_id);
+    console.log(b);
+});
+window.tvStuff.widget.subscribe('onChartReady', function(){
+    console.log('onChartReady from subscribe');
+});
+window.tvStuff.widget.subscribe('onTick', function(a){
+    console.log('event [onTick] ');
+    console.log(a);
+});
+window.tvStuff.widget.subscribe('series_event', function(a){
+    console.log('event [series_event] ');
+    console.log(a);
+});
 window.tvStuff.widget.subscribe('series_properties_changed', function(){
     console.log('series_properties_changed');
     let symbol;
@@ -56,7 +86,6 @@ window.tvStuff.widget.subscribe('series_properties_changed', function(){
     }
     let x = bleh(window.tvStuff.current_symbol);
 });
-
 window.tvStuff.widget.subscribe('time_interval', function(a){
     console.log('event [time_interval] ');
     console.log(a);
@@ -78,15 +107,6 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
     setTimeout(function(){let x = checkFixDrawingsResolution();}, 2000); // directly calling bleh results in errors...
 });
 
-window.tvStuff.widget.subscribe('drawing', function(a){
-    console.log('event [drawing] ');
-    console.log(a);
-});
-window.tvStuff.widget.subscribe('drawing_event', function(drawing_id, b){
-    console.log('event [drawing_event] ');
-    console.log(drawing_id);
-    console.log(b);
-});
 
 window.tvStuff.widget.onChartReady(function() {
     console.log('onChartReady()');
@@ -103,8 +123,6 @@ window.tvStuff.widget.onChartReady(function() {
 
 });
 
-window.tvStuff.widget.subscribe('onChartReady', function(){
-    console.log('onChartReady from subscribe');
-});
+
 
 
