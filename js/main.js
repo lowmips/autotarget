@@ -56,7 +56,7 @@ window.tvStuff.widget.subscribe('drawing_event', function(drawing_id, b){
     console.log(b);
 });
 window.tvStuff.widget.subscribe('onChartReady', function(){
-    console.log('onChartReady from subscribe');
+    console.log('event [onChartReady]');
 });
 window.tvStuff.widget.subscribe('onTick', function(a){
     console.log('event [onTick] ');
@@ -67,7 +67,7 @@ window.tvStuff.widget.subscribe('series_event', function(a){
     console.log(a);
 });
 window.tvStuff.widget.subscribe('series_properties_changed', function(){
-    console.log('series_properties_changed');
+    console.log('event [series_properties_changed]');
     let symbol;
     try{
         symbol = window.tvStuff.widget.activeChart().getSeries().symbolSource().symbol;
