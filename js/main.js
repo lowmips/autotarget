@@ -50,10 +50,15 @@ window.tvStuff.widget.subscribe('drawing', function(a){
     console.log('event [drawing] ' + ((new Date).toLocaleString('en-US')) );
     console.log(a);
 });
-window.tvStuff.widget.subscribe('drawing_event', function(drawing_id, b){
+window.tvStuff.widget.subscribe('drawing_event', function(drawing_id, event_type){
     console.log('event [drawing_event] ');
     console.log(drawing_id);
-    console.log(b);
+    console.log(event_type);
+
+    if(event_type === 'properties_changed'){
+        let shape = window.tvStuff.widget.activeChart().getShapeById(drawing_id);
+        console.log(shape.getProperties());
+    }
 });
 window.tvStuff.widget.subscribe('onChartReady', function(){
     console.log('event [onChartReady]');
