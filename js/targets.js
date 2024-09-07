@@ -227,7 +227,7 @@ async function handleUpdateMsg(msg, sendtoback){
         }
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-        console.log( 'shape_id['+shape_id+']'+ ((new Date).toLocaleString('en-US')) );
+        console.log( ((new Date).toLocaleString('en-US')) + ': shape_id['+shape_id+'] created');
 
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
         /*if(shape.getPoints().length === 0){
@@ -342,7 +342,7 @@ export async function checkFixDrawingsResolution(){
 
             let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
             if(!isVisible) {
-                console.log('shape_id['+shape_id+'] should be made visible');
+                console.log( ((new Date).toLocaleString('en-US')) + ': shape_id['+shape_id+'] making visible');
                 shape.setProperties({visible: true});
             }
 
@@ -377,7 +377,12 @@ export async function checkFixDrawingsResolution(){
             }
 
             // Attempt to set the correct points
+            console.log( ((new Date).toLocaleString('en-US')) + ': shape_id['+shape_id+'] setting points');
             shape.setPoints(shape_points);
+
+            // wait for properties_changed event before proceeding
+
+
 
             // Did it work?
             let current_start_ts =  parseInt(shape.getPoints()[0].time);
@@ -395,7 +400,7 @@ export async function checkFixDrawingsResolution(){
             }
 
             if(!isVisible) {
-                console.log('shape_id['+shape_id+'] should be hidden');
+                console.log( ((new Date).toLocaleString('en-US')) + ': shape_id['+shape_id+'] making hidden');
                 setTimeout(function(){shape.setProperties({visible: false});},100);
             }
         }
