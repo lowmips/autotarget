@@ -240,9 +240,9 @@ async function handleUpdateMsg(msg, sendtoback){
         if(sendtoback && ('sendToBack' in shape)) shape.sendToBack();
         else if('sendToFront' in shape) shape.sendToFront();
         if(target_count < window.tvStuff.targets.filtering.target_count.min) {
-            console.log( ((new Date).toLocaleString('en-US')) + 'shape_id['+shape_id+']: hiding');
+            //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: hiding');
             shape.setProperties({visible: false});
-            console.log( ((new Date).toLocaleString('en-US')) + 'shape_id['+shape_id+']: done');
+            //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
         }
 
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
