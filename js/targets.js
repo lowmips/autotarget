@@ -246,6 +246,13 @@ async function handleUpdateMsg(msg, sendtoback){
             //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to front');
             shape.sendToFront();
         }
+
+        // add to various tracking structures
+        targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
+        if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
+        if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
+        checkDrawingStart(ticker, shape_id, shape_points);
+
         if(target_count < window.tvStuff.targets.filtering.target_count.min) {
             //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
             //addItem('drawing_event','properties_changed', shape_id);  // NOTE! 'hide" event fires immediately.  wait for properties_changed instead!
@@ -253,16 +260,6 @@ async function handleUpdateMsg(msg, sendtoback){
             //waitForAndRemoveItem('drawing_event','properties_changed', shape_id);
             //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
         }
-
-        targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
-        if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
-        if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
-
-        checkDrawingStart(ticker, shape_id, shape_points);
-
-        /*setTimeout(function(){
-            checkDrawingStart(ticker, shape_id, shape_points);
-        },500);*/
     });
 
 
@@ -304,19 +301,19 @@ async function handleUpdateMsg(msg, sendtoback){
 
 }
 
-async function checkDrawingStart(ticker, shape_id, shape_points){
+function checkDrawingStart(ticker, shape_id, shape_points){
     //console.log('checkDrawingStart('+ticker+','+shape_id+')');
     // is the timestamp correctly set? (shape drawing at large resolution issue)
     // if not, add to list of drawings whose resolution needs to be fixed
     let current_resolution = window.tvStuff.current_resolution;
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
     let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
-    if(!isVisible) {
+    /*if(!isVisible) {
         //console.log( ((new Date).toLocaleString('en-US')) + ' checkDrawingStart - shape_id['+shape_id+']: - setting visible');
         addItem('drawing_event','properties_changed',shape_id);
         shape.setProperties({visible: true});
         await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
-    }
+    }*/
     let points = shape.getPoints();
     for(let idx in points){
         if(points[idx].time !== shape_points[idx].time){
@@ -328,7 +325,7 @@ async function checkDrawingStart(ticker, shape_id, shape_points){
             break;
         }
     }
-    if(!isVisible) shape.setProperties({visible: false});
+    /*if(!isVisible) shape.setProperties({visible: false});*/
 }
 
 export async function checkFixDrawingsResolution(){
