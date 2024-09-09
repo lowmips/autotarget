@@ -360,9 +360,9 @@ export async function checkFixDrawingsResolution(){
             let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
             if(!isVisible) {
                 console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
-                addItem('drawing_event','show',shape_id);
+                addItem('drawing_event','properties_changed',shape_id);
                 shape.setProperties({visible: true});
-                waitForAndRemoveItem('drawing_event','show',shape_id);
+                waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
             }
 
             let original_shape_points = shape.getPoints();
