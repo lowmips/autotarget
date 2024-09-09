@@ -246,8 +246,8 @@ async function handleUpdateMsg(msg, sendtoback){
             shape.sendToFront();
         }
         if(target_count < window.tvStuff.targets.filtering.target_count.min) {
-            console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
-            shape.setProperties({visible: false});
+            //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
+            //shape.setProperties({visible: false});
             //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
         }
 
