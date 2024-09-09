@@ -1,5 +1,6 @@
 import { parseFullSymbol } from './helpers.js';
 import { colors }from './colors.js';
+import {addItem, hasItem, waitForAndRemoveItem} from "./waitqueue";
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
 let targetCache = {};
@@ -246,17 +247,22 @@ async function handleUpdateMsg(msg, sendtoback){
             shape.sendToFront();
         }
         if(target_count < window.tvStuff.targets.filtering.target_count.min) {
-            //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
-            //shape.setProperties({visible: false});
-            //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
+            console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
+            addItem('drawing_event','hide', shape_id);
+            shape.setProperties({visible: false});
+            waitForAndRemoveItem('drawing_event','hide', shape_id);
+            console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
         }
 
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
-        setTimeout(function(){
+
+        checkDrawingStart(ticker, shape_id, shape_points);
+
+        /*setTimeout(function(){
             checkDrawingStart(ticker, shape_id, shape_points);
-        },500);
+        },500);*/
     });
 
 
