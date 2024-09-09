@@ -317,7 +317,7 @@ async function checkDrawingStart(ticker, shape_id, shape_points){
         console.log( ((new Date).toLocaleString('en-US')) + ' checkDrawingStart - shape_id['+shape_id+']: - setting visible');
         addItem('drawing_event','show',shape_id);
         shape.setProperties({visible: true});
-        waitForAndRemoveItem('drawing_event','show',shape_id);
+        await waitForAndRemoveItem('drawing_event','show',shape_id);
     }
     let points = shape.getPoints();
     for(let idx in points){
@@ -362,7 +362,7 @@ export async function checkFixDrawingsResolution(){
                 console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
                 addItem('drawing_event','properties_changed',shape_id);
                 shape.setProperties({visible: true});
-                waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
+                await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
             }
 
             let original_shape_points = shape.getPoints();
@@ -399,7 +399,7 @@ export async function checkFixDrawingsResolution(){
             console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] setting points');
             addItem('drawing_event','properties_changed',shape_id);
             shape.setPoints(shape_points);
-            waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
+            await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
 
 
             // Did it work?
@@ -419,7 +419,7 @@ export async function checkFixDrawingsResolution(){
 
             if(!isVisible) {
                 console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making hidden');
-                setTimeout(function(){shape.setProperties({visible: false});},100);
+                shape.setProperties({visible: false});
             }
         }
     }
