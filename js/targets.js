@@ -355,6 +355,9 @@ export async function checkFixDrawingsResolution(){
 
 async function fixDrawingResolution(ticker, resolution, shape_id){
     console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
+    let current_resolution = window.tvStuff.current_resolution;
+    let revisions = targetCache[ticker]['resolution_revise'];
+    let revs = revisions[resolution];
     let target = targetCache[ticker]['shape_id_to_target'][shape_id];
     let shape_type = (('is_range' in target)?'is_range':target.shape_type);
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
