@@ -247,11 +247,11 @@ async function handleUpdateMsg(msg, sendtoback){
             shape.sendToFront();
         }
         if(target_count < window.tvStuff.targets.filtering.target_count.min) {
-            console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
+            //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
             addItem('drawing_event','hide', shape_id);
             shape.setProperties({visible: false});
             waitForAndRemoveItem('drawing_event','hide', shape_id);
-            console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
+            //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
         }
 
         targetCache[ticker]['shape_id_to_target'][shape_id] = new_target;
@@ -315,7 +315,9 @@ async function checkDrawingStart(ticker, shape_id, shape_points){
     let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
     if(!isVisible) {
         console.log( ((new Date).toLocaleString('en-US')) + ' checkDrawingStart - shape_id['+shape_id+']: - setting visible');
+        addItem('drawing_event','show',shape_id);
         shape.setProperties({visible: true});
+        waitForAndRemoveItem('drawing_event','show',shape_id);
     }
     let points = shape.getPoints();
     for(let idx in points){
@@ -358,7 +360,9 @@ export async function checkFixDrawingsResolution(){
             let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
             if(!isVisible) {
                 console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
+                addItem('drawing_event','show',shape_id);
                 shape.setProperties({visible: true});
+                waitForAndRemoveItem('drawing_event','show',shape_id);
             }
 
             let original_shape_points = shape.getPoints();
@@ -393,10 +397,9 @@ export async function checkFixDrawingsResolution(){
 
             // Attempt to set the correct points
             console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] setting points');
+            addItem('drawing_event','properties_changed',shape_id);
             shape.setPoints(shape_points);
-
-            // wait for properties_changed event before proceeding
-
+            waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
 
 
             // Did it work?
