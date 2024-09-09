@@ -347,78 +347,82 @@ export async function checkFixDrawingsResolution(){
         while(revs_len--){
             let shape_id = revs[revs_len];
             //console.log('shape_id: '+shape_id);
-            let target = targetCache[ticker]['shape_id_to_target'][shape_id];
-            let shape_type = (('is_range' in target)?'is_range':target.shape_type);
-            let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-            let shape_points = [];
-
-            let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
-            if(!isVisible) {
-                //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
-                addItem('drawing_event','properties_changed',shape_id); // NOTE! 'show' event fires immediately, but the shape may not be ready yet! wait for properties_changed instead.
-                shape.setProperties({visible: true});
-                await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
-            }
-
-            let original_shape_points = shape.getPoints();
-
-            // bug -- sometimes we get a shape with no points
-            if(original_shape_points.length === 0){
-                console.log('BUG! shape_id['+shape_id+'] has no points!');
-                //console.log(target);
-                //removeDrawing(ticker, shape_id);
-                continue;
-            }
-
-            let original_start_ts = original_shape_points[0].time;
-            let original_end_ts = (original_shape_points.length > 1?original_shape_points[1].time:null);
-            let target_start_ts;
-            let target_end_ts;
-
-            // Build the correct points
-            if(shape_type === 'is_range'){
-                target_start_ts = target.shape_points[0].time;
-                target_end_ts = target.shape_points[1].time;
-                shape_points.push(target.shape_points[0]);
-                shape_points.push(target.shape_points[1]);
-            }else{
-                target_start_ts = target.ts_start;
-                shape_points.push({ time: target.ts_start, price: target.target_price });
-                if(shape_type === 'trend_line'){
-                    target_end_ts = target.ts_end;
-                    shape_points.push({ time: target.ts_end, price: target.target_price });
-                }
-            }
-
-            // Attempt to set the correct points
-            //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] setting points');
-            shape.setPoints(shape_points);
-
-
-            // Did it work?
-            let current_start_ts =  parseInt(shape.getPoints()[0].time);
-            let current_end_ts = (target.shape_type === 'trend_line')? parseInt(shape.getPoints()[1].time):null;
-            if(current_start_ts === target_start_ts && current_end_ts === target_end_ts){
-                // it worked! remove from original revision list.
-                revs.splice(revs_len, 1);
-            } else if(current_start_ts === original_start_ts && current_end_ts === original_end_ts){
-                // nothing changed
-            } else{
-                // partial success. move to finer time frame.
-                revs.splice(revs_len, 1);
-                if(!(current_resolution in revisions)) revisions[current_resolution] = [];
-                revisions[current_resolution].push(shape_id);
-            }
-
-            if(!isVisible) {
-                //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making hidden');
-                shape.setProperties({visible: false});
-            }
+            console.log("calling fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
+            let z = fixDrawingResolution(ticker, resolution_when_set, shape_id);
         }
     }
 }
 
-//window.checkFixDrawingsResolution = checkFixDrawingsResolution;
+async function fixDrawingResolution(ticker, resolution, shape_id){
+    console.log("fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
+    let target = targetCache[ticker]['shape_id_to_target'][shape_id];
+    let shape_type = (('is_range' in target)?'is_range':target.shape_type);
+    let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+    let shape_points = [];
+
+    let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
+    if(!isVisible) {
+        //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
+        addItem('drawing_event','properties_changed',shape_id); // NOTE! 'show' event fires immediately, but the shape may not be ready yet! wait for properties_changed instead.
+        shape.setProperties({visible: true});
+        await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
+    }
+
+    let original_shape_points = shape.getPoints();
+
+    // bug -- sometimes we get a shape with no points
+    if(original_shape_points.length === 0){
+        console.log('BUG! shape_id['+shape_id+'] has no points!');
+        //console.log(target);
+        //removeDrawing(ticker, shape_id);
+        return;
+    }
+
+    let original_start_ts = original_shape_points[0].time;
+    let original_end_ts = (original_shape_points.length > 1?original_shape_points[1].time:null);
+    let target_start_ts;
+    let target_end_ts;
+
+    // Build the correct points
+    if(shape_type === 'is_range'){
+        target_start_ts = target.shape_points[0].time;
+        target_end_ts = target.shape_points[1].time;
+        shape_points.push(target.shape_points[0]);
+        shape_points.push(target.shape_points[1]);
+    }else{
+        target_start_ts = target.ts_start;
+        shape_points.push({ time: target.ts_start, price: target.target_price });
+        if(shape_type === 'trend_line'){
+            target_end_ts = target.ts_end;
+            shape_points.push({ time: target.ts_end, price: target.target_price });
+        }
+    }
+
+    // Attempt to set the correct points
+    //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] setting points');
+    shape.setPoints(shape_points);
+
+    // Did it work?
+    let current_start_ts =  parseInt(shape.getPoints()[0].time);
+    let current_end_ts = (target.shape_type === 'trend_line')? parseInt(shape.getPoints()[1].time):null;
+    if(current_start_ts === target_start_ts && current_end_ts === target_end_ts){
+        // it worked! remove from original revision list.
+        revs.splice(revs_len, 1);
+    } else if(current_start_ts === original_start_ts && current_end_ts === original_end_ts){
+        // nothing changed
+    } else{
+        // partial success. move to finer time frame.
+        revs.splice(revs_len, 1);
+        if(!(current_resolution in revisions)) revisions[current_resolution] = [];
+        revisions[current_resolution].push(shape_id);
+    }
+
+    if(!isVisible) {
+        //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making hidden');
+        shape.setProperties({visible: false});
+    }
+    console.log("DONE! fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
+}
 
 export function hideDrawingsByTargetCount(){
     let ticker = window.tvStuff.current_symbol;
