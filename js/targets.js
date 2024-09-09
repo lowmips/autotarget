@@ -239,18 +239,18 @@ async function handleUpdateMsg(msg, sendtoback){
             console.log(shape.getPoints());
         }*/
         if(sendtoback && ('sendToBack' in shape)) {
-            console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to back');
+            //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to back');
             shape.sendToBack();
         }
         else if('sendToFront' in shape) {
-            console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to front');
+            //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to front');
             shape.sendToFront();
         }
         if(target_count < window.tvStuff.targets.filtering.target_count.min) {
             //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
-            addItem('drawing_event','hide', shape_id);
+            //addItem('drawing_event','properties_changed', shape_id);  // NOTE! 'hide" event fires immediately.  wait for properties_changed instead!
             shape.setProperties({visible: false});
-            waitForAndRemoveItem('drawing_event','hide', shape_id);
+            //waitForAndRemoveItem('drawing_event','properties_changed', shape_id);
             //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
         }
 
@@ -298,26 +298,24 @@ async function handleUpdateMsg(msg, sendtoback){
                     shape_points: shape_points,
                 };
             //console.log(shape_id);
-            setTimeout(function(){
-                checkDrawingStart(ticker, shape_id, shape_points);
-            },500);
+            checkDrawingStart(ticker, shape_id, shape_points);
         }
     }
 
 }
 
 async function checkDrawingStart(ticker, shape_id, shape_points){
-    console.log('checkDrawingStart('+ticker+','+shape_id+')');
+    //console.log('checkDrawingStart('+ticker+','+shape_id+')');
     // is the timestamp correctly set? (shape drawing at large resolution issue)
     // if not, add to list of drawings whose resolution needs to be fixed
     let current_resolution = window.tvStuff.current_resolution;
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
     let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
     if(!isVisible) {
-        console.log( ((new Date).toLocaleString('en-US')) + ' checkDrawingStart - shape_id['+shape_id+']: - setting visible');
-        addItem('drawing_event','show',shape_id);
+        //console.log( ((new Date).toLocaleString('en-US')) + ' checkDrawingStart - shape_id['+shape_id+']: - setting visible');
+        addItem('drawing_event','properties_changed',shape_id);
         shape.setProperties({visible: true});
-        await waitForAndRemoveItem('drawing_event','show',shape_id);
+        await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
     }
     let points = shape.getPoints();
     for(let idx in points){
@@ -360,7 +358,7 @@ export async function checkFixDrawingsResolution(){
             let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
             if(!isVisible) {
                 console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
-                addItem('drawing_event','properties_changed',shape_id);
+                addItem('drawing_event','properties_changed',shape_id); // NOTE! 'show' event fires immediately, but the shape may not be ready yet! wait for properties_changed instead.
                 shape.setProperties({visible: true});
                 await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
             }
@@ -370,7 +368,7 @@ export async function checkFixDrawingsResolution(){
             // bug -- sometimes we get a shape with no points
             if(original_shape_points.length === 0){
                 console.log('BUG! shape_id['+shape_id+'] has no points!');
-                console.log(target);
+                //console.log(target);
                 //removeDrawing(ticker, shape_id);
                 continue;
             }
@@ -396,10 +394,8 @@ export async function checkFixDrawingsResolution(){
             }
 
             // Attempt to set the correct points
-            console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] setting points');
-            //addItem('drawing_event','properties_changed',shape_id);
+            //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] setting points');
             shape.setPoints(shape_points);
-            //await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
 
 
             // Did it work?
@@ -418,7 +414,7 @@ export async function checkFixDrawingsResolution(){
             }
 
             if(!isVisible) {
-                console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making hidden');
+                //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making hidden');
                 shape.setProperties({visible: false});
             }
         }
