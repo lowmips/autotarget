@@ -347,7 +347,7 @@ export async function checkFixDrawingsResolution(){
         while(revs_len--){
             let shape_id = revs[revs_len];
             //console.log('shape_id: '+shape_id);
-            console.log("calling fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
+            console.log("calling async fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
             let z = fixDrawingResolution(ticker, resolution_when_set, shape_id);
         }
     }
