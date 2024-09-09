@@ -354,7 +354,7 @@ export async function checkFixDrawingsResolution(){
 }
 
 async function fixDrawingResolution(ticker, resolution, shape_id){
-    console.log("fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
+    console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
     let target = targetCache[ticker]['shape_id_to_target'][shape_id];
     let shape_type = (('is_range' in target)?'is_range':target.shape_type);
     let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
@@ -421,7 +421,7 @@ async function fixDrawingResolution(ticker, resolution, shape_id){
         //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making hidden');
         shape.setProperties({visible: false});
     }
-    console.log("DONE! fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
+    console.log("DONE! fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
 }
 
 export function hideDrawingsByTargetCount(){
