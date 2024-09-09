@@ -1,6 +1,6 @@
 import Datafeed from './datafeed.js';
 import {startTargetsSub, stopTargetsSub, checkFixDrawingsResolution} from './targets.js';
-import {removeItem} from "./waitqueue";
+import {removeItem} from "./waitqueue.js";
 
 window.tvStuff = {
     current_symbol: null,   // ticker MEXC:BTC/USDT

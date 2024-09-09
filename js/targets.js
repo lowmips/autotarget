@@ -1,6 +1,6 @@
 import { parseFullSymbol } from './helpers.js';
 import { colors }from './colors.js';
-import {addItem, hasItem, waitForAndRemoveItem} from "./waitqueue";
+import {addItem, hasItem, waitForAndRemoveItem} from "./waitqueue.js";
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
 let targetCache = {};
