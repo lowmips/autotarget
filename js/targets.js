@@ -348,12 +348,12 @@ export async function checkFixDrawingsResolution(){
             let shape_id = revs[revs_len];
             //console.log('shape_id: '+shape_id);
             console.log("calling async fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
-            let z = fixDrawingResolution(ticker, resolution_when_set, shape_id);
+            let z = fixDrawingResolution(ticker, resolution_when_set, revs_len, shape_id);
         }
     }
 }
 
-async function fixDrawingResolution(ticker, resolution, shape_id){
+async function fixDrawingResolution(ticker, resolution, rev_index, shape_id){
     console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
     let current_resolution = window.tvStuff.current_resolution;
     let revisions = targetCache[ticker]['resolution_revise'];
@@ -410,12 +410,12 @@ async function fixDrawingResolution(ticker, resolution, shape_id){
     let current_end_ts = (target.shape_type === 'trend_line')? parseInt(shape.getPoints()[1].time):null;
     if(current_start_ts === target_start_ts && current_end_ts === target_end_ts){
         // it worked! remove from original revision list.
-        revs.splice(revs_len, 1);
+        revs.splice(rev_index, 1);
     } else if(current_start_ts === original_start_ts && current_end_ts === original_end_ts){
         // nothing changed
     } else{
         // partial success. move to finer time frame.
-        revs.splice(revs_len, 1);
+        revs.splice(rev_index, 1);
         if(!(current_resolution in revisions)) revisions[current_resolution] = [];
         revisions[current_resolution].push(shape_id);
     }
