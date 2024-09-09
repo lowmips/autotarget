@@ -228,7 +228,7 @@ async function handleUpdateMsg(msg, sendtoback){
         }
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-        console.log( ((new Date).toLocaleString('en-US')) + ': handleUpdateMsg - shape_id['+shape_id+'] created');
+        //console.log( ((new Date).toLocaleString('en-US')) + ': handleUpdateMsg - shape_id['+shape_id+'] created');
 
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
         /*if(shape.getPoints().length === 0){
@@ -329,7 +329,7 @@ function checkDrawingStart(ticker, shape_id, shape_points){
 }
 
 export async function checkFixDrawingsResolution(){
-    console.log('checkFixDrawingsResolution()');
+    //console.log('checkFixDrawingsResolution()');
     let ticker = window.tvStuff.current_symbol;
     if(!(ticker in targetCache)){
         //console.log('ticker['+ticker+'] not in targetCache');
@@ -354,7 +354,7 @@ export async function checkFixDrawingsResolution(){
 
             let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
             if(!isVisible) {
-                console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
+                //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
                 addItem('drawing_event','properties_changed',shape_id); // NOTE! 'show' event fires immediately, but the shape may not be ready yet! wait for properties_changed instead.
                 shape.setProperties({visible: true});
                 await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);

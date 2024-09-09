@@ -1,7 +1,7 @@
 export const eventWaitQueue = {};
 
 export function addItem(event, event_type, drawing_id){
-    console.log('addItem('+event+','+event_type+','+drawing_id+')');
+    //console.log('addItem('+event+','+event_type+','+drawing_id+')');
     if(!(event in eventWaitQueue)) eventWaitQueue[event] = {};
     if(!(event_type in eventWaitQueue[event])) eventWaitQueue[event][event_type] = [];
     eventWaitQueue[event][event_type].push(drawing_id);
@@ -14,7 +14,7 @@ export function hasItem(event, event_type, drawing_id){
 }
 
 export function removeItem(event, event_type, drawing_id){
-    console.log('removeItem('+event+','+event_type+','+drawing_id+')');
+    //console.log('removeItem('+event+','+event_type+','+drawing_id+')');
     if(!(event in eventWaitQueue)) return false;
     if(!(event_type in eventWaitQueue[event])) return false;
     let pos = eventWaitQueue[event][event_type].indexOf(drawing_id);
@@ -23,7 +23,7 @@ export function removeItem(event, event_type, drawing_id){
 }
 
 export async function waitForAndRemoveItem(event, event_type, drawing_id){
-    console.log('waitForAndRemoveItem('+event+','+event_type+','+drawing_id+')');
+    //console.log('waitForAndRemoveItem('+event+','+event_type+','+drawing_id+')');
     while(hasItem(event, event_type, drawing_id)){
         await aSleep(250);
     }
