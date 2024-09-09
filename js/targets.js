@@ -397,9 +397,9 @@ export async function checkFixDrawingsResolution(){
 
             // Attempt to set the correct points
             console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] setting points');
-            addItem('drawing_event','properties_changed',shape_id);
+            //addItem('drawing_event','properties_changed',shape_id);
             shape.setPoints(shape_points);
-            await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
+            //await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
 
 
             // Did it work?
