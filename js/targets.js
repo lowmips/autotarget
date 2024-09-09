@@ -334,7 +334,7 @@ async function checkDrawingStart(ticker, shape_id, shape_points){
 }
 
 export async function checkFixDrawingsResolution(){
-    //console.log('checkFixDrawingsResolution()');
+    console.log('checkFixDrawingsResolution()');
     let ticker = window.tvStuff.current_symbol;
     if(!(ticker in targetCache)){
         //console.log('ticker['+ticker+'] not in targetCache');
