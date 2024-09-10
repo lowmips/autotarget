@@ -111,7 +111,7 @@ $q = "SELECT * ".
     "FROM `$table_name_sql` ".
     "WHERE `ts_end`>='$min_ts' ".
     "AND `ts_end`<='$max_ts' ".
-    "AND `target_count>='$min_target_count' ".
+    "AND `target_count`>='$min_target_count' ".
     "ORDER BY `ts_end` DESC ";
 #echo $q; exit;
 if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
