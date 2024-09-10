@@ -126,6 +126,8 @@ async function handleUpdateMsg(msg, sendtoback){
             target_count,
         };
 
+        if(target_count < window.tvStuff.targets.requesting.target_count.min) return;
+
         // check groups stuff
         if(!(ts_start in potential_ranges)){
             potential_ranges[ts_start] = {
