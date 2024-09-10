@@ -96,7 +96,7 @@ $q ="select MAX(moo.ts_end) as max_ts, MIN(moo.ts_end) as min_ts ".
     " FROM `$table_name_sql` ".
     " where 1 ".
     " AND `ts_end`<='$ts_from' ".
-    " AND `ts_end >= '$min_ts' ".
+    " AND `ts_end` >= '$min_ts' ".
     " ORDER BY `ts_end` DESC ".
     //" LIMIT $max_sql ".
     ") as moo ";
