@@ -38,6 +38,7 @@ if(!array_key_exists('ticker', $_REQUEST) || !array_key_exists('from', $_REQUEST
 
 $ts_from = (int)$_REQUEST['from'];
 $max = (int)$_REQUEST['max'];
+$min_ts = isset($_REQUEST['min_ts'])?(int)$_REQUEST['min_ts']:0;
 if($ts_from <= 0) error_and_end('from must be a timestamp > 0');
 if($max <= 0) error_and_end('max must be > 0');
 $min_target_count = (isset($_REQUEST['min_target_count'])?(int)$_REQUEST['min_target_count']:1);
@@ -96,6 +97,7 @@ $q ="select MAX(moo.ts_end) as max_ts, MIN(moo.ts_end) as min_ts ".
     " FROM `$table_name_sql` ".
     " where 1 ".
     " AND `ts_end`<='$ts_from' ".
+    " AND `ts_end >= '$min_ts' ".
     " ORDER BY `ts_end` DESC ".
     " LIMIT $max_sql ".
     ") as moo ";
@@ -104,13 +106,13 @@ if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
 $row = $result->fetch_assoc();
 if($row === false) error_and_end("query failure: $q");
 if($row === null) empty_set_and_end($exchange, $from_token, $to_token);
-$max_ts = (int)$row['max_ts'];
-$min_ts = (int)$row['min_ts'];
+$max_found_ts = (int)$row['max_ts'];
+$min_found_ts = (int)$row['min_ts'];
 
 $q = "SELECT * ".
     "FROM `$table_name_sql` ".
-    "WHERE `ts_end`>='$min_ts' ".
-    "AND `ts_end`<='$max_ts' ".
+    "WHERE `ts_end`>='$min_found_ts' ".
+    "AND `ts_end`<='$max_found_ts' ".
     "AND `target_count`>='$min_target_count' ".
     "ORDER BY `ts_end` DESC ";
 #echo $q; exit;
