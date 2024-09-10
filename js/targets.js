@@ -14,8 +14,6 @@ window.targetCache = targetCache;
     }
 */
 let subs = {};
-let max_history_targets = 10000;
-
 
 ws_targets.addEventListener('open', function(event) {
     console.log('ws_targets [open]' + event);
@@ -67,7 +65,6 @@ export function getTargets(min_ts){
         });
 
 }
-window.getTargets = getTargets;
 
 export function checkEarliestTarget(){
     console.log('checkEarliestTarget()');
@@ -78,6 +75,7 @@ export function checkEarliestTarget(){
     if(earliestBar === null || latestBar === null) return;
     if((ticker in targetCache) && targetCache[ticker]['earliest_target_ts'] <= earliestBar) return;
     getTargets(earliestBar);
+    let z = checkFixDrawingsResolution();
 }
 
 async function handleMsg(msg_str){
@@ -334,6 +332,7 @@ function checkDrawingStart(ticker, shape_id, shape_points){
 export async function checkFixDrawingsResolution(){
     //console.log('checkFixDrawingsResolution()');
     let ticker = window.tvStuff.current_symbol;
+    let earliestBar = window.tvStuff.widget.activeChart().getSeries().data().first().timeMs / 1000;
     if(!(ticker in targetCache)){
         //console.log('ticker['+ticker+'] not in targetCache');
         return;
@@ -350,22 +349,45 @@ export async function checkFixDrawingsResolution(){
         while(revs_len--){
             let shape_id = revs[revs_len];
             //console.log('shape_id: '+shape_id);
-            console.log("calling async fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
-            let z = fixDrawingResolution(ticker, resolution_when_set, revs_len, shape_id);
+            //console.log("calling async fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
+            let z = fixDrawingResolution(ticker, resolution_when_set, revs_len, shape_id, earliestBar);
         }
     }
 }
 
-async function fixDrawingResolution(ticker, resolution, rev_index, shape_id){
-    console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
+async function fixDrawingResolution(ticker, resolution, rev_index, shape_id, earliest_bar_ts){
+    //console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
     let current_resolution = window.tvStuff.current_resolution;
     let revisions = targetCache[ticker]['resolution_revise'];
     let revs = revisions[resolution];
     let target = targetCache[ticker]['shape_id_to_target'][shape_id];
     let shape_type = (('is_range' in target)?'is_range':target.shape_type);
-    let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-    let shape_points = [];
+    let shape_points = [];  // the "correct" points
+    let target_start_ts;
+    let target_end_ts;
 
+    // build the correct points
+    // if we've changed resolution, the target may be before the earliest bar we now have.
+    // if we try to fix the drawings before the last bar, this will lead to a drawing bug.
+    if(shape_type === 'is_range'){
+        target_start_ts = target.shape_points[0].time;
+        target_end_ts = target.shape_points[1].time;
+        if(target_start_ts < earliest_bar_ts || target_end_ts < earliest_bar_ts) return;
+        shape_points.push(target.shape_points[0]);
+        shape_points.push(target.shape_points[1]);
+    }else{
+        target_start_ts = target.ts_start;
+        if(target_start_ts < earliest_bar_ts) return;
+        shape_points.push({ time: target.ts_start, price: target.target_price });
+        if(shape_type === 'trend_line'){
+            target_end_ts = target.ts_end;
+            if(target_end_ts < earliest_bar_ts) return;
+            shape_points.push({ time: target.ts_end, price: target.target_price });
+        }
+    }
+
+    // get the shape's current info
+    let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
     let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
     if(!isVisible) {
         //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
@@ -373,9 +395,7 @@ async function fixDrawingResolution(ticker, resolution, rev_index, shape_id){
         shape.setProperties({visible: true});
         await waitForAndRemoveItem('drawing_event','properties_changed',shape_id);
     }
-
     let original_shape_points = shape.getPoints();
-
     // bug -- sometimes we get a shape with no points
     if(original_shape_points.length === 0){
         console.log('BUG! shape_id['+shape_id+'] has no points!');
@@ -383,26 +403,8 @@ async function fixDrawingResolution(ticker, resolution, rev_index, shape_id){
         //removeDrawing(ticker, shape_id);
         return;
     }
-
     let original_start_ts = original_shape_points[0].time;
     let original_end_ts = (original_shape_points.length > 1?original_shape_points[1].time:null);
-    let target_start_ts;
-    let target_end_ts;
-
-    // Build the correct points
-    if(shape_type === 'is_range'){
-        target_start_ts = target.shape_points[0].time;
-        target_end_ts = target.shape_points[1].time;
-        shape_points.push(target.shape_points[0]);
-        shape_points.push(target.shape_points[1]);
-    }else{
-        target_start_ts = target.ts_start;
-        shape_points.push({ time: target.ts_start, price: target.target_price });
-        if(shape_type === 'trend_line'){
-            target_end_ts = target.ts_end;
-            shape_points.push({ time: target.ts_end, price: target.target_price });
-        }
-    }
 
     // Attempt to set the correct points
     //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] setting points');
@@ -427,7 +429,7 @@ async function fixDrawingResolution(ticker, resolution, rev_index, shape_id){
         //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making hidden');
         shape.setProperties({visible: false});
     }
-    console.log("DONE! fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
+    //console.log("DONE! fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
 }
 
 export function hideDrawingsByTargetCount(){
