@@ -9,7 +9,7 @@ window.tvStuff = {
     previous_resolution: null,
     ranges:{
         highlight: true,
-        min_distance: 0.001,
+        min_distance: 0.0005,
         color: "rgba(255, 152, 0, 0.25)",
     },
     targets: {
