@@ -372,12 +372,12 @@ async function fixDrawingResolution(ticker, resolution, rev_index, shape_id, ear
     if(shape_type === 'is_range'){
         target_start_ts = target.shape_points[0].time;
         target_end_ts = target.shape_points[1].time;
-        if(target_start_ts < earliest_bar_ts || target_end_ts < earliest_bar_ts) return;
+        if(/*target_start_ts < earliest_bar_ts || */target_end_ts < earliest_bar_ts) return;
         shape_points.push(target.shape_points[0]);
         shape_points.push(target.shape_points[1]);
     }else{
         target_start_ts = target.ts_start;
-        if(target_start_ts < earliest_bar_ts) return;
+        //if(target_start_ts < earliest_bar_ts) return;
         shape_points.push({ time: target.ts_start, price: target.target_price });
         if(shape_type === 'trend_line'){
             target_end_ts = target.ts_end;
