@@ -72,8 +72,9 @@ export function checkEarliestTarget(){
     console.log('ticker['+ticker+'] earliestBar['+earliestBar+'] latestBar['+latestBar+']');
     if(earliestBar === null || latestBar === null) return;
     let minutes;
-    if(!(ticker in targetCache) || (targetCache[ticker]['earliest_target_ts'] === null )){
+    if(!(ticker in targetCache) || (targetCache[ticker]['earliest_target_ts']===null) ){
         minutes = (latestBar - earliestBar) / 60;
+        getTargets(minutes);
         return;
     }
     if(earliestBar < targetCache[ticker]['earliest_target_ts']){
