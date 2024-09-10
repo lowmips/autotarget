@@ -330,7 +330,7 @@ function checkDrawingStart(ticker, shape_id, shape_points){
 }
 
 export async function checkFixDrawingsResolution(){
-    //console.log('checkFixDrawingsResolution()');
+    console.log('checkFixDrawingsResolution()');
     let ticker = window.tvStuff.current_symbol;
     let earliestBar = window.tvStuff.widget.activeChart().getSeries().data().first().timeMs / 1000;
     if(!(ticker in targetCache)){
