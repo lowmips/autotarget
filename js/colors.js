@@ -7,7 +7,7 @@ group by target_count
 
 export const colors = {
     COLOR_TIER_1: '#0000cc',
-    COLOR_TIER_2: '#330aa3',
+    COLOR_TIER_2: '#0d03c2',
     COLOR_TIER_3: '#400d99',
     COLOR_TIER_4: '#4c0f8f',
     COLOR_TIER_5: '#591285',
