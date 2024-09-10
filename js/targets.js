@@ -69,13 +69,16 @@ export function checkEarliestTarget(){
     let ticker = window.tvStuff.current_symbol;
     let earliestBar = window.tvStuff.widget.activeChart().getSeries().data().first().timeMs / 1000;
     let latestBar = window.tvStuff.widget.activeChart().getSeries().data().last().timeMs / 1000;
-
-
-    if(earliestBar === null) return;
-    earliestBar = parseInt(earliestBar);
-    let max;
+    if(earliestBar === null || latestBar === null) return;
+    let minutes;
     if(!(ticker in targetCache) || (targetCache[ticker]['earliest_target_ts'] === null )){
-
+        minutes = (latestBar - earliestBar) / 60;
+        return;
+    }
+    if(earliestBar < targetCache[ticker]['earliest_target_ts']){
+        minutes = (targetCache[ticker]['earliest_target_ts'] - earliestBar) / 60;
+        getTargets(minutes);
+        return;
     }
 
 }
