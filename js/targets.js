@@ -35,6 +35,7 @@ ws_targets.addEventListener('message', function(event) {
 });
 
 export function getTargets(min_ts){
+    console.log('getTargets('+min_ts+')');
     let ticker = window.tvStuff.current_symbol;
     let earliest_ts = null;
     let from_ts;
