@@ -75,7 +75,7 @@ export function checkEarliestTarget(){
     let latestBar = window.tvStuff.widget.activeChart().getSeries().data().last().timeMs / 1000;
     console.log('ticker['+ticker+'] earliestBar['+earliestBar+'] latestBar['+latestBar+']');
     if(earliestBar === null || latestBar === null) return;
-    if(targetCache[ticker]['earliest_target_ts'] <= earliestBar) return;
+    if((ticker in targetCache) && targetCache[ticker]['earliest_target_ts'] <= earliestBar) return;
     getTargets(earliestBar);
 }
 
