@@ -34,7 +34,7 @@ ws_targets.addEventListener('message', function(event) {
     let z = handleMsg(event.data);
 });
 
-export function getTargets(max){
+export function getTargets(min_ts){
     let ticker = window.tvStuff.current_symbol;
     let earliest_ts = null;
     let from_ts;
@@ -46,7 +46,11 @@ export function getTargets(max){
         from_ts = targetCache[ticker]['earliest_target_ts'];
 
     // https://www.lowmips.com/autotarget/ajax-handlers/get_targets.php?ticker=MEXC:BTC/USDT&from=1725534247&max=100
-    const request_url = window.location.href + 'ajax-handlers/get_targets.php?ticker=' + ticker + '&from=' + from_ts + '&max=' + max + "&min_target_count="+min_target_count;
+    const request_url = window.location.href + 'ajax-handlers/get_targets.php?' +
+        'ticker=' + ticker +
+        '&from=' + from_ts +
+        '&min_ts=' + min_ts +
+        '&min_target_count=' + min_target_count;
     fetch(request_url)
         .then((response) => {
             if (response.ok) {
@@ -71,18 +75,8 @@ export function checkEarliestTarget(){
     let latestBar = window.tvStuff.widget.activeChart().getSeries().data().last().timeMs / 1000;
     console.log('ticker['+ticker+'] earliestBar['+earliestBar+'] latestBar['+latestBar+']');
     if(earliestBar === null || latestBar === null) return;
-    let minutes;
-    if(!(ticker in targetCache) || (targetCache[ticker]['earliest_target_ts']===null) ){
-        minutes = (latestBar - earliestBar) / 60;
-        getTargets(minutes);
-        return;
-    }
-    if(earliestBar < targetCache[ticker]['earliest_target_ts']){
-        minutes = (targetCache[ticker]['earliest_target_ts'] - earliestBar) / 60;
-        getTargets(minutes);
-        return;
-    }
-
+    if(targetCache[ticker]['earliest_target_ts'] <= earliestBar) return;
+    getTargets(earliestBar);
 }
 
 async function handleMsg(msg_str){

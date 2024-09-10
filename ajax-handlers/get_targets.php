@@ -33,18 +33,17 @@ function json_and_end($obj){
 // NOTE! "max" is the maximum number of 1 minute timestamp points for targets.  there may be multiple targets per timestamp!
 
 // Check request
-if(!array_key_exists('ticker', $_REQUEST) || !array_key_exists('from', $_REQUEST) || !array_key_exists('max', $_REQUEST))
+if(!array_key_exists('ticker', $_REQUEST) || !array_key_exists('from', $_REQUEST) || !array_key_exists('min_ts', $_REQUEST))
     die("Missing required request params");
 
 $ts_from = (int)$_REQUEST['from'];
-$max = (int)$_REQUEST['max'];
-$min_ts = isset($_REQUEST['min_ts'])?(int)$_REQUEST['min_ts']:0;
+$min_ts = (int)$_REQUEST['min_ts'];
 if($ts_from <= 0) error_and_end('from must be a timestamp > 0');
-if($max <= 0) error_and_end('max must be > 0');
+if($min_ts <= 0) error_and_end('min_ts must be > 0');
 $min_target_count = (isset($_REQUEST['min_target_count'])?(int)$_REQUEST['min_target_count']:1);
 
 $ts_from_sql = $mysqli->real_escape_string($ts_from);
-$max_sql = $mysqli->real_escape_string($max);
+$min_ts = $mysqli->real_escape_string($min_ts);
 
 // resolve the ticker into exchange, from_token, to_token
 $ticker_parts1 = explode(':', $_REQUEST['ticker']);
@@ -99,7 +98,7 @@ $q ="select MAX(moo.ts_end) as max_ts, MIN(moo.ts_end) as min_ts ".
     " AND `ts_end`<='$ts_from' ".
     " AND `ts_end >= '$min_ts' ".
     " ORDER BY `ts_end` DESC ".
-    " LIMIT $max_sql ".
+    //" LIMIT $max_sql ".
     ") as moo ";
 #echo $q."<br>";
 if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
