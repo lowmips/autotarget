@@ -38,6 +38,7 @@ export function getTargets(max){
     let ticker = window.tvStuff.current_symbol;
     let earliest_ts = null;
     let from_ts;
+    let min_target_count = window.tvStuff.targets.requesting.target_count.min;
 
     if(!(ticker in targetCache) || (targetCache[ticker]['earliest_target_ts'] === null))
         from_ts = parseInt(new Date().getTime()/1000);
@@ -45,7 +46,7 @@ export function getTargets(max){
         from_ts = targetCache[ticker]['earliest_target_ts'];
 
     // https://www.lowmips.com/autotarget/ajax-handlers/get_targets.php?ticker=MEXC:BTC/USDT&from=1725534247&max=100
-    const request_url = window.location.href + 'ajax-handlers/get_targets.php?ticker=' + ticker + '&from=' + from_ts + '&max=' + max;
+    const request_url = window.location.href + 'ajax-handlers/get_targets.php?ticker=' + ticker + '&from=' + from_ts + '&max=' + max + "&min_target_count="+min_target_count;
     fetch(request_url)
         .then((response) => {
             if (response.ok) {

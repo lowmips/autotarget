@@ -18,6 +18,11 @@ window.tvStuff = {
                 min: 2,
             },
         },
+        requesting: {
+            target_count: {
+                min: 2,
+            },
+        },
     },
     widget_options: {
         container: 'tv_chart_container',       // Reference to an attribute of a DOM element

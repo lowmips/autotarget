@@ -40,6 +40,7 @@ $ts_from = (int)$_REQUEST['from'];
 $max = (int)$_REQUEST['max'];
 if($ts_from <= 0) error_and_end('from must be a timestamp > 0');
 if($max <= 0) error_and_end('max must be > 0');
+$min_target_count = (isset($_REQUEST['min_target_count'])?(int)$_REQUEST['min_target_count']:1);
 
 $ts_from_sql = $mysqli->real_escape_string($ts_from);
 $max_sql = $mysqli->real_escape_string($max);
@@ -106,7 +107,12 @@ if($row === null) empty_set_and_end($exchange, $from_token, $to_token);
 $max_ts = (int)$row['max_ts'];
 $min_ts = (int)$row['min_ts'];
 
-$q = "SELECT * FROM `$table_name_sql` WHERE `ts_end`>='$min_ts' AND `ts_end`<='$max_ts' ORDER BY `ts_end` DESC ";
+$q = "SELECT * ".
+    "FROM `$table_name_sql` ".
+    "WHERE `ts_end`>='$min_ts' ".
+    "AND `ts_end`<='$max_ts' ".
+    "AND `target_count>='$min_target_count' ".
+    "ORDER BY `ts_end` DESC ";
 #echo $q; exit;
 if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
 
