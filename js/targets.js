@@ -46,7 +46,7 @@ export function getTargets(min_ts){
         from_ts = targetCache[ticker]['earliest_target_ts'];
 
     // https://www.lowmips.com/autotarget/ajax-handlers/get_targets.php?ticker=MEXC:BTC/USDT&from=1725534247&max=100
-    const request_url = window.location.href + 'ajax-handlers/get_targets.php?' +
+    const request_url = location.protocol + '//' + location.host + location.pathname+ 'ajax-handlers/get_targets.php?' +
         'ticker=' + ticker +
         '&from=' + from_ts +
         '&min_ts=' + min_ts +
