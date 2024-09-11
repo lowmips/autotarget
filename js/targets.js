@@ -7,7 +7,8 @@ let targetCache = {};
 window.targetCache = targetCache;
 /*
     ticker -> {
-        shape_id_to_target -> shape_id -> [targets]
+        shape_id_to_target -> shape_id -> target
+        shape_id_to_subtargets -> shape_id -> [targets]
         target_to_shape_id -> ts_start -> price -> shape_id
         resolution_revise -> resolution_when_set -> [shape_ids]
         earliest_target_ts -> [ts] # "ts_latest" timestamp of the earliest target we have so far
@@ -165,12 +166,10 @@ async function handleUpdateMsg(msg, sendtoback){
             if(new_target.ts_end === 0 && new_target.target_count !== existing_target.target_count){
                 let shape = window.tvStuff.widget.activeChart().getShapeById(existing_shape_id);
                 let props = {overrides: {},};
-                if(shape_type === 'horizontal_ray'){
+                if(shape_type === 'horizontal_ray')
                     props.overrides['linecolor'] = target_color;
-                }
-                if(shape_type === 'trend_line'){
+                if(shape_type === 'trend_line')
                     props.overrides['linecolor'] = target_color;
-                }
                 shape.setProperties(props);
                 return;
             }
@@ -227,13 +226,6 @@ async function handleUpdateMsg(msg, sendtoback){
         //console.log( ((new Date).toLocaleString('en-US')) + ': handleUpdateMsg - shape_id['+shape_id+'] created');
 
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-        /*if(shape.getPoints().length === 0){
-            console.log('BUG! new shape_id['+shape_id+'] has no points!');
-            return;
-        }else{
-            console.log('new shape_id['+shape_id+'] has points:');
-            console.log(shape.getPoints());
-        }*/
         if(sendtoback && ('sendToBack' in shape)) {
             //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to back');
             shape.sendToBack();
