@@ -1,6 +1,6 @@
 import Datafeed from './datafeed.js';
 import {startTargetsSub, stopTargetsSub, checkFixDrawingsResolution} from './targets.js';
-import {removeItem} from "./waitqueue.js";
+import {hasItem, removeItem} from "./waitqueue.js";
 
 window.tvStuff = {
     current_symbol: null,   // ticker MEXC:BTC/USDT
@@ -57,15 +57,20 @@ window.tvStuff.widget.subscribe('drawing', function(a){
     console.log(a);
 });
 window.tvStuff.widget.subscribe('drawing_event', function(drawing_id, event_type){
-    console.log('event [drawing_event] ');
-    console.log(drawing_id);
-    console.log(event_type);
+    //console.log('event [drawing_event] ');
+    //console.log(drawing_id);
+    //console.log(event_type);
 
-    if(event_type === 'properties_changed'){
-        let shape = window.tvStuff.widget.activeChart().getShapeById(drawing_id);
-        console.log(shape.getProperties());
+    switch(event_type){
+        case 'properties_changed':
+            //let shape = window.tvStuff.widget.activeChart().getShapeById(drawing_id);
+            //console.log(shape.getProperties());
+            break;
+        case 'click':
+
+            break;
     }
-    removeItem('drawing_event', event_type, drawing_id);
+    if(hasItem('drawing_event',event_type, drawing_id)) removeItem('drawing_event', event_type, drawing_id);
 });
 window.tvStuff.widget.subscribe('onChartReady', function(){
     console.log('event [onChartReady]');
