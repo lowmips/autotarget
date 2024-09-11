@@ -69,6 +69,8 @@ window.tvStuff.widget.subscribe('drawing_event', function(drawing_id, event_type
 });
 window.tvStuff.widget.subscribe('onChartReady', function(){
     console.log('event [onChartReady]');
+
+    window.tvStuff.widget.activeChart().getSeries().priceScale().setAutoScale(false);
 });
 window.tvStuff.widget.subscribe('onTick', function(a){
     console.log('event [onTick] ');
