@@ -240,14 +240,6 @@ async function handleUpdateMsg(msg, sendtoback){
         if (!(ts_start in targetCache[ticker]['target_to_shape_id'])) targetCache[ticker]['target_to_shape_id'][ts_start] = {};
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
         checkDrawingStart(ticker, shape_id, shape_points);
-
-        if(target_count < window.tvStuff.targets.filtering.target_count.min) {
-            //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: hiding');
-            //addItem('drawing_event','properties_changed', shape_id);  // NOTE! 'hide" event fires immediately.  wait for properties_changed instead!
-            shape.setProperties({visible: false});
-            //waitForAndRemoveItem('drawing_event','properties_changed', shape_id);
-            //console.log( ((new Date).toLocaleString('en-US')) + ' shape_id['+shape_id+']: done');
-        }
     });
 
 
