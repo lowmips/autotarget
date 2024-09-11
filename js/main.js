@@ -10,7 +10,7 @@ window.tvStuff = {
     ranges:{
         highlight: true,
         min_distance: 0.0005,
-        color: "rgba(255, 152, 0, 0.25)",
+        color: "rgba(255, 152, 0, 0.25)",   // default color
     },
     targets: {
         filtering: {

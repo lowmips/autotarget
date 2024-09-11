@@ -197,7 +197,7 @@ async function handleUpdateMsg(msg, sendtoback){
                     {
                         //text: 'hi ya',
                         showPrice: false,
-                        showLabel: false,
+                        //showLabel: false,
                         linecolor: target_color,
                         //'linetoolhorzray.fontsize': 30,
                         //'linetoolhorzray.horzLabelsAlign': 'left',
@@ -211,7 +211,7 @@ async function handleUpdateMsg(msg, sendtoback){
                 shape_opts['overrides'] =
                     {
                         showPriceLabels: false,
-                        showLabel: false,
+                        //showLabel: false,
                         linecolor: target_color,
                         //'linetooltrendline.linecolor': target_color,
                         //'linetooltrendline.showBarsRange': false,
