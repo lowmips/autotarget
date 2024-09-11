@@ -2,6 +2,10 @@ import Datafeed from './datafeed.js';
 import {startTargetsSub, stopTargetsSub, checkFixDrawingsResolution} from './targets.js';
 import {hasItem, removeItem} from "./waitqueue.js";
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const timeframe = urlParams.get('tf')||'60';
+
 window.tvStuff = {
     current_symbol: null,   // ticker MEXC:BTC/USDT
     previous_symbol: null,
@@ -29,7 +33,7 @@ window.tvStuff = {
         datafeed: Datafeed,
         debug: true,
         fullscreen: true,                      // Displays the chart in the fullscreen mode
-        interval: '60',                        // Default interval
+        interval: timeframe,                        // Default interval
         library_path: 'charting_library/charting_library/',
         overrides: {
             "mainSeriesProperties.showCountdown": true,
