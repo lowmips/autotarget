@@ -4,7 +4,7 @@ import {hasItem, removeItem} from "./waitqueue.js";
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const timeframe = urlParams.get('tf')||'60';
+const tf = urlParams.get('tf')||'60';
 
 window.tvStuff = {
     current_symbol: null,   // ticker MEXC:BTC/USDT
@@ -33,7 +33,7 @@ window.tvStuff = {
         datafeed: Datafeed,
         debug: true,
         fullscreen: true,                      // Displays the chart in the fullscreen mode
-        interval: timeframe,                        // Default interval
+        interval: tf,                        // Default interval
         library_path: 'charting_library/charting_library/',
         overrides: {
             "mainSeriesProperties.showCountdown": true,
