@@ -327,8 +327,8 @@ export async function checkFixDrawingsResolution(){
         let revs_len = revs.length;
         while(revs_len--){
             let shape_id = revs[revs_len];
-            //console.log('shape_id: '+shape_id);
-            //console.log("calling async fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
+            console.log('shape_id: '+shape_id);
+            console.log("calling async fixDrawingResolution("+ticker+","+ shape_id+")");
             fixDrawingResolution(ticker, shape_id, earliestBar)
                 .then(function(result){
                     console.log('result: '+result);
