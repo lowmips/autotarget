@@ -1,6 +1,6 @@
 import { parseFullSymbol } from './helpers.js';
 import { colors }from './colors.js';
-import {addItem, hasItem, waitForAndRemoveItem} from "./waitqueue.js";
+import {addItem, waitForAndRemoveItem} from "./waitqueue.js";
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
 let targetCache = {};
@@ -467,7 +467,7 @@ export async function stopTargetsSub(ticker) {
 export async function startTargetsSub(ticker) {
     //console.log('startSub('+ticker+')');
     if(ticker in subs) return;
-    if(ws_targets.readyState == 0){  // Websocket.CONNECTING
+    if(ws_targets.readyState === 0){  // Websocket.CONNECTING
         //console.log('websocket.CONNECTING, waiting....');
         setTimeout(startTargetsSub,500, ticker);
         return;
