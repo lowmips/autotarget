@@ -329,16 +329,23 @@ export async function checkFixDrawingsResolution(){
             let shape_id = revs[revs_len];
             //console.log('shape_id: '+shape_id);
             //console.log("calling async fixDrawingResolution("+ticker+","+ resolution_when_set+","+ shape_id+")");
-            let z = fixDrawingResolution(ticker, resolution_when_set, revs_len, shape_id, earliestBar);
+            fixDrawingResolution(ticker, shape_id, earliestBar)
+                .then(function(result){
+                    if(result === 0) return;    // nothing changed
+                    revs.splice(revs_len, 1);
+                    if(result === 1) return;    // fixed!
+                    // partial fix... tweak resolution
+                    if(!(current_resolution in revisions)) revisions[current_resolution] = [];
+                    revisions[current_resolution].push(shape_id);
+                });
         }
     }
 }
 
-async function fixDrawingResolution(ticker, resolution, rev_index, shape_id, earliest_bar_ts){
+async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     //console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
     let current_resolution = window.tvStuff.current_resolution;
     let revisions = targetCache[ticker]['resolution_revise'];
-    let revs = revisions[resolution];
     let target = targetCache[ticker]['shape_id_to_target'][shape_id];
     let shape_type = (('is_range' in target)?'is_range':target.shape_type);
     let shape_points = [];  // the "correct" points
@@ -390,24 +397,24 @@ async function fixDrawingResolution(ticker, resolution, rev_index, shape_id, ear
     shape.setPoints(shape_points);
 
     // Did it work?
+    let retVal = 0;
     let current_start_ts =  parseInt(shape.getPoints()[0].time);
     let current_end_ts = (target.shape_type === 'trend_line')? parseInt(shape.getPoints()[1].time):null;
     if(current_start_ts === target_start_ts && current_end_ts === target_end_ts){
         // it worked! remove from original revision list.
-        revs.splice(rev_index, 1);
+        retVal = 1;
     } else if(current_start_ts === original_start_ts && current_end_ts === original_end_ts){
         // nothing changed
+        retVal = 0;
     } else{
         // partial success. move to finer time frame.
-        revs.splice(rev_index, 1);
-        if(!(current_resolution in revisions)) revisions[current_resolution] = [];
-        revisions[current_resolution].push(shape_id);
+        retVal = 2;
     }
-
     if(!isVisible) {
         //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making hidden');
         shape.setProperties({visible: false});
     }
+    return retVal;
     //console.log("DONE! fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
 }
 
