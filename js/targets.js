@@ -318,11 +318,11 @@ export async function checkFixDrawingsResolution(){
     }
     let current_resolution = window.tvStuff.current_resolution;
     let revisions = targetCache[ticker]['resolution_revise'];
-    //console.log('current_resolution: '+current_resolution);
-    //console.log(revisions);
+    console.log('current_resolution: '+current_resolution);
+    console.log(revisions);
     for(let resolution_when_set in revisions){
         if(current_resolution >= resolution_when_set) continue;
-        //console.log('Checking resolution_when_set['+resolution_when_set+']');
+        console.log('Checking resolution_when_set['+resolution_when_set+']');
         let revs = revisions[resolution_when_set];
         let revs_len = revs.length;
         while(revs_len--){
