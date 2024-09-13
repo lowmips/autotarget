@@ -359,7 +359,7 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     if(shape_type === 'is_range'){
         target_start_ts = target.shape_points[0].time;
         target_end_ts = target.shape_points[1].time;
-        if(/*target_start_ts < earliest_bar_ts || */target_end_ts < earliest_bar_ts) return;
+        if(/*target_start_ts < earliest_bar_ts || */target_end_ts < earliest_bar_ts) return 0;
         shape_points.push(target.shape_points[0]);
         shape_points.push(target.shape_points[1]);
     }else{
@@ -368,7 +368,7 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
         shape_points.push({ time: target.ts_start, price: target.target_price });
         if(shape_type === 'trend_line'){
             target_end_ts = target.ts_end;
-            if(target_end_ts < earliest_bar_ts) return;
+            if(target_end_ts < earliest_bar_ts) return 0;
             shape_points.push({ time: target.ts_end, price: target.target_price });
         }
     }
@@ -388,7 +388,7 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
         console.log('BUG! shape_id['+shape_id+'] has no points!');
         //console.log(target);
         //removeDrawing(ticker, shape_id);
-        return;
+        return 0;
     }
     let original_start_ts = original_shape_points[0].time;
     let original_end_ts = (original_shape_points.length > 1?original_shape_points[1].time:null);
