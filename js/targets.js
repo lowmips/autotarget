@@ -321,7 +321,7 @@ export async function checkFixDrawingsResolution(){
     console.log('current_resolution: '+current_resolution);
     console.log(revisions);
     for(let resolution_when_set in revisions){
-        if(current_resolution >= resolution_when_set) {
+        if(current_resolution > resolution_when_set) {
             console.log('current_resolution['+current_resolution+'] >= resolution_when_set['+resolution_when_set+']');
             continue;
         }
