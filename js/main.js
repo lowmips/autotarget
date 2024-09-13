@@ -4,7 +4,7 @@ import {hasItem, removeItem} from "./waitqueue.js";
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const tf = urlParams.get('tf')||'60';
+const tf = parseInt(urlParams.get('tf')||'60');
 
 window.tvStuff = {
     current_symbol: null,   // ticker MEXC:BTC/USDT
@@ -112,7 +112,7 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
     //     "label": "120",
     //     "value": ""
     // }
-    let new_interval = a.label;
+    let new_interval = parseInt(a.label);
     if(new_interval == window.tvStuff.current_resolution) return;
     window.tvStuff.previous_resolution = window.tvStuff.current_resolution;
     window.tvStuff.current_resolution = new_interval;
