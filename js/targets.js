@@ -332,7 +332,8 @@ export async function checkFixDrawingsResolution(){
             let shape_id = revs[revs_len];
             console.log('shape_id: '+shape_id);
             console.log("calling async fixDrawingResolution("+ticker+","+ shape_id+")");
-            fixDrawingResolution(ticker, shape_id, earliestBar)
+            let x =
+                fixDrawingResolution(ticker, shape_id, earliestBar)
                 .then(function(result){
                     console.log('result: '+result);
                     if(result === 0) return;    // nothing changed
