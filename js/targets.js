@@ -347,6 +347,8 @@ export async function checkFixDrawingsResolution(){
     }
 }
 
+window.checkFixDrawingsResolution = checkFixDrawingsResolution;
+
 async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     //console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
     let current_resolution = window.tvStuff.current_resolution;
