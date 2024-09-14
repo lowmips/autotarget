@@ -309,7 +309,7 @@ function checkDrawingStart(ticker, shape_id, shape_points){
 }
 
 export async function checkFixDrawingsResolution(){
-    console.log('checkFixDrawingsResolution()');
+    //console.log('checkFixDrawingsResolution()');
     let ticker = window.tvStuff.current_symbol;
     let earliestBar = window.tvStuff.widget.activeChart().getSeries().data().first().timeMs / 1000;
     if(!(ticker in targetCache)){
@@ -318,24 +318,24 @@ export async function checkFixDrawingsResolution(){
     }
     let current_resolution = window.tvStuff.current_resolution;
     let revisions = targetCache[ticker]['resolution_revise'];
-    console.log('current_resolution: '+current_resolution);
-    console.log(revisions);
+    //console.log('current_resolution: '+current_resolution);
+    //console.log(revisions);
     for(let resolution_when_set in revisions){
         /*if(current_resolution > resolution_when_set) {
             console.log('current_resolution['+current_resolution+'] >= resolution_when_set['+resolution_when_set+']');
             continue;
         }*/
-        console.log('Checking resolution_when_set['+resolution_when_set+']');
+        //console.log('Checking resolution_when_set['+resolution_when_set+']');
         let revs = revisions[resolution_when_set];
         let revs_len = revs.length;
         while(revs_len--){
             let shape_id = revs[revs_len];
-            console.log('shape_id: '+shape_id);
+            //console.log('shape_id: '+shape_id);
             //console.log("calling async fixDrawingResolution("+ticker+","+ shape_id+")");
             let x =
                 fixDrawingResolution(ticker, shape_id, earliestBar)
                 .then(function(result){
-                    console.log('result: '+result);
+                    //console.log('result: '+result);
                     if(result === 0) return;    // nothing changed
                     if(result === 1) {  // fixed!
                         revs.splice(revs_len, 1);
@@ -351,7 +351,7 @@ export async function checkFixDrawingsResolution(){
     }
 }
 
-window.checkFixDrawingsResolution = checkFixDrawingsResolution;
+//window.checkFixDrawingsResolution = checkFixDrawingsResolution;
 
 async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     //console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
