@@ -363,7 +363,7 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     let target_start_ts;
     let target_end_ts;
     let earliest_movable_ts = earliest_bar_ts + current_resolution;
-    let shaoe = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+    let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
     let points = shape.getPoints();
 
     // build the correct points
