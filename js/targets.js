@@ -10,8 +10,8 @@ window.targetCache = targetCache;
         shape_id_to_target -> shape_id -> target
         shape_id_to_subtargets -> shape_id -> [targets]
         target_to_shape_id -> ts_start -> price -> shape_id
-        resolution_revise -> resolution_when_set -> [shape_ids]
-        earliest_target_ts -> [ts] # "ts_latest" timestamp of the earliest target we have so far
+        resolution_revise -> [shape_ids]
+        earliest_target_ts -> [ts] # "ts_latest" timestamp of the earliest target we have so far, for requesting more when the chart is scrolled
     }
 */
 let subs = {};
@@ -104,7 +104,7 @@ async function handleUpdateMsg(msg, sendtoback){
         targetCache[ticker] = {
             shape_id_to_target: {},
             target_to_shape_id: {},
-            resolution_revise: {},
+            resolution_revise: [],
             earliest_target_ts: null,
         };
     let potential_ranges = [];
@@ -297,11 +297,8 @@ function checkDrawingStart(ticker, shape_id, shape_points){
     let points = shape.getPoints();
     for(let idx in points){
         if(points[idx].time !== shape_points[idx].time){
-            //console.log('shape_id['+shape_id+'] starting timestamp not correct!');
-            if(!(current_resolution in targetCache[ticker]['resolution_revise']))
-                targetCache[ticker]['resolution_revise'][current_resolution] = [];
-            if(targetCache[ticker]['resolution_revise'][current_resolution].indexOf(shape_id) === -1)
-                targetCache[ticker]['resolution_revise'][current_resolution].push(shape_id);
+            if(targetCache[ticker].resolution_revise.indexOf(shape_id) === -1)
+                targetCache[ticker].resolution_revise.push(shape_id);
             break;
         }
     }
@@ -317,7 +314,7 @@ export async function checkFixDrawingsResolution(){
         return;
     }
     let current_resolution = window.tvStuff.current_resolution;
-    let revisions = targetCache[ticker]['resolution_revise'];
+    let revisions = targetCache[ticker].resolution_revise;
     //console.log('current_resolution: '+current_resolution);
     //console.log(revisions);
     for(let resolution_when_set in revisions){
@@ -356,7 +353,7 @@ window.checkFixDrawingsResolution = checkFixDrawingsResolution;
 async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     //console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
     let current_resolution = window.tvStuff.current_resolution;
-    let revisions = targetCache[ticker]['resolution_revise'];
+    let revisions = targetCache[ticker].resolution_revise;
     let target = targetCache[ticker]['shape_id_to_target'][shape_id];
     let shape_type = (('is_range' in target)?'is_range':target.shape_type);
     let shape_points = [];  // the "correct" points
@@ -453,11 +450,8 @@ window.hideDrawingsByTargetCount = hideDrawingsByTargetCount;
 
 async function removeDrawing(ticker, shape_id){
     console.log('removeDrawing('+ticker+','+shape_id+')');
-    for(let resolution_when_set in targetCache[ticker]['resolution_revise']){
-        let revisions = targetCache[ticker]['resolution_revise'][resolution_when_set];
-        const index = revisions.indexOf(shape_id);
-        if (index > -1) revisions.splice(index, 1);
-    }
+    const index = targetCache[ticker].resolution_revise.indexOf(shape_id);
+    if (index > -1) targetCache[ticker].resolution_revise.splice(index, 1);
     let target = targetCache[ticker]['shape_id_to_target'][shape_id];
     delete targetCache[ticker]['target_to_shape_id'][target.ts_start][target.target_price];
     delete targetCache[ticker]['shape_id_to_target'][shape_id];
