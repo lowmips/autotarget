@@ -321,25 +321,29 @@ export async function checkFixDrawingsResolution(){
     console.log('current_resolution: '+current_resolution);
     console.log(revisions);
     for(let resolution_when_set in revisions){
-        if(current_resolution > resolution_when_set) {
+        /*if(current_resolution > resolution_when_set) {
             console.log('current_resolution['+current_resolution+'] >= resolution_when_set['+resolution_when_set+']');
             continue;
-        }
+        }*/
         console.log('Checking resolution_when_set['+resolution_when_set+']');
         let revs = revisions[resolution_when_set];
         let revs_len = revs.length;
         while(revs_len--){
             let shape_id = revs[revs_len];
             console.log('shape_id: '+shape_id);
-            console.log("calling async fixDrawingResolution("+ticker+","+ shape_id+")");
+            //console.log("calling async fixDrawingResolution("+ticker+","+ shape_id+")");
             let x =
                 fixDrawingResolution(ticker, shape_id, earliestBar)
                 .then(function(result){
                     console.log('result: '+result);
                     if(result === 0) return;    // nothing changed
-                    revs.splice(revs_len, 1);
-                    if(result === 1) return;    // fixed!
+                    if(result === 1) {  // fixed!
+                        revs.splice(revs_len, 1);
+                        return;
+                    }
+                    if(current_resolution >= resolution_when_set) return;
                     // partial fix... tweak resolution
+                    revs.splice(revs_len, 1);
                     if(!(current_resolution in revisions)) revisions[current_resolution] = [];
                     revisions[current_resolution].push(shape_id);
                 });
@@ -359,13 +363,14 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     let target_start_ts;
     let target_end_ts;
 
+
     // build the correct points
     // if we've changed resolution, the target may be before the earliest bar we now have.
     // if we try to fix the drawings before the last bar, this will lead to a drawing bug.
     if(shape_type === 'is_range'){
         target_start_ts = target.shape_points[0].time;
         target_end_ts = target.shape_points[1].time;
-        if(/*target_start_ts < earliest_bar_ts || */target_end_ts < earliest_bar_ts) return 0;
+        if(target_end_ts < earliest_bar_ts) return 0;
         shape_points.push(target.shape_points[0]);
         shape_points.push(target.shape_points[1]);
     }else{
