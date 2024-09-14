@@ -314,37 +314,18 @@ export async function checkFixDrawingsResolution(){
         return;
     }
     let current_resolution = window.tvStuff.current_resolution;
-    let revisions = targetCache[ticker].resolution_revise;
-    //console.log('current_resolution: '+current_resolution);
-    //console.log(revisions);
-    for(let resolution_when_set in revisions){
-        /*if(current_resolution > resolution_when_set) {
-            console.log('current_resolution['+current_resolution+'] >= resolution_when_set['+resolution_when_set+']');
-            continue;
-        }*/
-        //console.log('Checking resolution_when_set['+resolution_when_set+']');
-        let revs = revisions[resolution_when_set];
-        let revs_len = revs.length;
-        while(revs_len--){
-            let shape_id = revs[revs_len];
-            //console.log('shape_id: '+shape_id);
-            //console.log("calling async fixDrawingResolution("+ticker+","+ shape_id+")");
-            let x =
-                fixDrawingResolution(ticker, shape_id, earliestBar)
+    let revs = targetCache[ticker].resolution_revise;
+    let revs_len = revs.length;
+    while(revs_len--){
+        let shape_id = revs[revs_len];
+        //console.log('shape_id: '+shape_id);
+        //console.log("calling async fixDrawingResolution("+ticker+","+ shape_id+")");
+        let x =
+            fixDrawingResolution(ticker, shape_id, earliestBar)
                 .then(function(result){
-                    //console.log('result: '+result);
-                    if(result === 0) return;    // nothing changed
-                    if(result === 1) {  // fixed!
+                    if(result === 1) // fixed!
                         revs.splice(revs_len, 1);
-                        return;
-                    }
-                    if(current_resolution >= resolution_when_set) return;
-                    // partial fix... tweak resolution
-                    revs.splice(revs_len, 1);
-                    if(!(current_resolution in revisions)) revisions[current_resolution] = [];
-                    revisions[current_resolution].push(shape_id);
                 });
-        }
     }
 }
 
