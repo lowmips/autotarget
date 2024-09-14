@@ -411,7 +411,6 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
         shape.setProperties({visible: false});
     }
     return retVal;
-    //console.log("DONE! fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
 }
 
 window.fixDrawingResolution = fixDrawingResolution;
