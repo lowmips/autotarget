@@ -364,7 +364,7 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
         } else if(shape_type === 'trend_line'){
             target_end_ts = target.ts_end;
             if(target_end_ts < earliest_movable_ts && target_start_ts < earliest_movable_ts) return 0;
-            if(points[0].time <= earliest_movable_ts || points[1].time <= earliest_movable_ts) return 0;
+            if(points[0].time <= earliest_movable_ts && points[1].time <= earliest_movable_ts) return 0;
             shape_points.push({ time: target.ts_end, price: target.target_price });
         }
     }
