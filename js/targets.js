@@ -436,6 +436,8 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     //console.log("DONE! fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
 }
 
+window.fixDrawingResolution = fixDrawingResolution;
+
 export function hideDrawingsByTargetCount(){
     let ticker = window.tvStuff.current_symbol;
     for(let shape_id in window.targetCache[ticker]['shape_id_to_target']){
