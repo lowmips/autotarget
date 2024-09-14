@@ -362,8 +362,9 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     let shape_points = [];  // the "correct" points
     let target_start_ts;
     let target_end_ts;
-
-    let earliest_moveable_ts = earliest_bar_ts + current_resolution;
+    let earliest_movable_ts = earliest_bar_ts + current_resolution;
+    let shaoe = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+    let points = shape.getPoints();
 
     // build the correct points
     // if we've changed resolution, the target may be before the earliest bar we now have.
@@ -371,7 +372,8 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     if(shape_type === 'is_range'){
         target_start_ts = target.shape_points[0].time;
         target_end_ts = target.shape_points[1].time;
-        if(target_end_ts < earliest_moveable_ts) return 0;
+        if(target_end_ts < earliest_movable_ts) return 0;
+        if(points[0].time <= earliest_movable_ts) return 0; // the shape was drawn on a different timeframee whose earliest bar is earlier than this timeframe's earliest bar
         shape_points.push(target.shape_points[0]);
         shape_points.push(target.shape_points[1]);
     }else{
@@ -379,10 +381,12 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
         //if(target_start_ts < earliest_bar_ts) return;
         shape_points.push({ time: target.ts_start, price: target.target_price });
         if(shape_type === 'horizontal_ray') {
-            if(target_start_ts < earliest_moveable_ts) return 0;
+            if(target_start_ts < earliest_movable_ts) return 0;
+            if(points[0].time <= earliest_movable_ts) return 0;
         } else if(shape_type === 'trend_line'){
             target_end_ts = target.ts_end;
-            if(target_end_ts < earliest_moveable_ts && target_start_ts < earliest_moveable_ts) return 0;
+            if(target_end_ts < earliest_movable_ts && target_start_ts < earliest_movable_ts) return 0;
+            if(points[0].time <= earliest_movable_ts || points[1].time <= earliest_movable_ts) return 0;
             shape_points.push({ time: target.ts_end, price: target.target_price });
         }
     }
