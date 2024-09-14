@@ -392,7 +392,6 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     }
 
     // get the shape's current info
-    let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
     let isVisible = shape.getProperties().visible;  // shape with no getPoints() bug
     if(!isVisible) {
         //console.log( ((new Date).toLocaleString('en-US')) + ': checkFixDrawingsResolution - shape_id['+shape_id+'] making visible');
