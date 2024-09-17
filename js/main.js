@@ -7,7 +7,7 @@ const urlParams = new URLSearchParams(queryString);
 const tf = parseInt(urlParams.get('tf')||'60');
 
 window.tvStuff = {
-    current_symbol: null,   // ticker MEXC:BTC/USDT
+    current_symbol: null,   // "MEXC:BTC/USDT"
     previous_symbol: null,
     current_resolution: null,
     previous_resolution: null,
