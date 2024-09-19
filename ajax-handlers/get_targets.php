@@ -86,6 +86,7 @@ $update_obj = [
         'to_token' => $to_token,
     ],
     'updates' => [],
+    'dbg' => [],
 ];
 
 // find recently updated targets!
