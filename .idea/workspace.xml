@@ -6,6 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/targets.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/targets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ws_server/ws_targets.py" beforeDir="false" afterPath="$PROJECT_DIR$/ws_server/ws_targets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ws_server/zmysqla.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../klengine/make_targets.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/make_targets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../klengine/sql/proc_target_groups_fixup.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../klengine/sql/target_groups_latest.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/sql/target_groups_latest.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../klengine/sql/templates/ranges.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/sql/templates/ranges.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../klengine/sql/templates/targets.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/sql/templates/targets.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,15 +123,7 @@
       <workItem from="1719528758389" duration="3603000" />
       <workItem from="1720824176215" duration="10706000" />
       <workItem from="1724089254138" duration="208354000" />
-      <workItem from="1726048394944" duration="23056000" />
-    </task>
-    <task id="LOCAL-01379" summary="dev">
-      <option name="closed" value="true" />
-      <created>1725996760873</created>
-      <option name="number" value="01379" />
-      <option name="presentableId" value="LOCAL-01379" />
-      <option name="project" value="LOCAL" />
-      <updated>1725996760874</updated>
+      <workItem from="1726048394944" duration="32348000" />
     </task>
     <task id="LOCAL-01380" summary="dev">
       <option name="closed" value="true" />
@@ -509,7 +509,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726587812024</updated>
     </task>
-    <option name="localTasksCounter" value="1428" />
+    <task id="LOCAL-01428" summary="dev">
+      <option name="closed" value="true" />
+      <created>1726598718322</created>
+      <option name="number" value="01428" />
+      <option name="presentableId" value="LOCAL-01428" />
+      <option name="project" value="LOCAL" />
+      <updated>1726598718322</updated>
+    </task>
+    <option name="localTasksCounter" value="1429" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

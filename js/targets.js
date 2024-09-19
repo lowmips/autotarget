@@ -59,7 +59,7 @@ export function getTargets(min_ts){
             throw new Error('Something went wrong');
         })
         .then((responseJson) => {
-            handleUpdateMsg(responseJson, true);
+            handleTargetMsg(responseJson, true);
         })
         .catch((error) => {
             console.log(error);
@@ -83,11 +83,11 @@ async function handleMsg(msg_str){
     //console.log('handleMsg()');
     let msg = JSON.parse(msg_str);
     //console.log(msg);
-    if('updates' in msg) await handleUpdateMsg(msg);
+    if('targets' in msg) await handleTargetMsg(msg);
 }
 
-async function handleUpdateMsg(msg, sendtoback){
-    //console.log('handleUpdates');
+async function handleTargetMsg(msg, sendtoback){
+    //console.log('handleTargetMsg');
 
     if((typeof sendtoback) != 'boolean') sendtoback = false;
     if(!('pair_info' in msg)){
@@ -109,7 +109,7 @@ async function handleUpdateMsg(msg, sendtoback){
         };
     let potential_ranges = [];
 
-    msg.updates.forEach((update) => {
+    msg.targets.forEach((update) => {
         //console.log('Got update:');
         //console.log(update);
         let ts_start = parseInt(update.ts_start);
@@ -223,15 +223,15 @@ async function handleUpdateMsg(msg, sendtoback){
         }
 
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-        //console.log( ((new Date).toLocaleString('en-US')) + ': handleUpdateMsg - shape_id['+shape_id+'] created');
+        //console.log( ((new Date).toLocaleString('en-US')) + ': handleTargetMsg - shape_id['+shape_id+'] created');
 
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
         if(sendtoback && ('sendToBack' in shape)) {
-            //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to back');
+            //console.log( ((new Date).toLocaleString('en-US')) + ' handleTargetMsg - shape_id['+shape_id+']: sending to back');
             shape.sendToBack();
         }
         else if('sendToFront' in shape) {
-            //console.log( ((new Date).toLocaleString('en-US')) + ' handleUpdateMsg - shape_id['+shape_id+']: sending to front');
+            //console.log( ((new Date).toLocaleString('en-US')) + ' handleTargetMsg - shape_id['+shape_id+']: sending to front');
             shape.sendToFront();
         }
 

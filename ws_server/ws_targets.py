@@ -18,7 +18,7 @@ ws_connected = {}
 subs_to_ws = {} # pair_id -> [] websocket id's
 targets_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
 pair_id_info = {} # pair_id => exchange, from_token, to_token
-pair_id_latest = {} # pair_id => latest_targets
+pair_id_latest_targets = {} # pair_id => latest_targets
 main_loop_max_wait = 5 # we'll wait at most 5 seconds between updated target lookups
 
 def get_config():
@@ -62,8 +62,8 @@ async def main_loop():
                 targets_available[exchange]["pairs"][pair_l][pair_r] = {
                     "pair_id": pair_id,
                 }
-            if not pair_id in pair_id_latest:
-                pair_id_latest[pair_id] = {"latest_targets": None}
+            if not pair_id in pair_id_latest_targets:
+                pair_id_latest_targets[pair_id] = {"latest_targets": None}
             if not pair_id in pair_id_info:
                 pair_id_info[pair_id] = {
                     "exchange": exchange,
@@ -90,15 +90,15 @@ async def main_loop():
         for pair_id in pair_id_info:
             q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}'".format(mi=pair_id)
             latest_rows = mdb.query_get_all(q)
-            if len(latest_rows)==0 and pair_id_latest[pair_id]['latest_targets'] is None:
+            if len(latest_rows)==0 and pair_id_latest_targets[pair_id]['latest_targets'] is None:
                 #print('No updates for [{mi}]'.format(mi=pair_id))
                 continue
             latest_rows_str = json.dumps(latest_rows)
-            latest_targets_str = json.dumps(pair_id_latest[pair_id]['latest_targets'])
+            latest_targets_str = json.dumps(pair_id_latest_targets[pair_id]['latest_targets'])
             if latest_rows_str == latest_targets_str:
                 #print('No updates for [{mi}]'.format(mi=pair_id))
                 continue
-            pair_id_latest[pair_id]['latest_targets'] = latest_rows
+            pair_id_latest_targets[pair_id]['latest_targets'] = latest_rows
             if not pair_id in subs_to_ws:
                 print('No subs for pair_id[{pi}]!'.format(pi=pair_id))
                 continue
@@ -124,7 +124,7 @@ async def send_targets_update(pair_id, updates):
     pair_info = pair_id_info[pair_id]
     update_info = {
         'pair_info': pair_info,
-        'updates': updates
+        'targets': updates
     }
     update_str = json.dumps(update_info)
     print('update is [{us}]'.format(us=update_str))
