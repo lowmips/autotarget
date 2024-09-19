@@ -95,6 +95,7 @@ $q ="select MAX(moo.ts_end) as max_ts, MIN(moo.ts_end) as min_ts ".
     " select distinct(`ts_end`) ".
     " FROM `$table_name_sql` ".
     " where 1 ".
+    " AND `target_type`='1.618' ".
     " AND `ts_end`<='$ts_from' ".
     " AND `ts_end` >= '$min_ts' ".
     " ORDER BY `ts_end` DESC ".
@@ -110,7 +111,9 @@ $min_found_ts = (int)$row['min_ts'];
 
 $q = "SELECT * ".
     "FROM `$table_name_sql` ".
-    "WHERE `ts_end`>='$min_found_ts' ".
+    "WHERE 1 ".
+    "AND `target_type`='1.618' ".
+    "AND `ts_end`>='$min_found_ts' ".
     "AND `ts_end`<='$max_found_ts' ".
     "AND `target_count`>='$min_target_count' ".
     "ORDER BY `ts_end` DESC ";
