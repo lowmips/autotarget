@@ -129,6 +129,6 @@ while(($row = $result->fetch_assoc()) !== false){
         'target_price' => (double)$row['target_price'],
         'target_count' => (int)$row['target_count'],
     ];
-    $update_obj['updates'][] = $updt;
+    $update_obj['targets'][] = $updt;
 }
 json_and_end($update_obj);
