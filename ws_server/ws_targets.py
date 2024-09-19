@@ -88,7 +88,7 @@ async def main_loop():
 
         # get the latest targets for all pairs
         for pair_id in pair_id_info:
-            q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}'".format(mi=pair_id)
+            q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}' AND `target_type`='1.618' ".format(mi=pair_id)
             latest_rows = mdb.query_get_all(q)
             if len(latest_rows)==0 and pair_id_latest_targets[pair_id]['latest_targets'] is None:
                 #print('No updates for [{mi}]'.format(mi=pair_id))
