@@ -73,7 +73,7 @@ export function checkEarliestTarget(){
     let earliestBar = window.tvStuff.widget.activeChart().getSeries().data().first().timeMs / 1000;
     let latestBar = window.tvStuff.widget.activeChart().getSeries().data().last().timeMs / 1000;
     console.log('ticker['+ticker+'] earliestBar['+earliestBar+'] latestBar['+latestBar+']');
-    if ticker in targetCache:
+    if(ticker in targetCache)
         console.log('targetCache[ticker][\'earliest_target_ts\']: '+str(targetCache[ticker]['earliest_target_ts']));
     if(earliestBar === null || latestBar === null) return;
     let z = checkFixDrawingsResolution();
