@@ -113,6 +113,7 @@ $min_found_ts = (int)$row['min_ts'];
 $q = "SELECT * ".
     "FROM `$table_name_sql` ".
     "WHERE 1 ".
+    "AND `target_price`='62690.22' ". // DEBUG
     "AND `target_type`='1.618' ".
     "AND `ts_end`>='$min_found_ts' ".
     "AND `ts_end`<='$max_found_ts' ".
