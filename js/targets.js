@@ -127,7 +127,7 @@ async function handleTargetMsg(msg, sendtoback){
             target_count,
         };
 
-        if(target_price != 62690.22) return;
+        //if(target_price != 62690.22) return;
 
         if(target_count < window.tvStuff.targets.requesting.target_count.min) return;
 
