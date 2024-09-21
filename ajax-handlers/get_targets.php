@@ -125,6 +125,7 @@ if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
 
 while(($row = $result->fetch_assoc()) !== false){
     if($row === null) break;
+    $update_obj['dbg'][] = $row;
     $updt = [
         'ts_start' => (int)$row['ts_end'],
         'ts_latest' => (int)$row['last_update_ts'],
