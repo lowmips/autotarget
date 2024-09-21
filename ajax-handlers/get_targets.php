@@ -120,6 +120,7 @@ $q = "SELECT * ".
     "AND `target_count`>='$min_target_count' ".
     "ORDER BY `ts_end` DESC ";
 #echo $q; exit;
+$update_obj['dbg'][] = $q;
 if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
 
 while(($row = $result->fetch_assoc()) !== false){
