@@ -59,7 +59,7 @@ export function getTargets(min_ts){
             throw new Error('Something went wrong');
         })
         .then((responseJson) => {
-            handleTargetMsg(responseJson, true);
+            handleMsg(responseJson);
         })
         .catch((error) => {
             console.log(error);
