@@ -92,6 +92,7 @@ async function handleMsg(msg_str){
         }).catch(error => alert(error.message));
 
     if('ranges' in msg) await handleRangeMsg(msg);
+    else console.log('no ranges in msg??');
 
     console.log('here....');
 }
@@ -299,7 +300,7 @@ async function handleTargetMsg(msg, sendtoback){
         checkDrawingStart(ticker, shape_id, shape_points);
     });
     console.log('done looping targets...');
-    return Promise.resolve(1);
+    return true;
 }
 
 function checkDrawingStart(ticker, shape_id, shape_points){
