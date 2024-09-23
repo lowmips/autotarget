@@ -85,7 +85,12 @@ async function handleMsg(msg_str){
     console.log('handleMsg()');
     let msg = JSON.parse(msg_str);
     //console.log(msg);
-    if('targets' in msg) await handleTargetMsg(msg);
+    //if('targets' in msg) await handleTargetMsg(msg);
+    if('targets' in msg)
+        handleTargetMsg(msg).then(result => {
+            console.log('handleMsg ==> handleTargetMsg promise is done!');
+        });
+
     if('ranges' in msg) await handleRangeMsg(msg);
 
     console.log('here....');
