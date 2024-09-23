@@ -86,7 +86,7 @@ async function handleMsg(msg_str){
     let msg = JSON.parse(msg_str);
     //console.log(msg);
     if('targets' in msg) await handleTargetMsg(msg);
-    if(('ranges' in msg) && window.tvStuff.ranges.highlight) await handleRangeMsg(msg);
+    if('ranges' in msg) await handleRangeMsg(msg);
 }
 
 async function handleRangeMsg(msg) {
