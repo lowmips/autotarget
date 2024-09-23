@@ -89,7 +89,7 @@ async function handleMsg(msg_str){
     if('targets' in msg)
         handleTargetMsg(msg).then(result => {
             console.log('handleMsg ==> handleTargetMsg promise is done!');
-        }).catch(error => alert(error.message));;
+        }).catch(error => alert(error.message));
 
     if('ranges' in msg) await handleRangeMsg(msg);
 
@@ -100,12 +100,12 @@ async function handleRangeMsg(msg) {
     console.log('handleRangeMsg');
     if(!('pair_info' in msg)){
         console.log('Invalid update message, missing pair_info');
-        return false;
+        return true;
     }
     let ticker = msg.pair_info.exchange + ':' + msg.pair_info.from_token + '/' + msg.pair_info.to_token;
     if(!(ticker in subs)) {
         console.log('No subscription for ['+ticker+']');
-        return;
+        return true;
     }
     if(!(ticker in targetCache))
         targetCache[ticker] = {
@@ -115,6 +115,7 @@ async function handleRangeMsg(msg) {
             earliest_target_ts: null,
         };
 
+    console.log('looping rqanges...');
     msg.ranges.forEach((update) => {
         let ts = parseInt(update.ts);
         let price_high = parseFloat(update.price_high);
@@ -148,6 +149,8 @@ async function handleRangeMsg(msg) {
         //console.log(shape_id);
         checkDrawingStart(ticker, shape_id, shape_points);
     });
+    console.log('done looping rqanges...');
+    return true;
 }
 
 async function handleTargetMsg(msg, sendtoback){
