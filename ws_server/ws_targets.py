@@ -121,7 +121,7 @@ async def main_loop():
                  "AND `target_count` > 1 "
                  ).format(m=pair_id)
             latest_rows = mdb.query_get_all(q)
-            if len(latest_targets) > 0:
+            if len(latest_rows) > 0:
                 #latest_rows_str = json.dumps(latest_rows)
                 latest_rows_str = json.dumps(latest_rows, cls=DecimalEncoder).replace("\"`",'').replace("`\"",'')
                 #latest_ranges_str = json.dumps(pair_id_latest_ranges[pair_id]['ranges'])
