@@ -159,6 +159,7 @@ while(($row = $result->fetch_assoc()) !== false){
         'price_high' => $row['price_high'],
         'price_low' => $row['price_low'],
         'target_count' => (int)$row['target_count'],
+        'target_type' => $row['target_count'],
     ];
     $update_obj['ranges'][] = $updt;
 }
