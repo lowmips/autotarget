@@ -148,7 +148,7 @@ $q = "SELECT * ".
     "AND `ts`<='$ts_from' ".
     "AND `ts` >= '$min_ts' ".
     "AND `target_count`>1 ".
-    "ORDER BT `ts` DESC"
+    "ORDER BY `ts` DESC"
 ;
 if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
 while(($row = $result->fetch_assoc()) !== false){
