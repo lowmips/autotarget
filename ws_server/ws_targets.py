@@ -106,6 +106,7 @@ async def main_loop():
             # Find updated target_groups
             q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}' AND `target_type`='1.618' ".format(mi=pair_id)
             latest_rows = mdb.query_get_all(q)
+            print('target groups:')
             print(latest_rows)
             if len(latest_rows) > 0:
                 latest_rows_str = json.dumps(latest_rows)
@@ -121,6 +122,8 @@ async def main_loop():
                  "AND `target_count` > 1 "
                  ).format(m=pair_id)
             latest_rows = mdb.query_get_all(q)
+            print('ranges:')
+            print(latest_rows)
             if len(latest_rows) > 0:
                 #latest_rows_str = json.dumps(latest_rows)
                 latest_rows_str = json.dumps(latest_rows, cls=DecimalEncoder).replace("\"`",'').replace("`\"",'')
