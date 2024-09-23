@@ -172,6 +172,7 @@ async function handleTargetMsg(msg, sendtoback){
             earliest_target_ts: null,
         };
 
+    console.log('looping targets...');
     msg.targets.forEach((update) => {
         //console.log('Got update:');
         //console.log(update);
@@ -294,6 +295,7 @@ async function handleTargetMsg(msg, sendtoback){
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
         checkDrawingStart(ticker, shape_id, shape_points);
     });
+    console.log('done looping targets...');
     return true;
 }
 
