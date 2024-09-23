@@ -165,7 +165,7 @@ async function handleTargetMsg(msg, sendtoback){
     //console.log('Got pair_info['+ticker+']');
     if(!(ticker in subs)) {
         console.log('No subscription for ['+ticker+']');
-        return;
+        return true;
     }
     if(!(ticker in targetCache))
         targetCache[ticker] = {
