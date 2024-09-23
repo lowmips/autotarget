@@ -99,6 +99,7 @@ async def main_loop():
             # Find updated target_groups
             q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}' AND `target_type`='1.618' ".format(mi=pair_id)
             latest_rows = mdb.query_get_all(q)
+            print(latest_rows)
             if len(latest_rows) > 0:
                 latest_rows_str = json.dumps(latest_rows)
                 latest_targets_str = json.dumps(pair_id_latest_targets[pair_id]['targets'])
