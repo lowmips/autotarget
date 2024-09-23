@@ -86,6 +86,7 @@ export function checkEarliestTarget(){
 
 async function handleMsg(msg_str){
     console.log('handleMsg()');
+    console.log(msg_str);
     let msg = JSON.parse(msg_str);
     //console.log(msg);
     //if('targets' in msg) await handleTargetMsg(msg);
