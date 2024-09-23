@@ -51,7 +51,11 @@ async def main_loop():
             "exchange_id": exchange_id,
             "pairs": {}
         }
-        q = ("SELECT * FROM `klines_meta` WHERE `exchange_id`={eid} ORDER BY `pair_l`,`pair_r`").format(eid=exchange_id)
+        q = ("SELECT * "+
+            "FROM `klines_meta` "+
+            "WHERE `exchange_id`={eid} "+
+            "AND `id`=1 " + # temporary ...
+            "ORDER BY `pair_l`,`pair_r`").format(eid=exchange_id)
         pair_rows = mdb.query_get_all(q)
         for pair_row in pair_rows:
             pair_id = pair_row['id']
@@ -85,7 +89,6 @@ async def main_loop():
         #print('client count: ' + str(len(ws_connected)))
         #print('subs_to_ws:')
         #print(subs_to_ws)
-
         loop_start = int(time.time())
 
         # get the latest targets for all pairs
