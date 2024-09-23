@@ -82,7 +82,7 @@ export function checkEarliestTarget(){
 }
 
 async function handleMsg(msg_str){
-    //console.log('handleMsg()');
+    console.log('handleMsg()');
     let msg = JSON.parse(msg_str);
     //console.log(msg);
     if('targets' in msg) await handleTargetMsg(msg);
@@ -144,7 +144,7 @@ async function handleRangeMsg(msg) {
 }
 
 async function handleTargetMsg(msg, sendtoback){
-    //console.log('handleTargetMsg');
+    console.log('handleTargetMsg');
 
     if((typeof sendtoback) != 'boolean') sendtoback = false;
     if(!('pair_info' in msg)){
