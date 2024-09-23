@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import asyncio
+import decimal
 import json
 import logging
 import websockets
