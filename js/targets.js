@@ -55,7 +55,9 @@ export function getTargets(min_ts){
         .then((response) => {
             if (response.ok) {
                 //return response.json();
-                handleMsg(response.text());
+                response.text().then((text) => {
+                    handleMsg(text);
+                });
                 return true;
             }
             throw new Error('Something went wrong');
