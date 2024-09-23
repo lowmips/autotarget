@@ -164,7 +164,7 @@ async def send_targets_update(pair_id):
 
     update_info = {
         'pair_info': pair_info,
-        'targets': updates,
+        'targets': targets,
         'ranges': ranges
     }
     update_str = json.dumps(update_info)
