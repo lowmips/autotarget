@@ -89,7 +89,7 @@ async function handleMsg(msg_str){
     if('targets' in msg)
         handleTargetMsg(msg).then(result => {
             console.log('handleMsg ==> handleTargetMsg promise is done!');
-        });
+        }).catch(error => alert(error.message));;
 
     if('ranges' in msg) await handleRangeMsg(msg);
 
