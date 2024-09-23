@@ -54,14 +54,15 @@ export function getTargets(min_ts){
     fetch(request_url)
         .then((response) => {
             if (response.ok) {
-                return response.json();
+                //return response.json();
+                handleMsg(response.body);
             }
             throw new Error('Something went wrong');
         })
-        .then((responseJson) => {
+        /*.then((responseJson) => {
             handleTargetMsg(responseJson, true);
             handleRangeMsg(responseJson);
-        })
+        })*/
         .catch((error) => {
             console.log(error);
         });
