@@ -299,7 +299,7 @@ async function handleTargetMsg(msg, sendtoback){
         checkDrawingStart(ticker, shape_id, shape_points);
     });
     console.log('done looping targets...');
-    return true;
+    return Promise.resolve(1);
 }
 
 function checkDrawingStart(ticker, shape_id, shape_points){
