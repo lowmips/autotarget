@@ -60,6 +60,7 @@ export function getTargets(min_ts){
         })
         .then((responseJson) => {
             handleTargetMsg(responseJson, true);
+            handleRangeMsg(responseJson);
         })
         .catch((error) => {
             console.log(error);
