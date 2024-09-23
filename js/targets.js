@@ -294,7 +294,7 @@ async function handleTargetMsg(msg, sendtoback){
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
         checkDrawingStart(ticker, shape_id, shape_points);
     });
-
+    return true;
 }
 
 function checkDrawingStart(ticker, shape_id, shape_points){
