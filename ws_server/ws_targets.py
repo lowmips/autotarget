@@ -18,7 +18,8 @@ ws_connected = {}
 subs_to_ws = {} # pair_id -> [] websocket id's
 targets_available = {} # exchange -> exchange_id, pairs -> from_token -> to_token -> pair_id
 pair_id_info = {} # pair_id => exchange, from_token, to_token
-pair_id_latest_targets = {} # pair_id => latest_targets
+pair_id_latest_targets = {} # pair_id => targets[]
+pair_id_latest_ranges = {} # pair_id => ranges[]
 main_loop_max_wait = 5 # we'll wait at most 5 seconds between updated target lookups
 
 def get_config():
@@ -63,7 +64,8 @@ async def main_loop():
                     "pair_id": pair_id,
                 }
             if not pair_id in pair_id_latest_targets:
-                pair_id_latest_targets[pair_id] = {"latest_targets": None}
+                pair_id_latest_targets[pair_id] = {"targets": None}
+                pair_id_latest_ranges[pair_id] = {"ranges": None}
             if not pair_id in pair_id_info:
                 pair_id_info[pair_id] = {
                     "exchange": exchange,
@@ -88,21 +90,39 @@ async def main_loop():
 
         # get the latest targets for all pairs
         for pair_id in pair_id_info:
+            has_updates = False
+            has_ranges = False
+
+            # Find updated target_groups
             q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}' AND `target_type`='1.618' ".format(mi=pair_id)
             latest_rows = mdb.query_get_all(q)
-            if len(latest_rows)==0 and pair_id_latest_targets[pair_id]['latest_targets'] is None:
-                #print('No updates for [{mi}]'.format(mi=pair_id))
-                continue
-            latest_rows_str = json.dumps(latest_rows)
-            latest_targets_str = json.dumps(pair_id_latest_targets[pair_id]['latest_targets'])
-            if latest_rows_str == latest_targets_str:
-                #print('No updates for [{mi}]'.format(mi=pair_id))
-                continue
-            pair_id_latest_targets[pair_id]['latest_targets'] = latest_rows
-            if not pair_id in subs_to_ws:
-                print('No subs for pair_id[{pi}]!'.format(pi=pair_id))
-                continue
-            await send_targets_update(pair_id, latest_rows)
+            if len(latest_rows) > 0:
+                latest_rows_str = json.dumps(latest_rows)
+                latest_targets_str = json.dumps(pair_id_latest_targets[pair_id]['targets'])
+                if latest_rows_str != latest_targets_str:
+                    pair_id_latest_targets[pair_id]['targets'] = latest_rows
+                    has_updates = True
+            # find updated ranges
+            q = ("SELECT * " +
+                 "FROM span_targets_ranges_{m} " +
+                 "WHERE `ts` = (SELECT MAX(ts) from span_targets_ranges_{m}) " +
+                 "AND target_type != 'all' " +
+                 "AND `target_count` > 1 "
+                 ).format(m=pair_id)
+            latest_rows = mdb.query_get_all(q)
+            if len(latest_rows) > 0:
+                latest_rows_str = json.dumps(latest_rows)
+                latest_ranges_str = json.dumps(pair_id_latest_ranges[pair_id]['ranges'])
+                if latest_rows_str != latest_ranges_str:
+                    pair_id_latest_ranges[pair_id]['ranges'] = latest_rows
+                    has_ranges = True
+            # send any updates
+            if has_updates or has_ranges:
+                if pair_id in subs_to_ws:
+                    await send_targets_update(pair_id)
+                else:
+                    print('No subs for pair_id[{pi}]!'.format(pi=pair_id))
+
 
         # do we need to wait a bit?
         loop_end = int(time.time())
@@ -112,7 +132,7 @@ async def main_loop():
             #print('sleeping ['+str(sleep_time)+']')
             await asyncio.sleep(sleep_time)
 
-async def send_targets_update(pair_id, updates):
+async def send_targets_update(pair_id):
     print('send_targets_update({pi})'.format(pi=pair_id))
     if not pair_id in subs_to_ws:
         print('No subs for pair!')
@@ -122,9 +142,14 @@ async def send_targets_update(pair_id, updates):
         print('pair_id['+str(pair_id)+'] not in pair_id_info')
         return
     pair_info = pair_id_info[pair_id]
+
+    targets = pair_id_latest_ranges[pair_id]['targets']
+    ranges = pair_id_latest_ranges[pair_id]['ranges']
+
     update_info = {
         'pair_info': pair_info,
-        'targets': updates
+        'targets': updates,
+        'ranges': ranges
     }
     update_str = json.dumps(update_info)
     print('update is [{us}]'.format(us=update_str))
