@@ -72,10 +72,13 @@ if(!is_array($row = $result->fetch_assoc())) error_and_end("query fetch_assoc fa
 $pair_id = (int)$row['id'];
 if($pair_id<=0) error_and_end("query row failure: $q");
 
+$tbl_targets_name = "target_groups_{$pair_id}";
+$tbl_targets_name_sql = $mysqli->real_escape_string($tbl_targets_name);
+$tbl_ranges = "span_targets_ranges_{$pair_id}";
+$tbl_ranges_sql = $mysqli->real_escape_string($tbl_ranges);
+
 // target_groups table exist?
-$table_name = "target_groups_{$pair_id}";
-$table_name_sql = $mysqli->real_escape_string($table_name);
-$q = "SELECT * FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`='$table_name_sql' LIMIT 1";
+$q = "SELECT * FROM `INFORMATION_SCHEMA`.`TABLES` WHERE `TABLE_NAME`='$tbl_targets_name_sql' LIMIT 1";
 if(($result = $mysqli->query($q)) === false) empty_set_and_end($exchange, $from_token, $to_token);
 
 // build the return object
@@ -85,16 +88,17 @@ $update_obj = [
         'from_token' => $from_token,
         'to_token' => $to_token,
     ],
-    'updates' => [],
+    'targets' => [],
+    'ranges' => [],
     'dbg' => [],
 ];
 
-// find recently updated targets!
+// find recently updated targets
 $q ="select MAX(moo.ts_end) as max_ts, MIN(moo.ts_end) as min_ts ".
     "FROM ".
     "( ".
     " select distinct(`ts_end`) ".
-    " FROM `$table_name_sql` ".
+    " FROM `$tbl_targets_name_sql` ".
     " where 1 ".
     " AND `target_type`='1.618' ".
     " AND `ts_end`<='$ts_from' ".
@@ -111,7 +115,7 @@ $max_found_ts = (int)$row['max_ts'];
 $min_found_ts = (int)$row['min_ts'];
 
 $q = "SELECT * ".
-    "FROM `$table_name_sql` ".
+    "FROM `$tbl_targets_name_sql` ".
     "WHERE 1 ".
     //"AND `target_price`='62690.22' ". // DEBUG
     "AND `target_type`='1.618' ".
@@ -135,4 +139,29 @@ while(($row = $result->fetch_assoc()) !== false){
     ];
     $update_obj['targets'][] = $updt;
 }
+
+// Find ranges
+$q = "SELECT * ".
+    "FROM `$tbl_ranges_sql` ".
+    "WHERE 1 ".
+    "AND `target_type`='1.618' ".
+    "AND `ts`<='$ts_from' ".
+    "AND `ts` >= '$min_ts' ".
+    "AND `target_count`>1 ".
+    "ORDER BT `ts` DESC"
+;
+if(($result = $mysqli->query($q)) === false) error_and_end("query failure: $q");
+while(($row = $result->fetch_assoc()) !== false){
+    if($row === null) break;
+    //$update_obj['dbg'][] = $row;
+    $updt = [
+        'ts' => (int)$row['ts'],
+        'price_high' => $row['price_high'],
+        'price_low' => $row['price_low'],
+        'target_count' => (int)$row['target_count'],
+    ];
+    $update_obj['ranges'][] = $updt;
+}
+
+// DONE
 json_and_end($update_obj);
