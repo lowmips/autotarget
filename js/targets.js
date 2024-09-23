@@ -90,7 +90,7 @@ async function handleMsg(msg_str){
 }
 
 async function handleRangeMsg(msg) {
-    //console.log('handleRangeMsg');
+    console.log('handleRangeMsg');
     if(!('pair_info' in msg)){
         console.log('Invalid update message, missing pair_info');
         return false;
