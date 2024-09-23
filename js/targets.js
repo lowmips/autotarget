@@ -86,6 +86,61 @@ async function handleMsg(msg_str){
     let msg = JSON.parse(msg_str);
     //console.log(msg);
     if('targets' in msg) await handleTargetMsg(msg);
+    if(('ranges' in msg) && window.tvStuff.ranges.highlight) await handleRangeMsg(msg);
+}
+
+async function handleRangeMsg(msg) {
+    //console.log('handleRangeMsg');
+    if(!('pair_info' in msg)){
+        console.log('Invalid update message, missing pair_info');
+        return false;
+    }
+    let ticker = msg.pair_info.exchange + ':' + msg.pair_info.from_token + '/' + msg.pair_info.to_token;
+    if(!(ticker in subs)) {
+        console.log('No subscription for ['+ticker+']');
+        return;
+    }
+    if(!(ticker in targetCache))
+        targetCache[ticker] = {
+            shape_id_to_target: {},
+            target_to_shape_id: {},
+            resolution_revise: [],
+            earliest_target_ts: null,
+        };
+
+    msg.ranges.forEach((update) => {
+        let ts = parseInt(update.ts);
+        let price_high = parseFloat(update.price_high);
+        let price_low = parseFloat(update.price_low);
+        let target_count = parseInt(update.target_count);
+
+        let shape_points = [];
+        shape_points.push({time: ts, price: price_high});
+        shape_points.push({time: ts, price: price_low});
+        let shape_opts = {
+            shape: "trend_line",
+            lock: true,
+            //disableSelection: true,
+            disableUndo: true,
+        };
+        shape_opts['overrides'] =
+            {
+                showPriceLabels: false,
+                showLabel: false,
+                linecolor: window.tvStuff.ranges.color,
+                linewidth: 1,
+            };
+        let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+        let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+        shape.sendToBack();
+        targetCache[ticker]['shape_id_to_target'][shape_id] =
+            {
+                is_range: true,
+                shape_points: shape_points,
+            };
+        //console.log(shape_id);
+        checkDrawingStart(ticker, shape_id, shape_points);
+    });
 }
 
 async function handleTargetMsg(msg, sendtoback){
@@ -109,7 +164,6 @@ async function handleTargetMsg(msg, sendtoback){
             resolution_revise: [],
             earliest_target_ts: null,
         };
-    let potential_ranges = [];
 
     msg.targets.forEach((update) => {
         //console.log('Got update:');
@@ -130,18 +184,6 @@ async function handleTargetMsg(msg, sendtoback){
         //if(target_price != 62690.22) return;
 
         if(target_count < window.tvStuff.targets.requesting.target_count.min) return;
-
-        // check groups stuff
-        if(!(ts_start in potential_ranges)){
-            potential_ranges[ts_start] = {
-                count: 0,
-                high: null,
-                low: null,
-            };
-        }
-        potential_ranges[ts_start]['count']++;
-        if(potential_ranges[ts_start]['high']===null || potential_ranges[ts_start]['high'] < target_price) potential_ranges[ts_start]['high'] = target_price;
-        if(potential_ranges[ts_start]['low']===null || potential_ranges[ts_start]['low'] > target_price) potential_ranges[ts_start]['low'] = target_price;
 
         // update earliest ts_latest
         if(targetCache[ticker]['earliest_target_ts'] === null || ts_latest < targetCache[ticker]['earliest_target_ts']) targetCache[ticker]['earliest_target_ts'] = ts_latest;
@@ -245,43 +287,6 @@ async function handleTargetMsg(msg, sendtoback){
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
         checkDrawingStart(ticker, shape_id, shape_points);
     });
-
-
-    // check ranges
-    if(window.tvStuff.ranges.highlight) {
-        for (let ts_start in potential_ranges) {
-            let r = potential_ranges[ts_start];
-            if (r['count'] < 2) continue;
-            let distance_percent = 1 - (r['low'] / r['high']);
-            if (distance_percent < window.tvStuff.ranges.min_distance) continue;
-            let shape_points = [];
-            shape_points.push({time: parseInt(ts_start), price: parseFloat(r['high'])});
-            shape_points.push({time: parseInt(ts_start), price: parseFloat(r['low'])});
-            let shape_opts = {
-                shape: "trend_line",
-                lock: true,
-                //disableSelection: true,
-                disableUndo: true,
-            };
-            shape_opts['overrides'] =
-                {
-                    showPriceLabels: false,
-                    showLabel: false,
-                    linecolor: window.tvStuff.ranges.color,
-                    linewidth: 1,
-                };
-            let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
-            let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
-            shape.sendToBack();
-            targetCache[ticker]['shape_id_to_target'][shape_id] =
-                {
-                    is_range: true,
-                    shape_points: shape_points,
-                };
-            //console.log(shape_id);
-            checkDrawingStart(ticker, shape_id, shape_points);
-        }
-    }
 
 }
 
