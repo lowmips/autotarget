@@ -159,7 +159,7 @@ async def send_targets_update(pair_id):
         return
     pair_info = pair_id_info[pair_id]
 
-    targets = pair_id_latest_ranges[pair_id]['targets']
+    targets = pair_id_latest_targets[pair_id]['targets']
     ranges = pair_id_latest_ranges[pair_id]['ranges']
 
     update_info = {
