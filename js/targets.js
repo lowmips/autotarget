@@ -78,8 +78,8 @@ export function checkEarliestTarget(){
     let earliestBar = window.tvStuff.widget.activeChart().getSeries().data().first().timeMs / 1000;
     let latestBar = window.tvStuff.widget.activeChart().getSeries().data().last().timeMs / 1000;
     console.log('ticker['+ticker+'] earliestBar['+earliestBar+'] latestBar['+latestBar+']');
-    if(ticker in targetCache)
-        console.log('targetCache[ticker][\'earliest_target_ts\']: '+targetCache[ticker]['earliest_target_ts']);
+    //if(ticker in targetCache)
+        //console.log('targetCache[ticker][\'earliest_target_ts\']: '+targetCache[ticker]['earliest_target_ts']);
     if(earliestBar === null || latestBar === null) return;
     let z = checkFixDrawingsResolution();
     if((ticker in targetCache) && targetCache[ticker]['earliest_target_ts'] <= earliestBar) return;
@@ -87,8 +87,8 @@ export function checkEarliestTarget(){
 }
 
 async function handleMsg(msg_str){
-    console.log('handleMsg()');
-    console.log(msg_str);
+    //console.log('handleMsg()');
+    //console.log(msg_str);
     let msg = JSON.parse(msg_str);
     //console.log(msg);
     //if('targets' in msg) await handleTargetMsg(msg);
@@ -98,9 +98,9 @@ async function handleMsg(msg_str){
         }).catch(error => alert(error.message));
 
     if('ranges' in msg) await handleRangeMsg(msg);
-    else console.log('no ranges in msg??');
+    //else console.log('no ranges in msg??');
 
-    console.log('here....');
+    //console.log('here....');
 }
 
 async function handleRangeMsg(msg) {
@@ -128,6 +128,10 @@ async function handleRangeMsg(msg) {
         let price_high = parseFloat(update.price_high);
         let price_low = parseFloat(update.price_low);
         let target_count = parseInt(update.target_count);
+        let target_type = update.target_type;
+
+        // temporary
+        if(target_type !== '1.618') return;
 
         let shape_points = [];
         shape_points.push({time: ts, price: price_high});
