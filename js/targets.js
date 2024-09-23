@@ -87,6 +87,8 @@ async function handleMsg(msg_str){
     //console.log(msg);
     if('targets' in msg) await handleTargetMsg(msg);
     if('ranges' in msg) await handleRangeMsg(msg);
+
+    console.log('here....');
 }
 
 async function handleRangeMsg(msg) {
