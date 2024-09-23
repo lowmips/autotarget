@@ -168,7 +168,8 @@ async def send_targets_update(pair_id):
         'targets': targets,
         'ranges': ranges
     }
-    update_str = json.dumps(update_info)
+    #update_str = json.dumps(update_info)
+    update_str = json.dumps(update_info, cls=DecimalEncoder).replace("\"`",'').replace("`\"",'')
     print('update is [{us}]'.format(us=update_str))
 
     # send update to each subscriber
