@@ -119,6 +119,7 @@ async function handleRangeMsg(msg) {
         targetCache[ticker] = {
             shape_id_to_target: {},
             target_to_shape_id: {},
+            range_to_shape_id: {},
             resolution_revise: [],
             earliest_target_ts: null,
         };
