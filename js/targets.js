@@ -136,7 +136,8 @@ async function handleRangeMsg(msg) {
         if(target_type !== '1.618') return;
 
         // do we already have this range?
-        if(target_type in targetCache[ticker]['range_to_shape_id'] && ts in targetCache[ticker]['range_to_shape_id'][target_type]) return;
+        if((target_type in targetCache[ticker]['range_to_shape_id']) &&
+            (ts in targetCache[ticker]['range_to_shape_id'][target_type])) return;
 
         let shape_points = [];
         shape_points.push({time: ts, price: price_high});
