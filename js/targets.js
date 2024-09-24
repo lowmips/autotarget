@@ -5,6 +5,17 @@ import {addItem, waitForAndRemoveItem} from "./waitqueue.js";
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
 let targetCache = {};
 window.targetCache = targetCache;
+function addTickerToCache(ticker){
+    if(!(ticker in targetCache))
+        targetCache[ticker] = {
+            shape_id_to_target: {},
+            target_to_shape_id: {},
+            range_to_shape_id: {},
+            resolution_revise: [],
+            earliest_target_ts: null,
+        };
+}
+
 /*
     ticker -> {
         shape_id_to_target -> shape_id -> target
@@ -115,14 +126,7 @@ async function handleRangeMsg(msg) {
         console.log('No subscription for ['+ticker+']');
         return true;
     }
-    if(!(ticker in targetCache))
-        targetCache[ticker] = {
-            shape_id_to_target: {},
-            target_to_shape_id: {},
-            range_to_shape_id: {},
-            resolution_revise: [],
-            earliest_target_ts: null,
-        };
+    addTickerToCache(ticker);
 
     //console.log('looping ranges...');
     msg.ranges.forEach((update) => {
@@ -188,13 +192,7 @@ async function handleTargetMsg(msg, sendtoback){
         console.log('No subscription for ['+ticker+']');
         return true;
     }
-    if(!(ticker in targetCache))
-        targetCache[ticker] = {
-            shape_id_to_target: {},
-            target_to_shape_id: {},
-            resolution_revise: [],
-            earliest_target_ts: null,
-        };
+    addTickerToCache(ticker);
 
     //console.log('looping targets...');
     msg.targets.forEach((update) => {
