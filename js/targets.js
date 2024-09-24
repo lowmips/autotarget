@@ -10,6 +10,7 @@ window.targetCache = targetCache;
         shape_id_to_target -> shape_id -> target
         shape_id_to_subtargets -> shape_id -> [targets]
         target_to_shape_id -> ts_start -> price -> shape_id
+        range_to_shape_id -> ts -> target_type -> shape_id
         resolution_revise -> [shape_ids]
         earliest_target_ts -> [ts] # "ts_latest" timestamp of the earliest target we have so far, for requesting more when the chart is scrolled
     }
@@ -104,7 +105,7 @@ async function handleMsg(msg_str){
 }
 
 async function handleRangeMsg(msg) {
-    console.log('handleRangeMsg');
+    //console.log('handleRangeMsg');
     if(!('pair_info' in msg)){
         console.log('Invalid update message, missing pair_info');
         return true;
@@ -122,7 +123,7 @@ async function handleRangeMsg(msg) {
             earliest_target_ts: null,
         };
 
-    console.log('looping rqanges...');
+    //console.log('looping ranges...');
     msg.ranges.forEach((update) => {
         let ts = parseInt(update.ts);
         let price_high = parseFloat(update.price_high);
@@ -132,6 +133,9 @@ async function handleRangeMsg(msg) {
 
         // temporary
         if(target_type !== '1.618') return;
+
+        // do we already have this range?
+        if(target_type in targetCache[ticker]['range_to_shape_id'] && ts in targetCache[ticker]['range_to_shape_id'][target_type]) return;
 
         let shape_points = [];
         shape_points.push({time: ts, price: price_high});
@@ -152,20 +156,24 @@ async function handleRangeMsg(msg) {
         let shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
         shape.sendToBack();
+
+        // add to tracking structure
         targetCache[ticker]['shape_id_to_target'][shape_id] =
             {
                 is_range: true,
                 shape_points: shape_points,
             };
         //console.log(shape_id);
+        if(!(target_type in targetCache[ticker]['range_to_shape_id'])) targetCache[ticker]['range_to_shape_id'][target_type] = {}
+        targetCache[ticker]['range_to_shape_id'][target_type][ts] = shape_id
+
         checkDrawingStart(ticker, shape_id, shape_points);
     });
-    console.log('done looping rqanges...');
     return true;
 }
 
 async function handleTargetMsg(msg, sendtoback){
-    console.log('handleTargetMsg');
+    //console.log('handleTargetMsg');
 
     if((typeof sendtoback) != 'boolean') sendtoback = false;
     if(!('pair_info' in msg)){
@@ -186,7 +194,7 @@ async function handleTargetMsg(msg, sendtoback){
             earliest_target_ts: null,
         };
 
-    console.log('looping targets...');
+    //console.log('looping targets...');
     msg.targets.forEach((update) => {
         //console.log('Got update:');
         //console.log(update);
@@ -309,8 +317,7 @@ async function handleTargetMsg(msg, sendtoback){
         if (!(target_price in targetCache[ticker]['target_to_shape_id'][ts_start])) targetCache[ticker]['target_to_shape_id'][ts_start][target_price] = shape_id;
         checkDrawingStart(ticker, shape_id, shape_points);
     });
-    console.log('done looping targets...');
-    return true;
+    //console.log('done looping targets...');
 }
 
 function checkDrawingStart(ticker, shape_id, shape_points){
