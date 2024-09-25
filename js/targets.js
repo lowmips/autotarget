@@ -135,6 +135,7 @@ async function handleRangeMsg(msg) {
         let ts = parseInt(update.ts);
         let price_high = parseFloat(update.price_high);
         let price_low = parseFloat(update.price_low);
+        let price_when_made = parseFloat(update.price_when_made);
         let target_count = parseInt(update.target_count);
         let target_type = update.target_type;
 
@@ -169,6 +170,7 @@ async function handleRangeMsg(msg) {
         targetCache[ticker]['shape_id_to_target'][shape_id] =
             {
                 is_range: true,
+                price_when_made: price_when_made,
                 shape_points: shape_points,
             };
         //console.log(shape_id);

@@ -158,6 +158,7 @@ while(($row = $result->fetch_assoc()) !== false){
         'ts' => (int)$row['ts'],
         'price_high' => $row['price_high'],
         'price_low' => $row['price_low'],
+        'price_when_made' => $row['price_when_made'],
         'target_count' => (int)$row['target_count'],
         'target_type' => $row['target_type'],
     ];
