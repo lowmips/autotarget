@@ -11,6 +11,7 @@ function addTickerToCache(ticker){
             shape_id_to_target: {},
             target_to_shape_id: {},
             range_to_shape_id: {},
+            range_id_to_fib_id: {},
             resolution_revise: [],
             earliest_target_ts: null,
         };
@@ -22,6 +23,7 @@ function addTickerToCache(ticker){
         shape_id_to_subtargets -> shape_id -> [targets]
         target_to_shape_id -> ts_start -> price -> shape_id
         range_to_shape_id -> ts -> target_type -> shape_id
+        range_id_to_fib_id -> id -> id
         resolution_revise -> [shape_ids]
         earliest_target_ts -> [ts] # "ts_latest" timestamp of the earliest target we have so far, for requesting more when the chart is scrolled
     }
@@ -368,8 +370,6 @@ export async function checkFixDrawingsResolution(){
     }
 }
 
-window.checkFixDrawingsResolution = checkFixDrawingsResolution;
-
 async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     //console.log("fixDrawingResolution("+ticker+","+ resolution+","+ shape_id+")");
     let current_resolution = window.tvStuff.current_resolution;
@@ -452,8 +452,6 @@ async function fixDrawingResolution(ticker, shape_id, earliest_bar_ts){
     return retVal;
 }
 
-window.fixDrawingResolution = fixDrawingResolution;
-
 export function hideDrawingsByTargetCount(){
     let ticker = window.tvStuff.current_symbol;
     for(let shape_id in window.targetCache[ticker]['shape_id_to_target']){
@@ -465,7 +463,6 @@ export function hideDrawingsByTargetCount(){
         else shape.setProperties({visible: false});
     }
 }
-window.hideDrawingsByTargetCount = hideDrawingsByTargetCount;
 
 async function removeDrawing(ticker, shape_id){
     console.log('removeDrawing('+ticker+','+shape_id+')');
