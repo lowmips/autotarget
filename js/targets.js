@@ -509,3 +509,66 @@ export async function startTargetsSub(ticker) {
     ws_targets.send(substr);
     subs[ticker] = 1;
 }
+
+export function checkSelection(){
+    console.log('checkSelection()');
+    let ticker = window.tvStuff.current_symbol;
+    let selected = chart.selection().allSources();
+    for( let id of selected ){
+        let shape_id;
+        let shape_points;
+        let obj = chart.getShapeById(id);
+        console.log(obj);
+
+        // is this one of our drawings?
+        if(!(id in targetCache[ticker].shape_id_to_target)) continue;
+        let target = targetCache[ticker].shape_id_to_target[id];
+
+        switch(obj._source.toolname){
+            case "LineToolTrendLine":
+                if(!('is_range' in target)) break;
+                if(id in targetCache[ticker]['range_id_to_fib_id']) {
+                    console.log('id is in range_id_to_fib_id');
+
+                    // already had a fib drawn, just remove everything
+                    shape_id = targetCache[ticker]['range_id_to_fib_id'][id];
+                    console.log('shape_id: '+shape_id);
+
+                    // has it been manually deleted?
+                    let oldShape;
+                    try {
+                        oldShape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+                        console.log('oldShape:');
+                        console.log(oldShape);
+                    }catch(e){}
+                    if(oldShape){
+                        console.log('removing oldShape');
+                        window.tvStuff.widget.activeChart().removeEntity(shape_id);
+                        delete targetCache[ticker]['range_id_to_fib_id'][id];
+                        break;
+                    }
+                }
+                // average price
+                let ave_price = (target.shape_points[0].price + target.shape_points[1].price)/2;
+                let is_reverse = target.price_when_made < ave_price;
+                shape_points = [];
+                shape_points.push({time: target.shape_points[0].time + 120, price: target.shape_points[0].price});
+                shape_points.push({time: target.shape_points[1].time + 300, price: target.shape_points[1].price});
+                let shape_opts = {
+                    shape: "fib_retracement",
+                    //lock: true,
+                    //disableSelection: true,
+                    //disableUndo: true,
+                };
+                shape_opts['overrides'] =
+                    {
+                        reverse: is_reverse,
+                    }
+
+                shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+                targetCache[ticker]['range_id_to_fib_id'][id] = shape_id;
+                break;
+
+        }
+    }
+}

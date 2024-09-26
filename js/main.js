@@ -1,5 +1,5 @@
 import Datafeed from './datafeed.js';
-import {startTargetsSub, stopTargetsSub, checkFixDrawingsResolution} from './targets.js';
+import {startTargetsSub, stopTargetsSub, checkFixDrawingsResolution, checkSelection} from './targets.js';
 import {hasItem, removeItem} from "./waitqueue.js";
 
 const queryString = window.location.search;
@@ -126,6 +126,7 @@ window.tvStuff.widget.subscribe('time_interval', function(a){
 });
 
 
+
 window.tvStuff.widget.onChartReady(function() {
     console.log('onChartReady()');
 
@@ -138,6 +139,8 @@ window.tvStuff.widget.onChartReady(function() {
     window.tvStuff.widget.activeChart().dataReady(() => {
         console.log('dataReady()');
     });
+
+    window.tvStuff.widget.activeChart().selection().onChanged().subscribe(null, () => checkSelection());
 
 });
 
