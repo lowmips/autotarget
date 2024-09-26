@@ -513,6 +513,7 @@ export async function startTargetsSub(ticker) {
 export function checkSelection(){
     console.log('checkSelection()');
     let ticker = window.tvStuff.current_symbol;
+    let chart = window.tvStuff.widget.activeChart();
     let selected = chart.selection().allSources();
     for( let id of selected ){
         let shape_id;
@@ -537,13 +538,13 @@ export function checkSelection(){
                     // has it been manually deleted?
                     let oldShape;
                     try {
-                        oldShape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+                        oldShape = chart.getShapeById(shape_id);
                         console.log('oldShape:');
                         console.log(oldShape);
                     }catch(e){}
                     if(oldShape){
                         console.log('removing oldShape');
-                        window.tvStuff.widget.activeChart().removeEntity(shape_id);
+                        chart.removeEntity(shape_id);
                         delete targetCache[ticker]['range_id_to_fib_id'][id];
                         break;
                     }
@@ -565,7 +566,7 @@ export function checkSelection(){
                         reverse: is_reverse,
                     }
 
-                shape_id = window.tvStuff.widget.activeChart().createMultipointShape(shape_points, shape_opts);
+                shape_id = chart.createMultipointShape(shape_points, shape_opts);
                 targetCache[ticker]['range_id_to_fib_id'][id] = shape_id;
                 break;
 
