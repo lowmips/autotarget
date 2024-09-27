@@ -511,7 +511,7 @@ export async function startTargetsSub(ticker) {
 }
 
 export function checkSelection(){
-    console.log('checkSelection()');
+    //console.log('checkSelection()');
     let ticker = window.tvStuff.current_symbol;
     let chart = window.tvStuff.widget.activeChart();
     let selected = chart.selection().allSources();
@@ -519,7 +519,7 @@ export function checkSelection(){
         let shape_id;
         let shape_points;
         let obj = chart.getShapeById(id);
-        console.log(obj);
+        //console.log(obj);
 
         // is this one of our drawings?
         if(!(id in targetCache[ticker].shape_id_to_target)) continue;
@@ -529,21 +529,21 @@ export function checkSelection(){
             case "LineToolTrendLine":
                 if(!('is_range' in target)) break;
                 if(id in targetCache[ticker]['range_id_to_fib_id']) {
-                    console.log('id is in range_id_to_fib_id');
+                    //console.log('id is in range_id_to_fib_id');
 
                     // already had a fib drawn, just remove everything
                     shape_id = targetCache[ticker]['range_id_to_fib_id'][id];
-                    console.log('shape_id: '+shape_id);
+                    //console.log('shape_id: '+shape_id);
 
                     // has it been manually deleted?
                     let oldShape;
                     try {
                         oldShape = chart.getShapeById(shape_id);
-                        console.log('oldShape:');
-                        console.log(oldShape);
+                        //console.log('oldShape:');
+                        //console.log(oldShape);
                     }catch(e){}
                     if(oldShape){
-                        console.log('removing oldShape');
+                        //console.log('removing oldShape');
                         chart.removeEntity(shape_id);
                         delete targetCache[ticker]['range_id_to_fib_id'][id];
                         break;
