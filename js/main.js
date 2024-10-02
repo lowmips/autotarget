@@ -19,12 +19,12 @@ window.tvStuff = {
     targets: {
         filtering: {
             target_count: {
-                min: 8,
+                min: 7,
             },
         },
         requesting: {
             target_count: {
-                min: 8,
+                min: 7,
             },
         },
     },
