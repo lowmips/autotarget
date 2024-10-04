@@ -16,7 +16,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../klengine" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -115,15 +115,7 @@
       <workItem from="1719528758389" duration="3603000" />
       <workItem from="1720824176215" duration="10706000" />
       <workItem from="1724089254138" duration="208354000" />
-      <workItem from="1726048394944" duration="80828000" />
-    </task>
-    <task id="LOCAL-01470" summary="dev">
-      <option name="closed" value="true" />
-      <created>1726945718302</created>
-      <option name="number" value="01470" />
-      <option name="presentableId" value="LOCAL-01470" />
-      <option name="project" value="LOCAL" />
-      <updated>1726945718302</updated>
+      <workItem from="1726048394944" duration="81563000" />
     </task>
     <task id="LOCAL-01471" summary="dev">
       <option name="closed" value="true" />
@@ -509,7 +501,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727610161926</updated>
     </task>
-    <option name="localTasksCounter" value="1519" />
+    <task id="LOCAL-01519" summary="dev">
+      <option name="closed" value="true" />
+      <created>1727827274718</created>
+      <option name="number" value="01519" />
+      <option name="presentableId" value="LOCAL-01519" />
+      <option name="project" value="LOCAL" />
+      <updated>1727827274718</updated>
+    </task>
+    <option name="localTasksCounter" value="1520" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
