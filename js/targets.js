@@ -140,7 +140,7 @@ async function handleRangeMsg(msg) {
         let target_type = update.target_type;
 
         // temporary
-        if(target_type !== '1.618') return;
+        //if(target_type !== '1.618') return;
 
         // do we already have this range?
         if((target_type in targetCache[ticker]['range_to_shape_id']) &&
