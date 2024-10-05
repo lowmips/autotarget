@@ -100,8 +100,8 @@ $q ="select MAX(moo.ts_end) as max_ts, MIN(moo.ts_end) as min_ts ".
     " select distinct(`ts_end`) ".
     " FROM `$tbl_targets_name_sql` ".
     " where 1 ".
-    //" AND `target_type`='1.618' ".
-    "AND `target_type` != 'all' ".
+    " AND `target_type`='1.786' ".
+    //"AND `target_type` != 'all' ".
     " AND `ts_end`<='$ts_from' ".
     " AND `ts_end` >= '$min_ts' ".
     " ORDER BY `ts_end` DESC ".
@@ -119,8 +119,8 @@ $q = "SELECT * ".
     "FROM `$tbl_targets_name_sql` ".
     "WHERE 1 ".
     //"AND `target_price`='62690.22' ". // DEBUG
-    //"AND `target_type`='1.618' ".
-    "AND `target_type` != 'all' ".
+    "AND `target_type`='1.786' ".
+    //"AND `target_type` != 'all' ".
     "AND `ts_end`>='$min_found_ts' ".
     "AND `ts_end`<='$max_found_ts' ".
     "AND `target_count`>='$min_target_count' ".
@@ -146,8 +146,8 @@ while(($row = $result->fetch_assoc()) !== false){
 $q = "SELECT * ".
     "FROM `$tbl_ranges_sql` ".
     "WHERE 1 ".
-    //"AND `target_type`='1.618' ".
-    "AND `target_type` != 'all' ".
+    "AND `target_type`='1.786' ".
+    //"AND `target_type` != 'all' ".
     "AND `ts`<='$ts_from' ".
     "AND `ts` >= '$min_ts' ".
     "AND `target_count`>1 ".
