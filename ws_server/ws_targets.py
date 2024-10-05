@@ -119,7 +119,7 @@ async def main_loop():
             q = ("SELECT * " +
                  "FROM span_targets_ranges_{m} " +
                  "WHERE `ts` = (SELECT MAX(ts) from span_targets_ranges_{m}) " +
-                 "AND target_type != 'all' " +
+                 "AND target_type = '1.786' " +
                  "AND `target_count` > 1 "
                  ).format(m=pair_id)
             latest_rows = mdb.query_get_all(q)
