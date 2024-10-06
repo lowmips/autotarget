@@ -553,8 +553,9 @@ export function checkSelection(){
                 let ave_price = (target.shape_points[0].price + target.shape_points[1].price)/2;
                 let is_reverse = false; //target.price_when_made < ave_price;
                 shape_points = [];
-                shape_points.push({time: target.shape_points[0].time + 120, price: target.shape_points[0].price});
-                shape_points.push({time: target.shape_points[1].time + 300, price: target.shape_points[1].price});
+                shape_points.push({time: target.shape_points[1].time, price: target.shape_points[1].price});
+                shape_points.push({time: target.shape_points[0].time + 300, price: target.shape_points[0].price});
+
                 let shape_opts = {
                     shape: "fib_retracement",
                     //lock: true,
