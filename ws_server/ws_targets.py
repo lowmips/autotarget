@@ -105,7 +105,7 @@ async def main_loop():
             has_ranges = False
 
             # Find updated target_groups
-            q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}' AND `target_type`='1.618' ".format(mi=pair_id)
+            q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}' AND `target_type` IN ('1.618') ".format(mi=pair_id)
             latest_rows = mdb.query_get_all(q)
             print('target groups:')
             print(latest_rows)

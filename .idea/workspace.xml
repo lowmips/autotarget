@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../klengine/make_range_fibs.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/make_range_fibs.py" afterDir="false" />
-    </list>
+    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +14,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../klengine" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -117,23 +114,7 @@
       <workItem from="1720824176215" duration="10706000" />
       <workItem from="1724089254138" duration="208354000" />
       <workItem from="1726048394944" duration="88793000" />
-      <workItem from="1728472474559" duration="56252000" />
-    </task>
-    <task id="LOCAL-01610" summary="dev">
-      <option name="closed" value="true" />
-      <created>1729123495133</created>
-      <option name="number" value="01610" />
-      <option name="presentableId" value="LOCAL-01610" />
-      <option name="project" value="LOCAL" />
-      <updated>1729123495133</updated>
-    </task>
-    <task id="LOCAL-01611" summary="dev">
-      <option name="closed" value="true" />
-      <created>1729163707598</created>
-      <option name="number" value="01611" />
-      <option name="presentableId" value="LOCAL-01611" />
-      <option name="project" value="LOCAL" />
-      <updated>1729163707599</updated>
+      <workItem from="1728472474559" duration="57085000" />
     </task>
     <task id="LOCAL-01612" summary="dev">
       <option name="closed" value="true" />
@@ -511,7 +492,23 @@
       <option name="project" value="LOCAL" />
       <updated>1729952714922</updated>
     </task>
-    <option name="localTasksCounter" value="1659" />
+    <task id="LOCAL-01659" summary="dev">
+      <option name="closed" value="true" />
+      <created>1729952859148</created>
+      <option name="number" value="01659" />
+      <option name="presentableId" value="LOCAL-01659" />
+      <option name="project" value="LOCAL" />
+      <updated>1729952859148</updated>
+    </task>
+    <task id="LOCAL-01660" summary="dev">
+      <option name="closed" value="true" />
+      <created>1729952951574</created>
+      <option name="number" value="01660" />
+      <option name="presentableId" value="LOCAL-01660" />
+      <option name="project" value="LOCAL" />
+      <updated>1729952951574</updated>
+    </task>
+    <option name="localTasksCounter" value="1661" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
