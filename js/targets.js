@@ -139,9 +139,6 @@ async function handleRangeMsg(msg) {
         let target_count = parseInt(update.target_count);
         let target_type = update.target_type;
 
-        // temporary
-        //if(target_type !== '1.618') return;
-
         // do we already have this range?
         if((target_type in targetCache[ticker]['range_to_shape_id']) &&
             (ts in targetCache[ticker]['range_to_shape_id'][target_type])) return;
@@ -180,6 +177,17 @@ async function handleRangeMsg(msg) {
         checkDrawingStart(ticker, shape_id, shape_points);
     });
     return true;
+}
+
+function toggleRanges(show){
+    let ticker = window.tvStuff.current_symbol;
+    if(!(ticker in targetCache)) return;
+    for(let shape_id in targetCache[ticker]['shape_id_to_target']){
+        let is_range = targetCache[ticker]['shape_id_to_target'][shape_id].is_range;
+        if(!is_range) continue;
+        let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
+        shape.setProperties({visible: show});
+    }
 }
 
 async function handleTargetMsg(msg, sendtoback){
