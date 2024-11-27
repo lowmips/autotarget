@@ -179,7 +179,7 @@ async function handleRangeMsg(msg) {
     return true;
 }
 
-export function toggleRanges(show){
+/*export function toggleRanges(show){
     let ticker = window.tvStuff.current_symbol;
     if(!(ticker in targetCache)) return;
     for(let shape_id in targetCache[ticker]['shape_id_to_target']){
@@ -188,7 +188,7 @@ export function toggleRanges(show){
         let shape = window.tvStuff.widget.activeChart().getShapeById(shape_id);
         shape.setProperties({visible: show});
     }
-}
+}*/
 
 async function handleTargetMsg(msg, sendtoback){
     //console.log('handleTargetMsg');
