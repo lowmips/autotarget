@@ -179,7 +179,7 @@ async function handleRangeMsg(msg) {
     return true;
 }
 
-function toggleRanges(show){
+export function toggleRanges(show){
     let ticker = window.tvStuff.current_symbol;
     if(!(ticker in targetCache)) return;
     for(let shape_id in targetCache[ticker]['shape_id_to_target']){
