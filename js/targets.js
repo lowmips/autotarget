@@ -524,6 +524,10 @@ export function checkSelection(){
     let chart = window.tvStuff.widget.activeChart();
     let selected = chart.selection().allSources();
 
+
+    let getRandArb = function(min, max) {
+        return Math.random() * (max - min) + min;
+    }
     let getRGB = function(){
         let r = Math.floor(Math.random() * (256));
         let g = Math.floor(Math.random() * (256));
@@ -592,10 +596,11 @@ export function checkSelection(){
 
                 // get a random RGB value for levels line color
                 let rgb = getRGB();
+                let alpha = getRandArb(0.45, 0.90);
                 for(let lvl=1; lvl < 24; lvl++){
                     let lvl_name = 'level' + lvl;
                     shape_opts['overrides'][lvl_name] = {
-                        'color':'rgba('+(rgb[0])+','+(rgb[1])+','+(rgb[2])+',1)',
+                        'color':'rgba('+(rgb[0])+','+(rgb[1])+','+(rgb[2])+','+alpha+')',
                     };
                 }
                 // create the shape and add reference to our cache
