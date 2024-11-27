@@ -49,8 +49,8 @@ window.tvStuff.current_resolution = window.tvStuff.widget_options.interval;
 window.tvStuff.widget = new TradingView.widget(window.tvStuff.widget_options);
 
 window.tvStuff.widget.subscribe('chart_loaded', function(a){
-    console.log('event [chart_loaded] ');
-    console.log(a);
+    //console.log('event [chart_loaded] ');
+    //console.log(a);
 });
 window.tvStuff.widget.subscribe('drawing', function(a){
     //console.log('event [drawing] ' + ((new Date).toLocaleString('en-US')) );

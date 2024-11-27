@@ -523,6 +523,20 @@ export function checkSelection(){
     let ticker = window.tvStuff.current_symbol;
     let chart = window.tvStuff.widget.activeChart();
     let selected = chart.selection().allSources();
+
+    let getRGB = function(){
+        let r = Math.floor(Math.random() * (256));
+        let g = Math.floor(Math.random() * (256));
+        let b = Math.floor(Math.random() * (256));
+        while(r<10 && g<10 && b<10){
+            let r = Math.floor(Math.random() * (256));
+            let g = Math.floor(Math.random() * (256));
+            let b = Math.floor(Math.random() * (256));
+        }
+        return [r,g,b];
+    };
+
+
     for( let id of selected ){
         let shape_id;
         let shape_points;
@@ -535,6 +549,7 @@ export function checkSelection(){
 
         switch(obj._source.toolname){
             case "LineToolTrendLine":
+                // let's handle target ranges only, for now...
                 if(!('is_range' in target)) break;
                 if(id in targetCache[ticker]['range_id_to_fib_id']) {
                     //console.log('id is in range_id_to_fib_id');
@@ -557,7 +572,7 @@ export function checkSelection(){
                         break;
                     }
                 }
-                // average price
+                // get the target range average price
                 let ave_price = (target.shape_points[0].price + target.shape_points[1].price)/2;
                 let is_reverse = false; //target.price_when_made < ave_price;
                 shape_points = [];
@@ -575,6 +590,15 @@ export function checkSelection(){
                         reverse: is_reverse,
                     }
 
+                // get a random RGB value for levels line color
+                let rgb = getRGB();
+                for(let lvl=1; lvl < 24; lvl++){
+                    let lvl_name = 'level' + lvl;
+                    shape_opts['overrides'][lvl_name] = {
+                        'color':'rgba('+(rgb[0])+','+(rgb[1])+','+(rgb[2])+',1)',
+                    };
+                }
+                // create the shape and add reference to our cache
                 shape_id = chart.createMultipointShape(shape_points, shape_opts);
                 targetCache[ticker]['range_id_to_fib_id'][id] = shape_id;
                 break;
