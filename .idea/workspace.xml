@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev" />
+    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +16,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../klengine" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -115,15 +117,7 @@
       <workItem from="1724089254138" duration="208354000" />
       <workItem from="1726048394944" duration="88793000" />
       <workItem from="1728472474559" duration="63027000" />
-      <workItem from="1732375200639" duration="9567000" />
-    </task>
-    <task id="LOCAL-01624" summary="dev">
-      <option name="closed" value="true" />
-      <created>1729343654715</created>
-      <option name="number" value="01624" />
-      <option name="presentableId" value="LOCAL-01624" />
-      <option name="project" value="LOCAL" />
-      <updated>1729343654715</updated>
+      <workItem from="1732375200639" duration="10974000" />
     </task>
     <task id="LOCAL-01625" summary="dev">
       <option name="closed" value="true" />
@@ -509,7 +503,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732752522583</updated>
     </task>
-    <option name="localTasksCounter" value="1673" />
+    <task id="LOCAL-01673" summary="dev">
+      <option name="closed" value="true" />
+      <created>1732752627629</created>
+      <option name="number" value="01673" />
+      <option name="presentableId" value="LOCAL-01673" />
+      <option name="project" value="LOCAL" />
+      <updated>1732752627629</updated>
+    </task>
+    <option name="localTasksCounter" value="1674" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
