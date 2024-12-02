@@ -585,7 +585,7 @@ export function checkSelection(){
 
                 let shape_opts = {
                     shape: "fib_retracement",
-                    //lock: true,
+                    lock: true,
                     disableSelection: true,
                     //disableUndo: true,
                 };
