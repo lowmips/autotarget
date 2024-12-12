@@ -529,10 +529,10 @@ export function checkSelection(){
         return Math.random() * (max - min) + min;
     }
     let getRGB = function(){
-        let r = Math.floor(Math.random() * (256));
-        let g = Math.floor(Math.random() * (256));
-        let b = Math.floor(Math.random() * (256));
-        while(r<10 && g<10 && b<10){
+        let r = 0;
+        let g = 0;
+        let b = 0;
+        while(r<25 && g<25 && b<25){
             let r = Math.floor(Math.random() * (256));
             let g = Math.floor(Math.random() * (256));
             let b = Math.floor(Math.random() * (256));
@@ -596,7 +596,7 @@ export function checkSelection(){
 
                 // get a random RGB value for levels line color
                 let rgb = getRGB();
-                let alpha = getRandArb(0.45, 0.90);
+                let alpha = getRandArb(0.5, 0.92);
                 for(let lvl=1; lvl <= 24; lvl++){
                     let lvl_name = 'level' + lvl;
                     shape_opts['overrides'][lvl_name] = {
