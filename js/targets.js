@@ -549,17 +549,22 @@ export function checkSelection(){
         let shape_points;
         console.log('checkSelection() - getShapeById');
         let obj = chart.getShapeById(id);
+        console.log('checkSelection() - getShapeById - done');
         //console.log(obj);
 
         // is this one of our drawings?
+        console.log('checkSelection() - checking if our drawing');
         if(!(id in targetCache[ticker].shape_id_to_target)) {
             console.log('id['+id+'] not in shape_id_to_target - not our drawing - continuing');
             continue;
         }
+        console.log('checkSelection() - getting target');
         let target = targetCache[ticker].shape_id_to_target[id];
 
+        console.log('checkSelection() - switching by toolname');
         switch(obj._source.toolname){
             case "LineToolTrendLine":
+                console.log('checkSelection() - toolname is LineToolTrendLine');
                 // let's handle target ranges only, for now...
                 if(!('is_range' in target)) break;
                 if(id in targetCache[ticker]['range_id_to_fib_id']) {
