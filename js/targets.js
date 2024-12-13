@@ -547,6 +547,7 @@ export function checkSelection(){
         console.log('checkSelection() - id is ['+id+']');
         let shape_id;
         let shape_points;
+        console.log('checkSelection() - getShapeById');
         let obj = chart.getShapeById(id);
         //console.log(obj);
 
