@@ -524,6 +524,7 @@ export function checkSelection(){
     console.log('checkSelection()');
     let ticker = window.tvStuff.current_symbol;
     let chart = window.tvStuff.widget.activeChart();
+    console.log('checkSelection() - getting selections');
     let selected = chart.selection().allSources();
 
     let getRandArb = function(min, max) {
@@ -541,8 +542,9 @@ export function checkSelection(){
         return [r,g,b];
     };
 
-
+    console.log('checkSelection() - checking ids');
     for( let id of selected ){
+        console.log('checkSelection() - id is ['+id+']');
         let shape_id;
         let shape_points;
         let obj = chart.getShapeById(id);
