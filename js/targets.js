@@ -607,8 +607,11 @@ export function checkSelection(){
                     }
 
                 // get a random RGB value for levels line color
+                console.log('getting rgb');
                 let rgb = getRGB();
+                console.log('getting alpha');
                 let alpha = getRandArb(0.5, 0.92);
+                console.log('setting levels');
                 for(let lvl=1; lvl <= 24; lvl++){
                     let lvl_name = 'level' + lvl;
                     shape_opts['overrides'][lvl_name] = {
