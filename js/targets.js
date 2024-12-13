@@ -549,7 +549,10 @@ export function checkSelection(){
         //console.log(obj);
 
         // is this one of our drawings?
-        if(!(id in targetCache[ticker].shape_id_to_target)) continue;
+        if(!(id in targetCache[ticker].shape_id_to_target)) {
+            console.log('id['+id+'] not in shape_id_to_target - not our drawing - continuing');
+            continue;
+        }
         let target = targetCache[ticker].shape_id_to_target[id];
 
         switch(obj._source.toolname){
