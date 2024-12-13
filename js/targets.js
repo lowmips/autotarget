@@ -126,10 +126,10 @@ async function handleRangeMsg(msg) {
         return true;
     }
     let ticker = msg.pair_info.exchange + ':' + msg.pair_info.from_token + '/' + msg.pair_info.to_token;
-    if(!(ticker in subs)) {
+    /*if(!(ticker in subs)) {
         console.log('No subscription for ['+ticker+']');
         return true;
-    }
+    }*/
     addTickerToCache(ticker);
 
     //console.log('looping ranges...');
@@ -202,10 +202,10 @@ async function handleTargetMsg(msg, sendtoback){
     }
     let ticker = msg.pair_info.exchange + ':' + msg.pair_info.from_token + '/' + msg.pair_info.to_token;
     //console.log('Got pair_info['+ticker+']');
-    if(!(ticker in subs)) {
+    /*if(!(ticker in subs)) {
         console.log('No subscription for ['+ticker+']');
         return true;
-    }
+    }*/
     addTickerToCache(ticker);
 
     //console.log('looping targets...');
