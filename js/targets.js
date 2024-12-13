@@ -521,11 +521,10 @@ export async function startTargetsSub(ticker) {
 }
 
 export function checkSelection(){
-    //console.log('checkSelection()');
+    console.log('checkSelection()');
     let ticker = window.tvStuff.current_symbol;
     let chart = window.tvStuff.widget.activeChart();
     let selected = chart.selection().allSources();
-
 
     let getRandArb = function(min, max) {
         return Math.random() * (max - min) + min;
