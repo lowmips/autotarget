@@ -521,10 +521,9 @@ export async function startTargetsSub(ticker) {
 }
 
 export function checkSelection(){
-    console.log('checkSelection()');
+    //console.log('checkSelection()');
     let ticker = window.tvStuff.current_symbol;
     let chart = window.tvStuff.widget.activeChart();
-    console.log('checkSelection() - getting selections');
     let selected = chart.selection().allSources();
 
     let getRandArb = function(min, max) {
@@ -535,36 +534,29 @@ export function checkSelection(){
         let g = 0;
         let b = 0;
         while(r<25 && g<25 && b<25){
-            let r = Math.floor(Math.random() * (256));
-            let g = Math.floor(Math.random() * (256));
-            let b = Math.floor(Math.random() * (256));
+            r = Math.floor(Math.random() * (256));
+            g = Math.floor(Math.random() * (256));
+            b = Math.floor(Math.random() * (256));
         }
         return [r,g,b];
     };
 
-    console.log('checkSelection() - checking ids');
     for( let id of selected ){
-        console.log('checkSelection() - id is ['+id+']');
         let shape_id;
         let shape_points;
-        console.log('checkSelection() - getShapeById');
         let obj = chart.getShapeById(id);
-        console.log('checkSelection() - getShapeById - done');
         //console.log(obj);
 
         // is this one of our drawings?
-        console.log('checkSelection() - checking if our drawing');
         if(!(id in targetCache[ticker].shape_id_to_target)) {
-            console.log('id['+id+'] not in shape_id_to_target - not our drawing - continuing');
+            //console.log('id['+id+'] not in shape_id_to_target - not our drawing - continuing');
             continue;
         }
-        console.log('checkSelection() - getting target');
         let target = targetCache[ticker].shape_id_to_target[id];
 
-        console.log('checkSelection() - switching by toolname');
         switch(obj._source.toolname){
             case "LineToolTrendLine":
-                console.log('checkSelection() - toolname is LineToolTrendLine');
+                //console.log('checkSelection() - toolname is LineToolTrendLine');
                 // let's handle target ranges only, for now...
                 if(!('is_range' in target)) break;
                 if(id in targetCache[ticker]['range_id_to_fib_id']) {
@@ -607,11 +599,8 @@ export function checkSelection(){
                     }
 
                 // get a random RGB value for levels line color
-                console.log('getting rgb');
                 let rgb = getRGB();
-                console.log('getting alpha');
                 let alpha = getRandArb(0.5, 0.92);
-                console.log('setting levels');
                 for(let lvl=1; lvl <= 24; lvl++){
                     let lvl_name = 'level' + lvl;
                     shape_opts['overrides'][lvl_name] = {
