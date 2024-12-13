@@ -48,7 +48,7 @@ ws_targets.addEventListener('message', function(event) {
 });
 
 export function getTargets(min_ts){
-    console.log('getTargets('+min_ts+')');
+    //console.log('getTargets('+min_ts+')');
     let ticker = window.tvStuff.current_symbol;
     let earliest_ts = null;
     let from_ts;
@@ -67,9 +67,9 @@ export function getTargets(min_ts){
         '&min_target_count=' + min_target_count;
     fetch(request_url)
         .then((response) => {
-            console.log('getTargets() - response handler')
+            //console.log('getTargets() - response handler')
             if (response.ok) {
-                console.log('getTargets() - response is OK');
+                //console.log('getTargets() - response is OK');
                 //return response.json();
                 response.text().then((text) => {
                     handleMsg(text);
@@ -103,7 +103,7 @@ export function checkEarliestTarget(){
 }
 
 async function handleMsg(msg_str){
-    console.log('handleMsg()');
+    //console.log('handleMsg()');
     //console.log(msg_str);
     let msg = JSON.parse(msg_str);
     //console.log(msg);
