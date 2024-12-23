@@ -2,7 +2,12 @@ import { parseFullSymbol } from './helpers.js';
 import { colors }from './colors.js';
 import {addItem, waitForAndRemoveItem} from "./waitqueue.js";
 
-const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/');
+const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/',{
+    shouldReconnect: function(event, ws) {
+        if (event.code === 1008 || event.code === 1011) return;
+        return Math.pow(1.5, ws.attempts) * 500;
+    }
+});
 let targetCache = {};
 window.targetCache = targetCache;
 function addTickerToCache(ticker){
@@ -14,6 +19,7 @@ function addTickerToCache(ticker){
             range_id_to_fib_id: {},
             resolution_revise: [],
             earliest_target_ts: null,
+            latest_target_ts: null,
         };
 }
 
@@ -26,6 +32,7 @@ function addTickerToCache(ticker){
         range_id_to_fib_id -> id -> id
         resolution_revise -> [shape_ids]
         earliest_target_ts -> [ts] # "ts_latest" timestamp of the earliest target we have so far, for requesting more when the chart is scrolled
+        latest_targets_ts -> [ts]
     }
 */
 let subs = {};
@@ -229,8 +236,9 @@ async function handleTargetMsg(msg, sendtoback){
 
         if(target_count < window.tvStuff.targets.requesting.target_count.min) return;
 
-        // update earliest ts_latest
+        // update earliest/latest ts_latest
         if(targetCache[ticker]['earliest_target_ts'] === null || ts_latest < targetCache[ticker]['earliest_target_ts']) targetCache[ticker]['earliest_target_ts'] = ts_latest;
+        if(targetCache[ticker]['latest_target_ts'] === null || ts_latest > targetCache[ticker]['latest_target_ts']) targetCache[ticker]['latest_target_ts'] = ts_latest;
 
         // determine target color
         let target_color;

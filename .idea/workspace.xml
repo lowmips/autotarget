@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/targets.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/targets.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,22 +47,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/reggi/PhpstormProjects/autotarget/ws_server&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/reggi/PhpstormProjects/autotarget/ws_server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\reggi\PhpstormProjects\autotarget\ws_server" />
@@ -118,15 +119,8 @@
       <workItem from="1726048394944" duration="88793000" />
       <workItem from="1728472474559" duration="63027000" />
       <workItem from="1732375200639" duration="13180000" />
-      <workItem from="1734005737613" duration="4410000" />
-    </task>
-    <task id="LOCAL-01638" summary="dev">
-      <option name="closed" value="true" />
-      <created>1729715032504</created>
-      <option name="number" value="01638" />
-      <option name="presentableId" value="LOCAL-01638" />
-      <option name="project" value="LOCAL" />
-      <updated>1729715032504</updated>
+      <workItem from="1734005737613" duration="5034000" />
+      <workItem from="1734181940321" duration="4153000" />
     </task>
     <task id="LOCAL-01639" summary="dev">
       <option name="closed" value="true" />
@@ -512,7 +506,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734094435145</updated>
     </task>
-    <option name="localTasksCounter" value="1687" />
+    <task id="LOCAL-01687" summary="dev">
+      <option name="closed" value="true" />
+      <created>1734094540094</created>
+      <option name="number" value="01687" />
+      <option name="presentableId" value="LOCAL-01687" />
+      <option name="project" value="LOCAL" />
+      <updated>1734094540094</updated>
+    </task>
+    <option name="localTasksCounter" value="1688" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
