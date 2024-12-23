@@ -5,7 +5,13 @@ import { parseFullSymbol } from './helpers.js';
 
 ws.addEventListener('open', function(event) {
     //console.log('ws [open]');
-})
+});
+ws.addEventListener('close', function(event) {
+    //console.log('ws [close]');
+});
+ws.addEventListener('error', function(event) {
+    //console.log('ws [error]');
+});
 
 ws.addEventListener('message', function(event) {
     //console.log('ws [message]: ' + event.data)
