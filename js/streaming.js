@@ -1,20 +1,20 @@
-const ws = new RobustWebSocket('wss://www.lowmips.com/autotarget/wss/');
+const ws_klines = new RobustWebSocket('wss://www.lowmips.com/autotarget/wss/');
 
 import { parseFullSymbol } from './helpers.js';
 
 
-ws.addEventListener('open', function(event) {
-    //console.log('ws [open]');
+ws_klines.addEventListener('open', function(event) {
+    console.log('ws_klines [open]');
 });
-ws.addEventListener('close', function(event) {
-    //console.log('ws [close]');
+ws_klines.addEventListener('close', function(event) {
+    console.log('ws_klines [close]');
 });
-ws.addEventListener('error', function(event) {
-    //console.log('ws [error]');
+ws_klines.addEventListener('error', function(event) {
+    console.log('ws_klines [error]');
 });
 
-ws.addEventListener('message', function(event) {
-    //console.log('ws [message]: ' + event.data)
+ws_klines.addEventListener('message', function(event) {
+    //console.log('ws_klines [message]: ' + event.data)
     const [
         eventTypeStr,
         exchange,
@@ -139,7 +139,7 @@ export function subscribeOnStream(
     channelToSubscription.set(channelString, subscriptionItem);
     //console.log('[subscribeBars]: Subscribe to streaming. Channel:', channelString);
     let json_str = JSON.stringify({'SubAdd': { subs: [channelString] }});
-    ws.send(json_str);
+    ws_klines.send(json_str);
 }
 
 export function unsubscribeFromStream(subscriberUID) {
@@ -159,7 +159,7 @@ export function unsubscribeFromStream(subscriberUID) {
                 // Unsubscribe from the channel if it is the last handler
                 //console.log('[unsubscribeBars]: Unsubscribe from streaming. Channel:', channelString);
                 let json_str = JSON.stringify({'SubRemove': { subs: [channelString] }});
-                ws.send(json_str);
+                ws_klines.send(json_str);
                 channelToSubscription.delete(channelString);
                 break;
             }
