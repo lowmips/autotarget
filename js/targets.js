@@ -3,10 +3,12 @@ import { colors }from './colors.js';
 import {addItem, waitForAndRemoveItem} from "./waitqueue.js";
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/',{
+    timeout: 4000,
     shouldReconnect: function(event, ws) {
         if (event.code === 1008 || event.code === 1011) return;
         return Math.pow(1.5, ws.attempts) * 500;
-    }
+    },
+    automaticOpen: true,
 });
 let targetCache = {};
 window.targetCache = targetCache;
