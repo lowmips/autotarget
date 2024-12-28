@@ -21,6 +21,9 @@ pair_id_info = {} # pair_id => exchange, from_token, to_token
 pair_id_latest = {} # pair_id => latest_kline
 main_loop_max_wait = 5 # we'll wait at most 5 seconds between update klines lookups
 
+tbl_klines_template = "klines_{pid}"
+
+
 def get_config():
     global config
     with open('config.ws_klines.json','r') as f:
@@ -191,6 +194,7 @@ async def handle_ws(websocket,path):
 async def handle_msg(websocket, msg):
     print('handle_msg()')
     print(msg)
+    ws_hex_id = websocket.id.hex
     msg_obj = None
     try:
         msg_obj = json.loads(msg)
@@ -248,8 +252,80 @@ async def handle_msg(websocket, msg):
                 subs_to_ws[pair_id] = []
             subs_to_ws[pair_id].append(websocket.id.hex)
 
+    if 'SubResume' in msg_obj:
+        if not 'channel' in msg_obj['SubResume'] or not 'last_ts' in msg_obj['SubResume']:
+            reason = 'invalid SubResume definition, closing connection'
+            print(reason)
+            await websocket.close(code=1000, reason=reason)
+            return
+
+        sub_list = msg_obj['SubResume']['channel'].split('~')
+        if len(sub_list) != 4:
+            reason = 'invalid sub definition, closing connection'
+            print(reason)
+            await websocket.close(code=1000, reason=reason)
+            return
+        ignore_me = sub_list[0]
+        exchange = sub_list[1]
+        from_token = sub_list[2]
+        to_token = sub_list[3]
+
+        # check for valid exchange and token
+        if not check_subscription(exchange, from_token, to_token):
+            reason = 'invalid sub: {e}:{f}:{t}, closing connection'.format(e=exchange, f=from_token, t=to_token)
+            print(reason)
+            await websocket.close(code=1000, reason=reason)
+            return
+
+        # find the pair_id
+        pair_id = klines_available[exchange]['pairs'][from_token][to_token]['pair_id']
+        pair_info = pair_id_info[pair_id]
+
+        # add to subscription structures
+        if not exchange in ws_connected[websocket.id.hex]['subs']:
+            ws_connected[websocket.id.hex]['subs'][exchange] = {}
+        if not from_token in ws_connected[websocket.id.hex]['subs'][exchange]:
+            ws_connected[websocket.id.hex]['subs'][exchange][from_token] = {}
+        if to_token in ws_connected[websocket.id.hex]['subs'][exchange][from_token]:
+            print('already subscribed')
+            return
+        else:
+            ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = pair_id
+
+        # add the pair_id -> websocket[] reverse lookup
+        if not pair_id in subs_to_ws:
+            subs_to_ws[pair_id] = []
+        subs_to_ws[pair_id].append(websocket.id.hex)
+
+        # find klines that were missed, if any
+        tbl_klines = tbl_klines_template.format(pid=pair_id)
+        q = "select * from `{tbl}` WHERE `timestamp`>'ts' ORDER BY `timestamp` ASC".format(tbl=tbl_klines, ts=msg_obj['SubResume']['last_ts'])
+        update_rows = mdb.query_get_all(q)
+        for urow in update_rows:
+            timestamp = urow['timestamp']
+            open = urow['open']
+            high = urow['high']
+            low = urow['low']
+            close = urow['close']
+            # format the update string
+            update_str = "0~{ex}~{fsym}~{tsym}~{ts}~{open}~{high}~{low}~{close}".format(
+                ex=pair_info['exchange'], fsym=pair_info['from_token'], tsym=pair_info['to_token'], ts=timestamp,
+                open=open, high=high, low=low, close=close
+                )
+            print('update is [{us}]'.format(us=update_str))
+            print('sending update to websocket ['+ws_hex_id+']')
+            try:
+                await ws_connected[ws_hex_id]['ws'].send(update_str)
+            except websockets.ConnectionClosedOK:
+                print('websockets.ConnectionClosedOK' + websocket.id.hex)
+                await handle_closed_ws(ws_connected[ws_hex_id]['ws'])
+            except websockets.exceptions.ConnectionClosedError:
+                print('websockets.exceptions.ConnectionClosedError')
+                await handle_closed_ws(ws_connected[ws_hex_id]['ws'])
+            except e:
+                print('generic exception caught: ' + e)
+
     if 'SubRemove' in msg_obj:
-        pass
         if 'subs' in msg_obj['SubRemove']:
             for sub in msg_obj['SubRemove']['subs']:
                 print('sub: '+sub)
