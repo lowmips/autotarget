@@ -1,13 +1,27 @@
-const ws_klines = new RobustWebSocket('wss://www.lowmips.com/autotarget/wss/');
-
 import { parseFullSymbol } from './helpers.js';
 
+const ws_klines = new RobustWebSocket('wss://www.lowmips.com/autotarget/wss/');
+let ws_was_closed = false;
 
 ws_klines.addEventListener('open', function(event) {
     console.log('ws_klines [open]');
+
+    // Previously opened and then closed?
+    if(!ws_was_closed) return;
+
+    // get updated klines
+    const parsedSymbol = parseFullSymbol(window.tvStuff.current_symbol);
+    const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
+    const subscriptionItem = channelToSubscription.get(channelString);
+    const lastBar = subscriptionItem.lastBar;
+    const ts = lastBar.time;
+    console.log('reconnecting from '+ts);
+    let json_str = JSON.stringify({'SubResume': { channel: [channelString], last_ts: ts }});
+    ws_klines.send(json_str);
 });
 ws_klines.addEventListener('close', function(event) {
     console.log('ws_klines [close]');
+    ws_was_closed = true;
 });
 ws_klines.addEventListener('error', function(event) {
     console.log('ws_klines [error]');
@@ -87,7 +101,6 @@ ws_klines.addEventListener('message', function(event) {
             close: tradePriceClose,
         };
     }
-
 
     //console.log('[socket] updated bar: ', bar);
     subscriptionItem.lastBar = bar;

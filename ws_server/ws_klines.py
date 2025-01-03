@@ -292,11 +292,6 @@ async def handle_msg(websocket, msg):
         else:
             ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = pair_id
 
-        # add the pair_id -> websocket[] reverse lookup
-        if not pair_id in subs_to_ws:
-            subs_to_ws[pair_id] = []
-        subs_to_ws[pair_id].append(websocket.id.hex)
-
         # find klines that were missed, if any
         tbl_klines = tbl_klines_template.format(pid=pair_id)
         q = "select * from `{tbl}` WHERE `timestamp`>'ts' ORDER BY `timestamp` ASC".format(tbl=tbl_klines, ts=msg_obj['SubResume']['last_ts'])
@@ -324,6 +319,11 @@ async def handle_msg(websocket, msg):
                 await handle_closed_ws(ws_connected[ws_hex_id]['ws'])
             except e:
                 print('generic exception caught: ' + e)
+
+        # add the pair_id -> websocket[] reverse lookup to continue sending updates
+        if not pair_id in subs_to_ws:
+            subs_to_ws[pair_id] = []
+        subs_to_ws[pair_id].append(websocket.id.hex)
 
     if 'SubRemove' in msg_obj:
         if 'subs' in msg_obj['SubRemove']:
