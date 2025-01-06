@@ -36,6 +36,7 @@ async def handle_closed_ws(websocket):
             subs_to_ws[pair_id].remove(websocket.id.hex)
 
 async def main_loop():
+    global mdb
     mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
     pair_count = 0
 
@@ -192,6 +193,7 @@ async def handle_ws(websocket,path):
             break
 
 async def handle_msg(websocket, msg):
+    global mdb
     print('handle_msg()')
     print(msg)
     ws_hex_id = websocket.id.hex
