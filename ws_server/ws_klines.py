@@ -255,12 +255,12 @@ async def handle_msg(websocket, msg):
             subs_to_ws[pair_id].append(websocket.id.hex)
 
     if 'SubResume' in msg_obj:
+        print('SubResume')
         if not 'channel' in msg_obj['SubResume'] or not 'last_ts' in msg_obj['SubResume']:
             reason = 'invalid SubResume definition, closing connection'
             print(reason)
             await websocket.close(code=1000, reason=reason)
             return
-
         sub_list = msg_obj['SubResume']['channel'].split('~')
         if len(sub_list) != 4:
             reason = 'invalid sub definition, closing connection'
@@ -296,7 +296,7 @@ async def handle_msg(websocket, msg):
 
         # find klines that were missed, if any
         tbl_klines = tbl_klines_template.format(pid=pair_id)
-        q = "select * from `{tbl}` WHERE `timestamp`>'ts' ORDER BY `timestamp` ASC".format(tbl=tbl_klines, ts=msg_obj['SubResume']['last_ts'])
+        q = "select * from `{tbl}` WHERE `timestamp`>'{ts}' ORDER BY `timestamp` ASC".format(tbl=tbl_klines, ts=msg_obj['SubResume']['last_ts'])
         update_rows = mdb.query_get_all(q)
         for urow in update_rows:
             timestamp = urow['timestamp']

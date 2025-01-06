@@ -14,7 +14,7 @@ ws_klines.addEventListener('open', function(event) {
     const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
     const subscriptionItem = channelToSubscription.get(channelString);
     const lastBar = subscriptionItem.lastBar;
-    const ts = lastBar.time;
+    const ts = (lastBar.time/1000);
     console.log('reconnecting from '+ts);
     let json_str = JSON.stringify({'SubResume': { channel: channelString, last_ts: ts }});
     ws_klines.send(json_str);
