@@ -111,6 +111,8 @@ ws_klines.addEventListener('message', function(event) {
 });
 
 const channelToSubscription = new Map();
+window.cToS = channelToSubscription;
+
 export function subscribeOnStream(
     symbolInfo,
     resolution,
