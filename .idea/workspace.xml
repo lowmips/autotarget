@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/streaming.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/streaming.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../klengine/make_targets.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/make_targets.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,15 +119,7 @@
       <workItem from="1728472474559" duration="63027000" />
       <workItem from="1732375200639" duration="13180000" />
       <workItem from="1734005737613" duration="5034000" />
-      <workItem from="1734181940321" duration="14502000" />
-    </task>
-    <task id="LOCAL-01645" summary="dev">
-      <option name="closed" value="true" />
-      <created>1729864194575</created>
-      <option name="number" value="01645" />
-      <option name="presentableId" value="LOCAL-01645" />
-      <option name="project" value="LOCAL" />
-      <updated>1729864194575</updated>
+      <workItem from="1734181940321" duration="15642000" />
     </task>
     <task id="LOCAL-01646" summary="dev">
       <option name="closed" value="true" />
@@ -515,7 +505,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735397332115</updated>
     </task>
-    <option name="localTasksCounter" value="1694" />
+    <task id="LOCAL-01694" summary="dev">
+      <option name="closed" value="true" />
+      <created>1735909238336</created>
+      <option name="number" value="01694" />
+      <option name="presentableId" value="LOCAL-01694" />
+      <option name="project" value="LOCAL" />
+      <updated>1735909238336</updated>
+    </task>
+    <option name="localTasksCounter" value="1695" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

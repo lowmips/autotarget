@@ -16,7 +16,7 @@ ws_klines.addEventListener('open', function(event) {
     const lastBar = subscriptionItem.lastBar;
     const ts = lastBar.time;
     console.log('reconnecting from '+ts);
-    let json_str = JSON.stringify({'SubResume': { channel: [channelString], last_ts: ts }});
+    let json_str = JSON.stringify({'SubResume': { channel: channelString, last_ts: ts }});
     ws_klines.send(json_str);
 });
 ws_klines.addEventListener('close', function(event) {
