@@ -1,4 +1,4 @@
-import { parseFullSymbol } from './helpers.js';
+import { parseFullSymbol, waitForSocketConnection } from './helpers.js';
 
 const ws_klines = new RobustWebSocket('wss://www.lowmips.com/autotarget/wss/');
 let ws_was_closed = false;
@@ -153,8 +153,11 @@ export function subscribeOnStream(
     };
     channelToSubscription.set(channelString, subscriptionItem);
     //console.log('[subscribeBars]: Subscribe to streaming. Channel:', channelString);
-    let json_str = JSON.stringify({'SubAdd': { subs: [channelString] }});
-    ws_klines.send(json_str);
+
+    waitForSocketConnection(ws_klines, function(){
+        let json_str = JSON.stringify({'SubAdd': { subs: [channelString] }});
+        ws_klines.send(json_str);
+    });
 }
 
 export function unsubscribeFromStream(subscriberUID) {
