@@ -1,6 +1,13 @@
 import { parseFullSymbol, waitForSocketConnection } from './helpers.js';
 
-const ws_klines = new RobustWebSocket('wss://www.lowmips.com/autotarget/wss/');
+const ws_klines = new RobustWebSocket('wss://www.lowmips.com/autotarget/wss/', null, {
+    timeout: 4000,
+    shouldReconnect: function(event, ws) {
+        if (event.code === 1008 || event.code === 1011) return;
+        return Math.pow(1.5, ws.attempts) * 500;
+    },
+    automaticOpen: true,
+});
 let ws_was_closed = false;
 
 ws_klines.addEventListener('open', function(event) {
@@ -111,7 +118,6 @@ ws_klines.addEventListener('message', function(event) {
 });
 
 const channelToSubscription = new Map();
-window.cToS = channelToSubscription;
 
 export function subscribeOnStream(
     symbolInfo,
