@@ -10,6 +10,7 @@ const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets
     },
     automaticOpen: true,
 });
+let ws_was_closed = false;
 let targetCache = {};
 window.targetCache = targetCache;
 function addTickerToCache(ticker){
@@ -41,6 +42,16 @@ let subs = {};
 
 ws_targets.addEventListener('open', function(event) {
     console.log('ws_targets [open]' + event);
+
+    // Previously opened and then closed?
+    if(!ws_was_closed) return;
+
+    const parsedSymbol = parseFullSymbol(window.tvStuff.current_symbol);
+    const channelString = `0~${parsedSymbol.exchange}~${parsedSymbol.fromSymbol}~${parsedSymbol.toSymbol}`;
+    const ts = targetCache[window.tvStuff.current_symbol]['latest_target_ts'];
+    console.log('reconnecting from '+ts);
+    let json_str = JSON.stringify({'SubResume': { channel: channelString, last_ts: ts }});
+    ws_targets.send(json_str);
 });
 ws_targets.addEventListener('close', function(event) {
     console.log('ws_targets [close]: code['+event.code+'] reason['+event.reason+'] wasClean['+event.wasClean+']');
@@ -119,7 +130,7 @@ async function handleMsg(msg_str){
     //if('targets' in msg) await handleTargetMsg(msg);
     if('targets' in msg)
         handleTargetMsg(msg).then(result => {
-            console.log('handleMsg ==> handleTargetMsg promise is done!');
+            //console.log('handleMsg ==> handleTargetMsg promise is done!');
         }).catch(error => alert(error.message));
 
     if('ranges' in msg) await handleRangeMsg(msg);

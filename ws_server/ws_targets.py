@@ -301,8 +301,55 @@ async def handle_msg(websocket, msg):
                 subs_to_ws[pair_id] = []
             subs_to_ws[pair_id].append(websocket.id.hex)
 
+    if 'SubResume' in msg_obj:
+        print('SubResume')
+        if not 'channel' in msg_obj['SubResume'] or not 'last_ts' in msg_obj['SubResume']:
+            reason = 'invalid SubResume definition, closing connection'
+            print(reason)
+            await websocket.close(code=1000, reason=reason)
+            return
+        sub_list = msg_obj['SubResume']['channel'].split('~')
+        if len(sub_list) != 4:
+            reason = 'invalid sub resume definition, closing connection'
+            print(reason)
+            await websocket.close(code=1000, reason=reason)
+            return
+        ignore_me = sub_list[0]
+        exchange = sub_list[1]
+        from_token = sub_list[2]
+        to_token = sub_list[3]
+        # check for valid exchange and token
+        if not check_subscription(exchange, from_token, to_token):
+            reason = 'invalid sub: {e}:{f}:{t}, closing connection'.format(e=exchange, f=from_token, t=to_token)
+            print(reason)
+            await websocket.close(code=1000, reason=reason)
+            return
+        pair_id = targets_available[exchange]['pairs'][from_token][to_token]['pair_id']
+
+        # add to subscription structures
+        if not exchange in ws_connected[websocket.id.hex]['subs']:
+            ws_connected[websocket.id.hex]['subs'][exchange] = {}
+        if not from_token in ws_connected[websocket.id.hex]['subs'][exchange]:
+            ws_connected[websocket.id.hex]['subs'][exchange][from_token] = {}
+        if to_token in ws_connected[websocket.id.hex]['subs'][exchange][from_token]:
+            print('already subscribed')
+            return
+        else:
+            ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = pair_id
+
+        # find any missing targets and/or ranges
+
+
+
+
+
+        # add the pair_id -> websocket[] reverse lookup
+        if not pair_id in subs_to_ws:
+            subs_to_ws[pair_id] = []
+        subs_to_ws[pair_id].append(websocket.id.hex)
+
+
     if 'SubRemove' in msg_obj:
-        pass
         if 'subs' in msg_obj['SubRemove']:
             for sub in msg_obj['SubRemove']['subs']:
                 print('sub: '+sub)
