@@ -350,6 +350,7 @@ async def handle_msg(websocket, msg):
         targets = mdb.query_get_all(q)
         for target in targets:
             msg_updates['targets'].append({
+                'target_type': target.target_type,
                 'ts_start': target.ts_end,
                 'ts_end': target.ts_hit,
                 'ts_latest': target.ts_latest
@@ -358,8 +359,18 @@ async def handle_msg(websocket, msg):
                 })
 
         # find any missing ranges
-
-
+        tbl_ranges = "span_targets_ranges_{pid}".format(pid=pair_id)
+        q = "SELECT * FROM `{tbl}` WHERE `ts`>'{ts}' ORDER BY ts ASC".format(tbl=tbl_ranges, tt=TARGET_TYPE, ts=last_ts)
+        ranges = mdb.query_get_all(q)
+        for range in ranges:
+            msg_updates['ranges'].append({
+                'ts': range.ts,
+                'target_type': range.target_type,
+                'price_high': range.price_high,
+                'price_low': range.price_low
+                'price_when_made': range.price_when_made,
+                'target_count': range.target_count,
+                })
 
 
         # send updates

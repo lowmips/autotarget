@@ -237,12 +237,14 @@ async function handleTargetMsg(msg, sendtoback){
         let ts_latest = parseInt(update.ts_latest);
         let target_price = parseFloat(update.target_price);
         let target_count = parseInt(update.target_count);
+        let target_type = update.target_type;
         let new_target = {
             ts_start,
             ts_end,
             ts_latest,
             target_price,
             target_count,
+            target_type,
         };
 
         if(target_count < window.tvStuff.targets.requesting.target_count.min) return;
