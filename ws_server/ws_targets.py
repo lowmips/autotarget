@@ -29,6 +29,7 @@ pair_id_info = {} # pair_id => exchange, from_token, to_token
 pair_id_latest_targets = {} # pair_id => targets[]
 pair_id_latest_ranges = {} # pair_id => ranges[]
 main_loop_max_wait = 5 # we'll wait at most 5 seconds between updated target lookups
+TARGET_TYPE = '1.786'
 
 def get_config():
     global config
@@ -42,6 +43,7 @@ async def handle_closed_ws(websocket):
             subs_to_ws[pair_id].remove(websocket.id.hex)
 
 async def main_loop():
+    global TARGET_TYPE
     mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
     pair_count = 0
 
@@ -105,7 +107,7 @@ async def main_loop():
             has_ranges = False
 
             # Find updated target_groups
-            q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}' AND `target_type` IN ('1.786') ".format(mi=pair_id)
+            q = "SELECT * FROM `target_groups_latest` WHERE `meta_id`='{mi}' AND `target_type` IN ('{tt}') ".format(mi=pair_id, tt=TARGET_TYPE)
             latest_rows = mdb.query_get_all(q)
             print('target groups:')
             print(latest_rows)
@@ -119,9 +121,9 @@ async def main_loop():
             q = ("SELECT * " +
                  "FROM span_targets_ranges_{m} " +
                  "WHERE `ts` = (SELECT MAX(ts) from span_targets_ranges_{m}) " +
-                 "AND target_type = '1.786' " +
+                 "AND target_type = '{tt}' " +
                  "AND `target_count` > 1 "
-                 ).format(m=pair_id)
+                 ).format(m=pair_id, tt=TARGET_TYPE)
             latest_rows = mdb.query_get_all(q)
             print('ranges:')
             print(latest_rows)
@@ -159,10 +161,8 @@ async def send_targets_update(pair_id):
         print('pair_id['+str(pair_id)+'] not in pair_id_info')
         return
     pair_info = pair_id_info[pair_id]
-
     targets = pair_id_latest_targets[pair_id]['targets']
     ranges = pair_id_latest_ranges[pair_id]['ranges']
-
     update_info = {
         'pair_info': pair_info,
         'targets': targets,
@@ -242,6 +242,7 @@ async def handle_ws(websocket,path):
             break
 
 async def handle_msg(websocket, msg):
+    global TARGET_TYPE, mdb
     print('handle_msg()')
     print(msg)
     msg_obj = None
@@ -308,6 +309,7 @@ async def handle_msg(websocket, msg):
             print(reason)
             await websocket.close(code=1000, reason=reason)
             return
+        last_ts = msg_obj['SubResume']['last_ts']
         sub_list = msg_obj['SubResume']['channel'].split('~')
         if len(sub_list) != 4:
             reason = 'invalid sub resume definition, closing connection'
@@ -337,11 +339,43 @@ async def handle_msg(websocket, msg):
         else:
             ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = pair_id
 
-        # find any missing targets and/or ranges
+        msg_updates = {
+            'targets': [],
+            'ranges': [],
+        }
+
+        # find any missing targets
+        tbl_targets = "target_groups_{pid}".format(pid=pair_id)
+        q = "SELECT * FROM `{tbl}` WHERE `target_type`='{tt}' AND `last_update_ts`>'{ts}' ORDER BY `last_update_ts` ASC".format(tbl=tbl_targets, tt=TARGET_TYPE, ts=last_ts)
+        targets = mdb.query_get_all(q)
+        for target in targets:
+            msg_updates['targets'].append({
+                'ts_start': target.ts_end,
+                'ts_end': target.ts_hit,
+                'ts_latest': target.ts_latest
+                'target_price': target.target_price,
+                'target_count': target.target_count,
+                })
+
+        # find any missing ranges
 
 
 
 
+        # send updates
+        update_str = json.dumps(msg_updates, cls=DecimalEncoder).replace("\"`",'').replace("`\"",'')
+        print('update is [{us}]'.format(us=update_str))
+        print('sending update to websocket ['+websocket.id.hex+']')
+        try:
+            await ws_connected[websocket.id.hex]['ws'].send(update_str)
+        except websockets.ConnectionClosedOK:
+            print('websockets.ConnectionClosedOK' + websocket.id.hex)
+            await handle_closed_ws(ws_connected[websocket.id.hex]['ws'])
+        except websockets.exceptions.ConnectionClosedError:
+            print('websockets.exceptions.ConnectionClosedError')
+            await handle_closed_ws(ws_connected[websocket.id.hex]['ws'])
+        except e:
+            print('generic exception caught: ' + e)
 
         # add the pair_id -> websocket[] reverse lookup
         if not pair_id in subs_to_ws:
