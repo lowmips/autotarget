@@ -367,7 +367,7 @@ async def handle_msg(websocket, msg):
                 'ts': range.ts,
                 'target_type': range.target_type,
                 'price_high': range.price_high,
-                'price_low': range.price_low
+                'price_low': range.price_low,
                 'price_when_made': range.price_when_made,
                 'target_count': range.target_count,
                 })
