@@ -349,6 +349,7 @@ async def handle_msg(websocket, msg):
         q = "SELECT * FROM `{tbl}` WHERE `target_type`='{tt}' AND `last_update_ts`>'{ts}' ORDER BY `last_update_ts` ASC".format(tbl=tbl_targets, tt=TARGET_TYPE, ts=last_ts)
         targets = mdb.query_get_all(q)
         for target in targets:
+            print(target)
             msg_updates['targets'].append({
                 'target_type': target.target_type,
                 'ts_start': target.ts_end,
