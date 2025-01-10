@@ -43,7 +43,7 @@ async def handle_closed_ws(websocket):
             subs_to_ws[pair_id].remove(websocket.id.hex)
 
 async def main_loop():
-    global TARGET_TYPE
+    global TARGET_TYPE, mdb
     mdb = mysqlDBC(config['mysql']['username'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
     pair_count = 0
 
