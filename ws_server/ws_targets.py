@@ -327,6 +327,7 @@ async def handle_msg(websocket, msg):
             await websocket.close(code=1000, reason=reason)
             return
         pair_id = targets_available[exchange]['pairs'][from_token][to_token]['pair_id']
+        pair_info = pair_id_info[pair_id]
 
         # add to subscription structures
         if not exchange in ws_connected[websocket.id.hex]['subs']:
@@ -340,6 +341,7 @@ async def handle_msg(websocket, msg):
             ws_connected[websocket.id.hex]['subs'][exchange][from_token][to_token] = pair_id
 
         msg_updates = {
+            'pair_info': pair_info,
             'targets': [],
             'ranges': [],
         }
