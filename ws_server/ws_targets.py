@@ -78,8 +78,8 @@ async def main_loop():
                     "pair_id": pair_id,
                 }
             if not pair_id in pair_id_latest_targets:
-                pair_id_latest_targets[pair_id] = {"targets": None}
-                pair_id_latest_ranges[pair_id] = {"ranges": None}
+                pair_id_latest_targets[pair_id] = {"targets": []}
+                pair_id_latest_ranges[pair_id] = {"ranges": []}
             if not pair_id in pair_id_info:
                 pair_id_info[pair_id] = {
                     "exchange": exchange,
