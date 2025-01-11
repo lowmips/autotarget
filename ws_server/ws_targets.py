@@ -354,7 +354,7 @@ async def handle_msg(websocket, msg):
                 'target_type': target['target_type'],
                 'ts_start': target['ts_end'],
                 'ts_end': target['ts_hit'],
-                'ts_latest': target['ts_latest'],
+                'ts_latest': target['last_update_ts'],
                 'target_price': target['target_price'],
                 'target_count': target['target_count'],
                 })
