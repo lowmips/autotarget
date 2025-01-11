@@ -351,12 +351,12 @@ async def handle_msg(websocket, msg):
         for target in targets:
             print(target)
             msg_updates['targets'].append({
-                'target_type': target.target_type,
-                'ts_start': target.ts_end,
-                'ts_end': target.ts_hit,
-                'ts_latest': target.ts_latest,
-                'target_price': target.target_price,
-                'target_count': target.target_count,
+                'target_type': target['target_type'],
+                'ts_start': target['ts_end'],
+                'ts_end': target['ts_hit'],
+                'ts_latest': target['ts_latest'],
+                'target_price': target['target_price'],
+                'target_count': target['target_count'],
                 })
 
         # find any missing ranges
@@ -365,12 +365,12 @@ async def handle_msg(websocket, msg):
         ranges = mdb.query_get_all(q)
         for range in ranges:
             msg_updates['ranges'].append({
-                'ts': range.ts,
-                'target_type': range.target_type,
-                'price_high': range.price_high,
-                'price_low': range.price_low,
-                'price_when_made': range.price_when_made,
-                'target_count': range.target_count,
+                'ts': range['ts'],
+                'target_type': range['target_type'],
+                'price_high': range['price_high'],
+                'price_low': range['price_low'],
+                'price_when_made': range['price_when_made'],
+                'target_count': range['target_count'],
                 })
 
 
