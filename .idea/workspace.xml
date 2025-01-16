@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../klengine/check_target_hit.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/check_target_hit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../klengine/sql/klines_meta.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/sql/klines_meta.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,15 +120,7 @@
       <workItem from="1732375200639" duration="13180000" />
       <workItem from="1734005737613" duration="5034000" />
       <workItem from="1734181940321" duration="35395000" />
-      <workItem from="1736942882916" duration="4949000" />
-    </task>
-    <task id="LOCAL-01671" summary="dev">
-      <option name="closed" value="true" />
-      <created>1732751818940</created>
-      <option name="number" value="01671" />
-      <option name="presentableId" value="LOCAL-01671" />
-      <option name="project" value="LOCAL" />
-      <updated>1732751818940</updated>
+      <workItem from="1736942882916" duration="5272000" />
     </task>
     <task id="LOCAL-01672" summary="dev">
       <option name="closed" value="true" />
@@ -515,7 +506,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736973622230</updated>
     </task>
-    <option name="localTasksCounter" value="1720" />
+    <task id="LOCAL-01720" summary="dev">
+      <option name="closed" value="true" />
+      <created>1737032339049</created>
+      <option name="number" value="01720" />
+      <option name="presentableId" value="LOCAL-01720" />
+      <option name="project" value="LOCAL" />
+      <updated>1737032339049</updated>
+    </task>
+    <option name="localTasksCounter" value="1721" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
