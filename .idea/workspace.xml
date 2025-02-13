@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev" />
+    <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
+      <change beforePath="$PROJECT_DIR$/../klengine/fix_targets_by_klines.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/fix_targets_by_klines.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -120,15 +122,7 @@
       <workItem from="1734181940321" duration="35395000" />
       <workItem from="1736942882916" duration="12820000" />
       <workItem from="1738180973364" duration="12849000" />
-      <workItem from="1739361948109" duration="2106000" />
-    </task>
-    <task id="LOCAL-01696" summary="dev">
-      <option name="closed" value="true" />
-      <created>1736191946998</created>
-      <option name="number" value="01696" />
-      <option name="presentableId" value="LOCAL-01696" />
-      <option name="project" value="LOCAL" />
-      <updated>1736191946998</updated>
+      <workItem from="1739361948109" duration="2623000" />
     </task>
     <task id="LOCAL-01697" summary="dev">
       <option name="closed" value="true" />
@@ -514,7 +508,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739363826231</updated>
     </task>
-    <option name="localTasksCounter" value="1745" />
+    <task id="LOCAL-01745" summary="dev">
+      <option name="closed" value="true" />
+      <created>1739394791354</created>
+      <option name="number" value="01745" />
+      <option name="presentableId" value="LOCAL-01745" />
+      <option name="project" value="LOCAL" />
+      <updated>1739394791354</updated>
+    </task>
+    <option name="localTasksCounter" value="1746" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
