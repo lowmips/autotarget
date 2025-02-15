@@ -120,23 +120,7 @@
       <workItem from="1734181940321" duration="35395000" />
       <workItem from="1736942882916" duration="12820000" />
       <workItem from="1738180973364" duration="12849000" />
-      <workItem from="1739361948109" duration="7197000" />
-    </task>
-    <task id="LOCAL-01708" summary="dev">
-      <option name="closed" value="true" />
-      <created>1736553478967</created>
-      <option name="number" value="01708" />
-      <option name="presentableId" value="LOCAL-01708" />
-      <option name="project" value="LOCAL" />
-      <updated>1736553478967</updated>
-    </task>
-    <task id="LOCAL-01709" summary="dev">
-      <option name="closed" value="true" />
-      <created>1736553842202</created>
-      <option name="number" value="01709" />
-      <option name="presentableId" value="LOCAL-01709" />
-      <option name="project" value="LOCAL" />
-      <updated>1736553842202</updated>
+      <workItem from="1739361948109" duration="7545000" />
     </task>
     <task id="LOCAL-01710" summary="dev">
       <option name="closed" value="true" />
@@ -514,7 +498,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739577595307</updated>
     </task>
-    <option name="localTasksCounter" value="1757" />
+    <task id="LOCAL-01757" summary="dev">
+      <option name="closed" value="true" />
+      <created>1739577779337</created>
+      <option name="number" value="01757" />
+      <option name="presentableId" value="LOCAL-01757" />
+      <option name="project" value="LOCAL" />
+      <updated>1739577779337</updated>
+    </task>
+    <task id="LOCAL-01758" summary="dev">
+      <option name="closed" value="true" />
+      <created>1739577834974</created>
+      <option name="number" value="01758" />
+      <option name="presentableId" value="LOCAL-01758" />
+      <option name="project" value="LOCAL" />
+      <updated>1739577834974</updated>
+    </task>
+    <option name="localTasksCounter" value="1759" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
