@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../klengine/sql/templates/targets.py" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine/sql/templates/targets.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,15 +122,7 @@
       <workItem from="1734181940321" duration="35395000" />
       <workItem from="1736942882916" duration="12820000" />
       <workItem from="1738180973364" duration="12849000" />
-      <workItem from="1739361948109" duration="14447000" />
-    </task>
-    <task id="LOCAL-01727" summary="dev">
-      <option name="closed" value="true" />
-      <created>1737722187343</created>
-      <option name="number" value="01727" />
-      <option name="presentableId" value="LOCAL-01727" />
-      <option name="project" value="LOCAL" />
-      <updated>1737722187343</updated>
+      <workItem from="1739361948109" duration="14483000" />
     </task>
     <task id="LOCAL-01728" summary="dev">
       <option name="closed" value="true" />
@@ -516,7 +508,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739708928126</updated>
     </task>
-    <option name="localTasksCounter" value="1776" />
+    <task id="LOCAL-01776" summary="dev">
+      <option name="closed" value="true" />
+      <created>1739882491144</created>
+      <option name="number" value="01776" />
+      <option name="presentableId" value="LOCAL-01776" />
+      <option name="project" value="LOCAL" />
+      <updated>1739882491144</updated>
+    </task>
+    <option name="localTasksCounter" value="1777" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
