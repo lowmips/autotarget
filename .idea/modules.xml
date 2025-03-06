@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/autotarget.iml" filepath="$PROJECT_DIR$/.idea/autotarget.iml" />
       <module fileurl="file://$PROJECT_DIR$/../get_klines_rabbitmq/.idea/get_klines_rabbitmq.iml" filepath="$PROJECT_DIR$/../get_klines_rabbitmq/.idea/get_klines_rabbitmq.iml" />
       <module fileurl="file://$PROJECT_DIR$/../klengine/.idea/klengine.iml" filepath="$PROJECT_DIR$/../klengine/.idea/klengine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../klengine_targets/.idea/klengine_targets.iml" filepath="$PROJECT_DIR$/../klengine_targets/.idea/klengine_targets.iml" />
       <module fileurl="file://$PROJECT_DIR$/../mexc-klines/.idea/mexc-klines.iml" filepath="$PROJECT_DIR$/../mexc-klines/.idea/mexc-klines.iml" />
     </modules>
   </component>

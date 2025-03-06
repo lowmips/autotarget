@@ -7,5 +7,6 @@
     <orderEntry type="module" module-name="get_klines_rabbitmq" />
     <orderEntry type="module" module-name="mexc-klines" />
     <orderEntry type="module" module-name="klengine" />
+    <orderEntry type="module" module-name="klengine_targets" />
   </component>
 </module>

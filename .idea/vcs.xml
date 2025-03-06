@@ -5,6 +5,7 @@
     <mapping directory="$PROJECT_DIR$/robust-websocket" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../get_klines_rabbitmq" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../klengine" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../klengine_targets" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../mexc-klines" vcs="Git" />
   </component>
 </project>
