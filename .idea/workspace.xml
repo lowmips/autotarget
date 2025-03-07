@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
-      <change afterPath="$PROJECT_DIR$/../klengine_targets/configs/spans.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../klengine_targets/targets_ut.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,22 +48,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/reggi/PhpstormProjects/klengine_targets/configs&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/reggi/PhpstormProjects/klengine_targets/configs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\reggi\PhpstormProjects\klengine_targets\configs" />
@@ -129,15 +128,8 @@
       <workItem from="1739361948109" duration="27960000" />
       <workItem from="1741176453416" duration="897000" />
       <workItem from="1741222528060" duration="235000" />
-      <workItem from="1741264140957" duration="28000" />
-    </task>
-    <task id="LOCAL-01737" summary="dev">
-      <option name="closed" value="true" />
-      <created>1739277263941</created>
-      <option name="number" value="01737" />
-      <option name="presentableId" value="LOCAL-01737" />
-      <option name="project" value="LOCAL" />
-      <updated>1739277263941</updated>
+      <workItem from="1741264140957" duration="663000" />
+      <workItem from="1741297702030" duration="676000" />
     </task>
     <task id="LOCAL-01738" summary="dev">
       <option name="closed" value="true" />
@@ -523,7 +515,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741263477400</updated>
     </task>
-    <option name="localTasksCounter" value="1786" />
+    <task id="LOCAL-01786" summary="dev">
+      <option name="closed" value="true" />
+      <created>1741264953357</created>
+      <option name="number" value="01786" />
+      <option name="presentableId" value="LOCAL-01786" />
+      <option name="project" value="LOCAL" />
+      <updated>1741264953357</updated>
+    </task>
+    <option name="localTasksCounter" value="1787" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
