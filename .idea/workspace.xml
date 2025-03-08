@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0c524bc-d278-4cc2-97a0-5184b9814298" name="Changes" comment="dev">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../klengine_targets/prompts/main.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../klengine_targets/prompts/main.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -131,15 +130,7 @@
       <workItem from="1741222528060" duration="235000" />
       <workItem from="1741264140957" duration="663000" />
       <workItem from="1741297702030" duration="676000" />
-      <workItem from="1741350426509" duration="4261000" />
-    </task>
-    <task id="LOCAL-01752" summary="dev">
-      <option name="closed" value="true" />
-      <created>1739452013989</created>
-      <option name="number" value="01752" />
-      <option name="presentableId" value="LOCAL-01752" />
-      <option name="project" value="LOCAL" />
-      <updated>1739452013989</updated>
+      <workItem from="1741350426509" duration="4326000" />
     </task>
     <task id="LOCAL-01753" summary="dev">
       <option name="closed" value="true" />
@@ -525,7 +516,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741394412293</updated>
     </task>
-    <option name="localTasksCounter" value="1801" />
+    <task id="LOCAL-01801" summary="dev">
+      <option name="closed" value="true" />
+      <created>1741394812627</created>
+      <option name="number" value="01801" />
+      <option name="presentableId" value="LOCAL-01801" />
+      <option name="project" value="LOCAL" />
+      <updated>1741394812627</updated>
+    </task>
+    <option name="localTasksCounter" value="1802" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
