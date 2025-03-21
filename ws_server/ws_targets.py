@@ -116,7 +116,7 @@ async def main_loop():
             print(latest_rows)
             if len(latest_rows) > 0:
                 latest_rows_str = json.dumps(latest_rows, cls=DecimalEncoder).replace("\"`",'').replace("`\"",'')
-                latest_targets_str = json.dumps(pair_id_latest_targets[pair_id]['targets'])
+                latest_targets_str = json.dumps(pair_id_latest_targets[pair_id]['targets'], cls=DecimalEncoder)
                 if latest_rows_str != latest_targets_str:
                     pair_id_latest_targets[pair_id]['targets'] = latest_rows
                     has_updates = True
