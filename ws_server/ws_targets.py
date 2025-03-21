@@ -13,7 +13,9 @@ from zmysql import mysqlDBC
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, decimal.Decimal):
-            return '`'+str(o)+'`' #` is special, will be removed later
+            return '`' + str(o) + '`'  # ` is special, will be removed later
+        elif isinstance(o, datetime.datetime):  # Handle datetime objects
+            return o.isoformat()  # Convert to ISO 8601 string
         return super(DecimalEncoder, self).default(o)
 
 config = None
