@@ -1,5 +1,5 @@
 import { parseFullSymbol } from './helpers.js';
-import { colors }from './colors.js';
+import { colors, tierRanges }from './colors.js';
 import {addItem, waitForAndRemoveItem} from "./waitqueue.js";
 
 const ws_targets = new RobustWebSocket('wss://www.lowmips.com/autotarget/targets/', null, {
@@ -256,9 +256,13 @@ async function handleTargetMsg(msg, sendtoback){
 
         // determine target color
         let target_color;
-        let target_tier_name = 'COLOR_TIER_' + new_target.target_count;
-        if(!(target_tier_name in colors))  target_color = '#FFFFFF';
-        else target_color = colors[target_tier_name];
+        if (new_target.target_count > 50000) {
+            target_color = '#FFFFFF';
+        } else {
+            const targetTier = tierRanges.find(range => new_target.target_count <= range.max);
+            const target_tier_name = `COLOR_TIER_${targetTier ? targetTier.tier : 1}`;
+            target_color = colors[target_tier_name] || '#FFFFFF';
+        }
 
         let shape_type = (new_target.ts_end > new_target.ts_start?'trend_line':'horizontal_ray');
         new_target['shape_type'] = shape_type;
