@@ -124,7 +124,7 @@ $q = "SELECT * ".
     "AND `ts_end`>='$min_found_ts' ".
     "AND `ts_end`<='$max_found_ts' ".
     //"AND `target_count`>='$min_target_count' ".
-    "AND `target_count`>='150' ".
+    "AND `target_count`>='100' ".
     "ORDER BY `ts_end` DESC ";
 #echo $q; exit;
 //$update_obj['dbg'][] = $q;
