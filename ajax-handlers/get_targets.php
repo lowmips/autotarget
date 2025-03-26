@@ -119,8 +119,8 @@ $q = "SELECT * ".
     "FROM `$tbl_targets_name_sql` ".
     "WHERE 1 ".
     //"AND `target_price`='62690.22' ". // DEBUG
-    //"AND `target_type`='1.786' ".
-    "AND `target_type` != 'all' ".
+    "AND `target_type`='1.786' ".
+    //"AND `target_type` != 'all' ".
     "AND `ts_end`>='$min_found_ts' ".
     "AND `ts_end`<='$max_found_ts' ".
     //"AND `target_count`>='$min_target_count' ".
