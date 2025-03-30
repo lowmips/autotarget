@@ -1,4 +1,6 @@
 <?php
+require_once('../auth.php');
+force_login(); // Ensure user is logged in
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once('../defines.php');
