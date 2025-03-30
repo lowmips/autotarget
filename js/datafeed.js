@@ -69,7 +69,7 @@ export default {
         //const bars = new Array(periodParams.countBack + 1);
 
         const pathWithoutScript = location.pathname.split('/').slice(0, -1).join('/');
-        const cleanPath = ('/' + pathWithoutScript.split('/').filter(Boolean).join('/')) + '\';
+        const cleanPath = ('/' + pathWithoutScript.split('/').filter(Boolean).join('/')) + '/';
 
         const kline_request_url = location.protocol + '//' + location.host + cleanPath + 'ajax-handlers/get_klines.php?resolution=' + resolution + '&from=' + periodParams.from + '&to=' + periodParams.to;
         //console.log('kline_request_url: ' + kline_request_url);
