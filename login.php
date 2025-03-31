@@ -60,6 +60,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $disabled === '') {
     <input type="password" id="password" name="password" required><br><br>
     <button type="submit" <?php echo $disabled; ?> >Login</button>
 </form>
-<p>Don't have an account? <a href="register.php">Register</a></p>
 </body>
 </html>
