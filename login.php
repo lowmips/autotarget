@@ -47,16 +47,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $disabled === '') {
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
-<h1>Login</h1>
-<?php if ($login_error): ?>
-    <p style="color: red;"><?php echo $login_error; ?></p>
-<?php endif; ?>
 <form method="post">
-    <label for="username">Username:</label><br>
+    <h1>Login</h1>
+    <?php if ($login_error): ?>
+        <p class="error"><?php echo $login_error; ?></p>
+    <?php endif; ?>
+    <label for="username">Username:</label>
     <input type="text" id="username" name="username" required><br><br>
-    <label for="password">Password:</label><br>
+    <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br><br>
     <button type="submit" <?php echo $disabled; ?> >Login</button>
 </form>

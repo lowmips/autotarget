@@ -1,0 +1,64 @@
+/* login.css */
+
+body {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Make sure it takes up the full viewport height */
+    margin: 0; /* Remove default body margin */
+    font-family: sans-serif;
+}
+
+form {
+    background-color: #222; /* Darker background for the form */
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px; /* Adjust the width as needed */
+    text-align: center; /* Center the form elements */
+}
+
+label,
+input,
+button {
+    margin-bottom: 10px; /* Add spacing below labels, inputs, and the button */
+    display: block; /* Make them block-level elements */
+    width: 100%; /* Make them take the full width of the form */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #555;
+    background-color: #333;
+    color: #fff;
+    border-radius: 3px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #777;
+    cursor: not-allowed;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    text-align: center;
+}
+
+p.error {
+    color: red;
+}
