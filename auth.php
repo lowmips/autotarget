@@ -29,9 +29,33 @@ function force_login() {
     }
 }
 
+// Function to validate username
+function validate_username(string $username): bool {
+    // Example: Only allow alphanumeric characters and underscores, length between 3 and 20
+    return preg_match('/^[a-zA-Z0-9_]{3,20}$/', $username) === 1;
+}
+
+// Function to validate password
+function validate_password(string $password): bool {
+    // Example: Minimum 8 characters, at least one uppercase, one lowercase, and one number
+    return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password) === 1;
+}
+
+// Function to validate email
+function validate_email(string $email): bool {
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
+
 // Login function
 function login_user(string $username, string $password): bool {
     global $mysqli;
+
+    if (!validate_username($username)) {
+        return false; // Invalid username format
+    }
+    if (!validate_password($password)){
+        return false; // Invalid password format.
+    }
 
     $username = $mysqli->real_escape_string($username); // Prevent SQL injection
 

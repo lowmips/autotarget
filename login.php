@@ -4,15 +4,42 @@ require_once('auth.php');
 $login_error = '';
 $redirect_url = isset($_GET['redirect']) ? $_GET['redirect'] : 'index.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Rate Limiting - Store login attempts in session
+$max_attempts = 5; // Maximum login attempts
+$lockout_time = 60; // Lockout time in seconds
+
+if (!isset($_SESSION['login_attempts'])) {
+    $_SESSION['login_attempts'] = 0;
+}
+
+if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
+    $remaining_time = $_SESSION['lockout_time'] - time();
+    $login_error = "Too many failed login attempts. Please wait " . $remaining_time . " seconds before trying again.";
+    $disabled = 'disabled'; // Disable the login button
+} else {
+    $disabled = '';
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $disabled === '') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     if (login_user($username, $password)) {
+        // Reset login attempts on successful login
+        $_SESSION['login_attempts'] = 0;
+        unset($_SESSION['lockout_time']);
+
         header("Location: " . $redirect_url); // Redirect to the original page
         exit;
     } else {
-        $login_error = 'Invalid username or password.';
+        $_SESSION['login_attempts']++;
+        if ($_SESSION['login_attempts'] >= $max_attempts) {
+            $_SESSION['lockout_time'] = time() + $lockout_time;
+            $login_error = "Too many failed login attempts. Please wait " . $lockout_time . " seconds before trying again.";
+            $disabled = 'disabled'; // Disable the login button
+        } else {
+            $login_error = 'Invalid username or password.';
+        }
     }
 }
 ?>
@@ -31,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="text" id="username" name="username" required><br><br>
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password" required><br><br>
-    <button type="submit">Login</button>
+    <button type="submit" <?php echo $disabled; ?> >Login</button>
 </form>
 <p>Don't have an account? <a href="register.php">Register</a></p>
 </body>
