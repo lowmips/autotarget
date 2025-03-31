@@ -20,6 +20,11 @@ function is_logged_in(): bool {
     return isset($_SESSION['user_id']);
 }
 
+// Function to check if the user is an admin
+function is_admin(): bool {
+    return isset($_SESSION['admin']) && $_SESSION['admin'] === true;
+}
+
 // Function to force login (redirect if not logged in)
 function force_login() {
     if (!is_logged_in()) {
@@ -28,6 +33,15 @@ function force_login() {
         exit;
     }
 }
+
+// Function to force admin login (redirect if not admin)
+function force_admin() {
+    force_login(); // Must be logged in first
+    if (!is_admin()) {
+        die("You do not have permission to access this page."); // Or redirect to an error page
+    }
+}
+
 
 // Function to validate username
 function validate_username(string $username): bool {
@@ -59,7 +73,7 @@ function login_user(string $username, string $password): bool {
 
     $username = $mysqli->real_escape_string($username); // Prevent SQL injection
 
-    $query = "SELECT id, username, password FROM users WHERE username = '$username'";
+    $query = "SELECT id, username, password, admin FROM users WHERE username = '$username'";
     $result = $mysqli->query($query);
 
     if ($result && $result->num_rows === 1) {
@@ -68,6 +82,7 @@ function login_user(string $username, string $password): bool {
             // Password is correct, create session
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['admin'] = (bool)$user['admin']; // Store admin status in session
             session_regenerate_id(true); // Prevent session fixation
             return true; // Login successful
         }

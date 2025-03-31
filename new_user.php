@@ -1,5 +1,6 @@
 <?php
-require_once('auth.php'); // Include auth.php for password hashing function
+require_once('auth.php');
+force_admin(); // Only admins can access this page
 
 $registration_error = '';
 
@@ -7,6 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $email = $_POST['email']; // Get email from the form
+    $admin = isset($_POST['admin']) && $_POST['admin'] === '1'; // Check if admin checkbox is checked
+
     global $mysqli;
 
     // Validate input (add more robust validation as needed)
@@ -14,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $registration_error = 'All fields are required.';
     }  elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // Validate email format
         $registration_error = 'Invalid email format.';
-    } else {
+    }  else {
         // Sanitize input
         $username = $mysqli->real_escape_string($username);
         $email = $mysqli->real_escape_string($email); // Sanitize the email
@@ -29,13 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($check_result && $check_result->num_rows > 0) {
             $registration_error = 'Username already exists.';
         } else {
-            // Insert the new user into the database (including email)
-            $insert_query = "INSERT INTO users (username, password, email) VALUES ('$username', '$hashed_password', '$email')";
+            // Insert the new user into the database (including admin)
+            $insert_query = "INSERT INTO users (username, password, email, admin) VALUES ('$username', '$hashed_password', '$email', '$admin')";
 
             if ($mysqli->query($insert_query)) {
-                // Registration successful, redirect to login
-                header("Location: login.php");
-                exit;
+                // Registration successful
+                $registration_success = 'User registered successfully!';
+                // Optionally, clear the form fields after successful registration
+                $username = '';
+                $email = '';
             } else {
                 $registration_error = 'Registration failed: ' . $mysqli->error;
             }
@@ -46,10 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>New User Registration (Admin Only)</title>
 </head>
 <body>
-<h1>Register</h1>
+<h1>New User Registration (Admin Only)</h1>
+<?php if (isset($registration_success)): ?>
+    <p style="color: green;"><?php echo $registration_success; ?></p>
+<?php endif; ?>
 <?php if ($registration_error): ?>
     <p style="color: red;"><?php echo $registration_error; ?></p>
 <?php endif; ?>
@@ -58,10 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="text" id="username" name="username" required><br><br>
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password" required><br><br>
-    <label for="email">Email:</label><br> <!-- Added email field -->
-    <input type="email" id="email" name="email" required><br><br> <!-- Added email input -->
-    <button type="submit">Register</button>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+    <label for="admin">Admin:</label>
+    <input type="checkbox" id="admin" name="admin" value="1"><br><br>
+    <button type="submit">Register User</button>
 </form>
-<p>Already have an account? <a href="login.php">Login</a></p>
+<p><a href="index.php">Back to Chart</a></p>
 </body>
 </html>
