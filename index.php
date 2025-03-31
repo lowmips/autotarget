@@ -21,8 +21,9 @@ force_login(); // Redirect to login page if not logged in
 </head>
 
 <body style="margin:0px;">
-<p style="text-align: right;">Logged in as <?php echo htmlspecialchars($_SESSION['username']); ?>  <a href="logout.php">Logout</a></p>
+<div style="background-color: #f0f0f0; padding: 5px; margin-bottom: 10px; font-size: 12px; line-height: 1.2; text-align: right;">
+    Logged in as <?php echo htmlspecialchars($_SESSION['username']); ?>  <a href="logout.php">Logout</a>
+</div>
 <div id="tv_chart_container"></div>
 </body>
-
 </html>
