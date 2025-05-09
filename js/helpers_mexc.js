@@ -1,46 +1,34 @@
-// Makes requests to MEXC API
-
 export const configurationData =  {
     // Represents the resolutions for bars supported by your datafeed
-    supported_resolutions: ['1','5','15','30','60','120','180','240','6H','12H'],
-    // The `exchanges` arguments are used for the `searchSymbols` method if a user selects the exchange
+    supported_resolutions: ['1','5','15','30','60','120','180','240','D'], // D for Daily, 1W for weekly, 1M for monthly if supported
+    // exchanges and symbols_types are used for the Symbol Search UI
     exchanges: [
-        { value: 'MEXC', name: 'MEXC', desc: 'MEXC'},
+        { value: 'MEXC', name: 'MEXC', desc: 'MEXC Exchange'},
+        // Add other exchanges if your datafeed supports them
     ],
-    // The `symbols_types` arguments are used for the `searchSymbols` method if a user selects this symbol type
     symbols_types: [
-        { name: 'crypto', value: 'crypto'}
-    ]
-}
+        { name: 'Crypto', value: 'crypto'}, // 'crypto' is a common value
+        // Add other symbol types if applicable (e.g., 'stock', 'forex')
+    ],
+    supports_marks: false, // Enable if you support marks on bars
+    supports_timescale_marks: false, // Enable if you support timescale marks
+    supports_group_request: false, // true if your searchSymbols can handle it
+    supports_search: true, // Enable if you have searchSymbols implementation
+    supports_time: true, // Enable if you have getServerTime implementation
+};
 
-/*export async function makeApiRequest(path) {
-    try {
-        const response = await fetch(window.location.href + 'php-cross-domain-proxy/proxy.php',{
-            headers:{
-                'X-Proxy-Url': `https://api.mexc.com/${path}`,
-            },
-        });
-        console.log(response);
-        return response.json();
-    } catch(error) {
-        throw new Error(`MEXC request error: ${error.status}`);
-    }
-}*/
-
-// Generates a symbol ID from a pair of the coins
+// Generates a symbol ID from a pair of the coins (less used if full_name is the standard)
 export function generateSymbol(exchange, fromSymbol, toSymbol) {
-    const short = `${fromSymbol}${toSymbol}`;
+    const short = `${fromSymbol}${toSymbol}`; // e.g., BTCUSDT
     return {
         short,
-        full: `${exchange}:${short}`,
+        full: `${exchange}:${fromSymbol}/${toSymbol}`, // e.g., MEXC:BTC/USDT (more standard for TV)
     };
 }
 
-export function splitSymbolPair(sp){
-    let pair_arr = sp.split('/');
+// Utility to split a pair like "BTC/USDT"
+export function splitSymbolPair(pairString){
+    if (!pairString || !pairString.includes('/')) return {ls: null, rs: null};
+    const pair_arr = pairString.split('/');
     return {ls: pair_arr[0], rs:pair_arr[1]};
-}
-
-export async function getBarsForSymbolStartEnd(){
-
 }

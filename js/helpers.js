@@ -1,20 +1,22 @@
 export function parseFullSymbol(fullSymbol) {
-    const match = fullSymbol.match(/^(\w+):(\w+)\/(\w+)$/);
+    if (!fullSymbol || typeof fullSymbol !== 'string') return null;
+    const match = fullSymbol.match(/^(\w+):([A-Z0-9]+)\/([A-Z0-9]+)$/i); // Made regex more general for symbols
     if (!match) {
+        console.warn("parseFullSymbol: No match for", fullSymbol);
         return null;
     }
-    return { exchange: match[1], fromSymbol: match[2], toSymbol: match[3] };
+    return { exchange: match[1].toUpperCase(), fromSymbol: match[2].toUpperCase(), toSymbol: match[3].toUpperCase() };
 }
 
 export function waitForSocketConnection(socket, callback){
-    setTimeout(
-        function () {
-            if (socket.readyState === 1) {
-                //console.log("Connection is made")
-                if (callback != null) callback();
-            } else {
-                //console.log("wait for connection...")
-                waitForSocketConnection(socket, callback);
-            }
-        }, 10); // wait 5 milisecond for the connection...
+    if (socket.readyState === 1) { // WebSocket.OPEN
+        // console.log("Connection is made");
+        if (callback != null) callback();
+    } else {
+        // console.log("wait for connection...");
+        // Consider adding a timeout or max retries to prevent infinite loops
+        setTimeout(() => {
+            waitForSocketConnection(socket, callback);
+        }, 50); // Increased wait time slightly
+    }
 }
