@@ -63,9 +63,6 @@ while($loop_ts < $to){
         $span_end_ts = $dt_span_end->getTimestamp();
     }
 
-    // Using prepared statements is highly recommended here if table names or columns were variable.
-    // Since they are fixed, real_escape_string for $loop_ts and $span_end_ts (already ints) is less critical
-    // but good practice if they were ever strings.
 
     // OPEN
     $q = "SELECT `open` FROM `klines_1` WHERE `timestamp`>=$loop_ts ORDER BY `timestamp` ASC LIMIT 1;";

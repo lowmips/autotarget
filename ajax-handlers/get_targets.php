@@ -165,29 +165,6 @@ while(($row = $result_targets->fetch_assoc()) !== null){
 }
 $stmt_targets->close();
 
-// Find ranges (ts is the range creation time)
-$q_ranges = "SELECT * ".
-    "FROM `$tbl_ranges_sql` ".
-    "WHERE `target_type` IN $target_types_sql_in ".
-    "AND `ts` BETWEEN ? AND ? ". // $min_ts and $ts_from (chart's visible range)
-    "AND `target_count` > 1 ". // Often want ranges with multiple constituents
-    "ORDER BY `ts` DESC";
-$stmt_ranges = $mysqli->prepare($q_ranges);
-$stmt_ranges->bind_param("ii", $min_ts, $ts_from);
-$stmt_ranges->execute();
-$result_ranges = $stmt_ranges->get_result();
-
-while(($row = $result_ranges->fetch_assoc()) !== null){
-    $update_obj['ranges'][] = [
-        'ts' => (int)$row['ts'],
-        'price_high' => $row['price_high'], // Ensure these are float/string as appropriate
-        'price_low' => $row['price_low'],
-        'price_when_made' => $row['price_when_made'],
-        'target_count' => (int)$row['target_count'],
-        'target_type' => $row['target_type'],
-    ];
-}
-$stmt_ranges->close();
 
 // DONE
 json_and_end($update_obj);
