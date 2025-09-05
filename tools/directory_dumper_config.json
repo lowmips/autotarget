@@ -6,7 +6,7 @@
     "node_modules",
     "dist",
     ".idea",
-    "charting_library"
+    "charting_library*"
   ],
   "skip_files": [
     ".gitignore"

@@ -5,11 +5,13 @@ import sys
 import json
 import time
 from datetime import datetime
+import fnmatch
 
 # Overall purpose:
 # This script scans a specified root directory, identifies its structure and
 # source code files based on a configurable exclusion list, and then dumps
 # all this information into a single timestamped output file.
+# The exclusion configuration supports glob-style wildcards (e.g., *, ?).
 # The output file includes the full path of the scanned directory, the dump
 # date/time, a relative directory tree, and the content of each identified
 # source code file, clearly demarcated.
@@ -57,9 +59,25 @@ def load_config(config_path):
         default_config.update({key: [] for key in default_config})
         return default_config
 
+def matches_any_pattern(name, patterns):
+    """
+    Checks if a name matches any of the glob-style patterns.
+
+    Args:
+        name (str): The string to check (e.g., filename, directory name, extension).
+        patterns (list): A list of glob-style patterns.
+
+    Returns:
+        bool: True if the name matches any pattern, False otherwise.
+    """
+    for pattern in patterns:
+        if fnmatch.fnmatch(name, pattern):
+            return True
+    return False
+
 def find_files_and_dirs(root_dir, config):
     """
-    Walks through the directory tree, applying exclusions from the config.
+    Walks through the directory tree, applying wildcard-based exclusions from the config.
 
     Args:
         root_dir (str): The path to the directory to start traversal from.
@@ -73,26 +91,25 @@ def find_files_and_dirs(root_dir, config):
     structure_paths = []
     source_file_paths = []
 
-    # Use sets for efficient lookups
-    skip_files_set = set(config.get('skip_files', []))
-    skip_extensions_set = set(config.get('skip_extensions', []))
-    skip_directories_set = set(config.get('skip_directories', []))
+    skip_files = config.get('skip_files', [])
+    skip_extensions = config.get('skip_extensions', [])
+    skip_directories = config.get('skip_directories', [])
 
     for dirpath, dirnames, filenames in os.walk(root_dir, topdown=True):
         # --- Directory Exclusion ---
         # Exclude specified directories by modifying dirnames in-place.
-        # os.walk will not descend into these directories.
-        dirnames[:] = [d for d d in dirnames if d not in skip_directories_set]
+        # This now uses wildcard matching.
+        dirnames[:] = [d for d in dirnames if not matches_any_pattern(d, skip_directories)]
 
         # Combine dirs and files for the structure list
         items_in_dir = dirnames + filenames
         for item_name in items_in_dir:
             # --- File and Extension Exclusion for Structure list ---
-            if item_name in skip_files_set:
+            if matches_any_pattern(item_name, skip_files):
                 continue
 
             _, ext = os.path.splitext(item_name)
-            if ext in skip_extensions_set:
+            if ext and matches_any_pattern(ext, skip_extensions):
                 continue
 
             full_path = os.path.join(dirpath, item_name)
@@ -106,11 +123,11 @@ def find_files_and_dirs(root_dir, config):
             # Skip __init__.py from being dumped as source code, but it will still appear in the structure list.
             if filename == "__init__.py":
                 continue
-            if filename in skip_files_set:
+            if matches_any_pattern(filename, skip_files):
                 continue
 
             _, ext = os.path.splitext(filename)
-            if ext in skip_extensions_set:
+            if ext and matches_any_pattern(ext, skip_extensions):
                 continue
 
             if filename.endswith(SOURCE_CODE_EXTENSIONS):
