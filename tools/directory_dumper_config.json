@@ -1,0 +1,25 @@
+{
+  "skip_directories": [
+    ".git",
+    "venv",
+    "__pycache__",
+    "node_modules",
+    "dist",
+    ".idea",
+    "charting_library"
+  ],
+  "skip_files": [
+    ".gitignore"
+  ],
+  "skip_extensions": [
+    ".log",
+    ".tmp",
+    ".env",
+    ".bak",
+    ".swp",
+    ".DS_Store",
+    ".so",
+    ".h5",
+    ".parquet"
+  ]
+}
