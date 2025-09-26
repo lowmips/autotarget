@@ -1,6 +1,6 @@
 import { parseFullSymbol, waitForSocketConnection } from './helpers.js';
 
-const ws_klines_url = 'wss://www.lowmips.com/autotarget/wss/'; // Define URL once
+const ws_klines_url = 'wss://www.lowmips.com:8888/autotarget/'; // Define URL once
 
 let ws_klines; // Declare ws_klines here, initialize in connect function
 let ws_was_closed = false;

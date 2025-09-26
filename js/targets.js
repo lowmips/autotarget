@@ -2,7 +2,7 @@ import { parseFullSymbol, waitForSocketConnection } from './helpers.js';
 import { colors, tierRanges } from './colors.js';
 import { addItem, waitForAndRemoveItem, hasItem, removeItem } from "./waitqueue.js";
 
-const ws_targets_url = 'wss://www.lowmips.com/autotarget/targets/';
+const ws_targets_url = 'wss://www.lowmips.com:8889/autotarget/';
 let ws_targets;
 let ws_targets_was_closed = false;
 let targetCache = {}; // ticker -> { shape_id_to_target, target_to_shape_id, etc. }
